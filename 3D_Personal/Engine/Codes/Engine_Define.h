@@ -18,6 +18,10 @@
 #define END }
 #define USING(Name) using namespace Name;
 
+// [2/5/2021 wades]
+#define ENUMSPACES(MyEnum) namespace MyEnum { \
+ enum MyEnum  
+
 #define NO_EVENT		0
 #define CHANGE_SCNENE	1
 

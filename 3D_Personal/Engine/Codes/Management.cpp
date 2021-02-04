@@ -110,7 +110,7 @@ _int CManagement::Get_SceneID()
 	return iSceneID;
 }
 
-HRESULT CManagement::AddGameObjectPrototype(
+HRESULT CManagement::Ready_GameObjectPrototype(
 	const _tchar* pProtoTag,
 	CGameObject* pPrototype)
 {
@@ -120,7 +120,7 @@ HRESULT CManagement::AddGameObjectPrototype(
 }
 
 //Call GameMgr
-CGameObject* CManagement::AddGameObject(const size_t & nSceneID, const _tchar*  pLayerTag , const _tchar*  GameObjectTag)
+CGameObject* CManagement::Ready_GameObject(const size_t & nSceneID, const _tchar*  pLayerTag , const _tchar*  GameObjectTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
 
@@ -130,7 +130,7 @@ CGameObject* CManagement::AddGameObject(const size_t & nSceneID, const _tchar*  
 
 //Call GameMgr
 
-CGameObject* CManagement::AddGameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
+CGameObject* CManagement::Ready_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
 	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
@@ -142,13 +142,23 @@ CGameObject* CManagement::AddGameObject(const _tchar * GameObjectTag, const _tch
 	return m_pGameObjectManager->Add_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
 
-CComponent * CManagement::Clone_Componet()
+HRESULT CManagement::Ready_Mesh(const _tchar * pMeshTag, eResourcesID::eResourcesID eType, const _tchar * pFilePath, const _tchar * pFileName)
 {
-	return nullptr;
+	NULL_CHECK_RETURN(m_pResource_Manager, E_FAIL);
+
+
+	return m_pResource_Manager->Ready_Meshes(m_pGraphic_Dev->Get_Device(), pMeshTag, eType, pFilePath, pFileName);
+}
+
+CComponent * CManagement::Clone_Resource(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, nullptr);
+
+	return m_pResource_Manager->Clone(pCompTag, eResourcesID);
 }
 
 //Call Renderer
-HRESULT CManagement::AddRenderer(eRenderID eID, CGameObject* pGameObject)
+HRESULT CManagement::Add_Renderer(eRenderID eID, CGameObject* pGameObject)
 {
 	NULL_CHECK_RETURN(m_pRenderer, E_FAIL);
 

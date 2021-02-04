@@ -29,7 +29,7 @@ enum class eComponentID
 	End
 };
 
-enum class eResourcesID
+ENUMSPACES(eResourcesID)
 {
 	StaticMesh,
 	DynamicMesh,
@@ -37,6 +37,7 @@ enum class eResourcesID
 	Texture,
 	End
 };
+END
 
 enum eTransform 
 {
@@ -47,7 +48,55 @@ enum eTransform
 	End
 };
 
+// CLine
+ENUMSPACES(eLinePt)
+{ 
+	Start, 
+	Last, 
+	End 
+};
 END
+
+ENUMSPACES(eRelationLine)
+{
+	OutLine,
+	InLine
+};
+END
+
+//CCell
+
+ENUMSPACES(eCellpt)
+{
+	A,B,C,
+	End
+};
+END
+ENUMSPACES(eNeighbor)
+{
+	AB,
+	BC,
+	CA,
+	End
+};
+END
+ENUMSPACES(eLineID)
+{
+		AB,
+		BC,
+		CA,
+		End
+};
+END
+ENUMSPACES(eCompare)
+{
+	Move,
+	Stop,
+	End
+};
+END
+
+END // for  Engine
 
 #define __ENGINE_ENUM_H__
 #endif

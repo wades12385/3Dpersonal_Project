@@ -7,6 +7,9 @@
 
 //Resources
 #include "Resources.h" // 나중에 추가하면 지워
+#include "StaticMesh.h"
+#include "DynamicMesh.h"
+#include "NaviMesh.h"
 
 BEGIN(Engine)
 class ENGINE_DLL CResource_Manager : public CBase
@@ -17,18 +20,21 @@ public:
 	explicit CResource_Manager();
 	virtual ~CResource_Manager() = default;
 
-	// CBase을(를) 통해 상속됨
-	virtual void Free() override;
 public:
+	HRESULT			Ready_Resourece(LPDIRECT3DDEVICE9 pDevice, const _tchar* pCompTag, const eResourcesID::eResourcesID& eCompID , const CComponent* pComp);
+	CComponent*		Clone(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);
 
-private:
-	HRESULT Ready_Resourece(LPDIRECT3DDEVICE9 pDevice, const _tchar* pCompTag, const eResourcesID& eCompID , const CComponent* pComp);
-	CComponent*	Clone(const _tchar* pCompTag, const eResourcesID& eResourcesID);
+	HRESULT			Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pBufferTag , const eResourcesID::eResourcesID& eResourcesID);
+	HRESULT			Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pTextureTag, const _tchar* pPath, const _uint& iCnt = 1); //이건 루트경로 받아서 싹 읽는 형식으로 
+	HRESULT			Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
 
-	HRESULT ExisitCheck_Comp(const _tchar* pCompTag, const eResourcesID& eResourceID);
-	HRESULT FindCheck_Comp(RESOURCEMAP::iterator& iter , const eResourcesID& eResourceID);
+
+	HRESULT			overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, RESOURCEMAP::iterator& iter);
+	HRESULT			FindCheck_Comp(RESOURCEMAP::iterator& iter, const eResourcesID::eResourcesID& eResourceID);
 private:
-	RESOURCEMAP m_mapResouces[(_uint)eResourcesID::End];
+	virtual void Free() override;
+private:
+	RESOURCEMAP m_mapResouces[eResourcesID::End];
 };
 END
 #define __COMPONENTMANAGER_H__

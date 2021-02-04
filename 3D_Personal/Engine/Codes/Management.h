@@ -31,14 +31,16 @@ public:
 	_int	Get_SceneID();
 public: 
 	/* For.GameObjectManager */
-	HRESULT		 AddGameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
-	CGameObject* AddGameObject(const size_t& nSceneID , const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	CGameObject* AddGameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	HRESULT		 Ready_GameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
+	CGameObject* Ready_GameObject(const size_t& nSceneID , const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	CGameObject* Ready_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
 public:
-	CComponent*	 Clone_Componet();
-public: /* For.Renderer */
-	HRESULT AddRenderer(eRenderID eID, CGameObject* pGameObject);
-
+	/*For.ResourcesManagner*/
+	HRESULT		 Ready_Mesh(const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
+	CComponent*	 Clone_Resource(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);
+public: 
+	/* For.Renderer */
+	HRESULT		 Add_Renderer(eRenderID eID, CGameObject* pGameObject);
 public:
 	virtual void Free() override;
 	static void ReleaseEngine();

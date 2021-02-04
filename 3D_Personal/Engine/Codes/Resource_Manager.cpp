@@ -7,21 +7,13 @@ CResource_Manager::CResource_Manager()
 {
 }
 
-void CResource_Manager::Free()
-{
-	for (_uint i = 0; i < (_uint)eResourcesID::End; ++i)
-	{
-		for (auto& pair : m_mapResouces[i])
-		{
-			SafeRelease(pair.second);
-		}
-		m_mapResouces[i].clear();
-	}
-}
 
-HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tchar * pCompTag, const eResourcesID & eCompID, const CComponent * pComp)
+HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tchar * pCompTag, 
+	const eResourcesID::eResourcesID & eCompID, const CComponent * pComp)
 {
-	if (FAILED(ExisitCheck_Comp(pCompTag, eCompID)))
+	RESOURCEMAP::iterator Res_finditer;
+
+	if (FAILED(overlapCheck_Comp(pCompTag, eCompID, Res_finditer)))
 		return E_FAIL;
 
 
@@ -29,24 +21,58 @@ HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tc
 	return S_OK;
 }
 
-CComponent* CResource_Manager::Clone(const _tchar * pCompTag, const eResourcesID & eResourceID)
+CComponent* CResource_Manager::Clone(const _tchar * pCompTag, const eResourcesID::eResourcesID & eResourceID)
 {
-	RESOURCEMAP::iterator Resourec_Finditer = find_if(m_mapResouces[(_uint)eResourceID].begin(), m_mapResouces[(_uint)eResourceID].end(), CTagFinder(pCompTag));
+	RESOURCEMAP::iterator Res_finditer;
 
-	if (FAILED(FindCheck_Comp(Resourec_Finditer, eResourceID)))
+	overlapCheck_Comp(pCompTag, eResourceID, Res_finditer);
+
+	if (FAILED(FindCheck_Comp(Res_finditer, eResourceID)))
 		return nullptr;
 
-	CComponent* pClone = Resourec_Finditer->second->Clone();
+	CComponent* pClone = Res_finditer->second->Clone();
 
 	return pClone;
 }
 
-//Áßº¹Ã¼Å© 
-HRESULT CResource_Manager::ExisitCheck_Comp(const _tchar* pCompTag, const eResourcesID& eResourceID, RESOURCEMAP::iterator& iter )
-{
-	auto& iter = find_if(m_mapResouces[(_uint)eResourceID].begin(), m_mapResouces[(_uint)eResourceID].end(), CTagFinder(pCompTag));
 
-	if (iter != m_mapResouces[(_uint)eResourceID].end())
+HRESULT CResource_Manager::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar * pMeshTag, eResourcesID::eResourcesID eType, const _tchar * pFilePath, const _tchar * pFileName)
+{
+	NULL_CHECK_RETURN(m_mapResouces, E_FAIL);
+	
+	RESOURCEMAP::iterator Res_finditer;
+
+	if (FAILED(overlapCheck_Comp(pMeshTag, eType, Res_finditer)))
+		return E_FAIL;
+
+	CResources*	pResource = nullptr;
+
+	switch (eType)
+	{
+	case Engine::eResourcesID::StaticMesh:
+		pResource = CStaticMesh::Create(pGraphicDev, pFilePath, pFileName);
+		break;
+	case Engine::eResourcesID::DynamicMesh:
+		pResource = CDynamicMesh::Create(pGraphicDev, pFilePath, pFileName);
+		break;
+	case Engine::eResourcesID::NaviMesh:
+		pResource = CNaviMesh::Create(pGraphicDev);
+		break;
+	default:
+		return E_FAIL;
+	}
+	NULL_CHECK_RETURN(pResource, E_FAIL);
+	m_mapResouces[eType].emplace(pMeshTag, pResource);
+
+	return S_OK;
+}
+
+//Áßº¹Ã¼Å© ¹Ø Å½»ö¿ë
+HRESULT CResource_Manager::overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, RESOURCEMAP::iterator& iter )
+{
+	iter = find_if(m_mapResouces[eResourceID].begin(), m_mapResouces[eResourceID].end(), CTagFinder(pCompTag));
+
+	if (iter != m_mapResouces[eResourceID].end())
 	{
 		_tchar szBuff[128] = L"";
 		swprintf_s(szBuff, L"Exisit %s Resource", pCompTag);
@@ -58,10 +84,21 @@ HRESULT CResource_Manager::ExisitCheck_Comp(const _tchar* pCompTag, const eResou
 }
 
 //Å½»ö Ã¼Å©
-HRESULT CResource_Manager::FindCheck_Comp(RESOURCEMAP::iterator & iter, const eResourcesID& eResourceID)
+HRESULT CResource_Manager::FindCheck_Comp(RESOURCEMAP::iterator & iter, const eResourcesID::eResourcesID& eResourceID)
 {
-	if (iter == m_mapResouces[(_uint)eResourceID].end())
+	if (iter == m_mapResouces[eResourceID].end())
 		return E_FAIL;
 
 	return S_OK;
+}
+void CResource_Manager::Free()
+{
+	for (_uint i = 0; i < eResourcesID::End; ++i)
+	{
+		for (auto& pair : m_mapResouces[i])
+		{
+			SafeRelease(pair.second);
+		}
+		m_mapResouces[i].clear();
+	}
 }
