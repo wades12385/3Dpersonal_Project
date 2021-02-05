@@ -24,6 +24,8 @@
 #include <iostream>
 #endif
 
+#ifndef __MFCTOOL
+
 #ifdef _DEBUG
 
 #define _CRTDBG_MAP_ALLOC
@@ -31,11 +33,12 @@
 #include <crtdbg.h>
 
 #ifndef DBG_NEW 
-
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
 #define new DBG_NEW 
+#endif
 
 #endif
+
 #endif
 
 using namespace std;
