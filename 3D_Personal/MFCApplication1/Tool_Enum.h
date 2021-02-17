@@ -5,6 +5,7 @@ ENUMSPACES(eToolScene)
 {
 	NaviModify,
 	Object,
+	ColBox,
 	End
 };
 END

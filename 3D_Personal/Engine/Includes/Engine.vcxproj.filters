@@ -139,6 +139,12 @@
     <Filter Include="01.Utilities\05.Component\01.Resources\03.Texture">
       <UniqueIdentifier>{5b334fb7-79a4-4a57-a34e-49b189b793a0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\04.SectionMesh">
+      <UniqueIdentifier>{5111bf5a-6428-4b63-bf39-dbf0c37c3d71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\04.ColliderBox">
+      <UniqueIdentifier>{9f1f4d9b-05f3-4e38-b91a-b45ef1624b07}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\Codes\Base.cpp">
@@ -237,7 +243,12 @@
     <ClCompile Include="..\Codes\NaviMesh.cpp">
       <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\Texture.cpp" />
+    <ClCompile Include="..\Codes\Texture.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\03.Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\ColliderBox.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\04.ColliderBox</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Codes\Renderer.h">
@@ -360,7 +371,12 @@
     <ClInclude Include="..\Codes\Light_Manager.h">
       <Filter>00.Systems\99.Export_System\05.Light\02.Light_Manager</Filter>
     </ClInclude>
-    <ClInclude Include="..\Codes\Texture.h" />
+    <ClInclude Include="..\Codes\Texture.h">
+      <Filter>01.Utilities\05.Component\01.Resources\03.Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\ColliderBox.h">
+      <Filter>01.Utilities\05.Component\01.Resources\04.ColliderBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Codes\Export_System.inl">

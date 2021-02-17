@@ -59,11 +59,20 @@
     <Filter Include="04.DirectApp\02.GameObject\02.NaviObj">
       <UniqueIdentifier>{c18230f6-3bb1-470e-b615-7c14ed6389f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.DirectApp\02.GameObject\StaticMesh">
+    <Filter Include="03.FormView\03.CollisionTab">
+      <UniqueIdentifier>{b27e836c-9a3d-4f1f-85a0-7a970963c6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\03.StaticMesh">
       <UniqueIdentifier>{b22a8571-9200-4c09-8fa2-27f20e7d48c6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.DirectApp\02.GameObject\StaticMesh\01.Stage1">
+    <Filter Include="04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1">
       <UniqueIdentifier>{1e9ecc8f-7a49-4fb3-b44e-087c4f8fb9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\04.ColBox">
+      <UniqueIdentifier>{bfc579b3-aef4-4621-8fea-d32241bdb30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\03.ColBoxDeploy">
+      <UniqueIdentifier>{d55561fc-f3f3-4d54-a9e1-e4e8d22c1195}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -117,10 +126,19 @@
       <Filter>04.DirectApp\02.GameObject\02.NaviObj</Filter>
     </ClInclude>
     <ClInclude Include="Stage1Mesh.h">
-      <Filter>04.DirectApp\02.GameObject\StaticMesh\01.Stage1</Filter>
+      <Filter>04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1</Filter>
     </ClInclude>
     <ClInclude Include="NaviModifyTab.h">
       <Filter>03.FormView\01.NaviModifyTab</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTab.h">
+      <Filter>03.FormView\03.CollisionTab</Filter>
+    </ClInclude>
+    <ClInclude Include="ColBox.h">
+      <Filter>04.DirectApp\02.GameObject\04.ColBox</Filter>
+    </ClInclude>
+    <ClInclude Include="ColBoxDeployScene.h">
+      <Filter>98.Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -164,8 +182,15 @@
       <Filter>04.DirectApp\02.GameObject\02.NaviObj</Filter>
     </ClCompile>
     <ClCompile Include="Stage1Mesh.cpp">
-      <Filter>04.DirectApp\02.GameObject\StaticMesh\01.Stage1</Filter>
+      <Filter>04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionTab.cpp">
+      <Filter>03.FormView\03.CollisionTab</Filter>
+    </ClCompile>
+    <ClCompile Include="ColBox.cpp">
+      <Filter>04.DirectApp\02.GameObject\04.ColBox</Filter>
+    </ClCompile>
+    <ClCompile Include="ColBoxDeployScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\MFCApplication1.ico">

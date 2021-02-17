@@ -23,6 +23,13 @@ typedef struct VertexColor
 
 const _ulong FVF_VTX_COLOR = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
 
+typedef struct CubeTexture
+{
+	D3DXVECTOR3 vPosition;
+	D3DXVECTOR3 vUV;
+}VTXCUBE;
+
+const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);	
 
 typedef struct VertexTex
 {

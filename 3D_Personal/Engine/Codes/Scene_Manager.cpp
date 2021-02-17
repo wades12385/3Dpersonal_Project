@@ -13,7 +13,10 @@ CScene_Manager::CScene_Manager()
 HRESULT CScene_Manager::Set_CurrentScene(const _int&  iSceneID,  CScene*  pCurrentScene)
 {
 	if (nullptr == pCurrentScene || m_iSceneID == iSceneID)
+	{
+		SafeRelease(pCurrentScene);
 		return E_FAIL;
+	}
 
 	SafeRelease(m_pCurrentScene);
 

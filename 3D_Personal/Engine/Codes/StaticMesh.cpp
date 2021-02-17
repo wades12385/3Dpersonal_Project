@@ -62,9 +62,9 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	else
 		m_pOriMesh->CloneMeshFVF(m_pOriMesh->GetOptions(), dwFVF, m_pDevice, &m_pMesh);
 
-	// 메시 크기에 맞는 바운딩 박스 생성
 	void*		pVertex = nullptr;
 	m_dwVtxCnt = m_pMesh->GetNumVertices();	
+	// 메시 크기에 맞는 바운딩 박스 생성 용으로 쓸 버텍스배열 받기
 	m_pVtxPos = new _vec3[m_dwVtxCnt];
 	//////////////////////////////////////////////////////////////////////////
 	m_pMesh->LockVertexBuffer(0, &pVertex);

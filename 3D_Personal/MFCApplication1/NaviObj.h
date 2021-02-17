@@ -29,9 +29,9 @@ public:
 	static CNaviObj* Create(LPDIRECT3DDEVICE9 pDevice, const _tchar* pComTag);
 
 public:
-	Engine::CStaticMesh*	m_pStaticMesh = nullptr;
-	Engine::CNaviMesh*		m_pNaviCom = nullptr;
-	Engine::CTransform*		m_pTrans = nullptr;
+	CStaticMesh*	m_pStaticMesh = nullptr;
+	CNaviMesh*		m_pNaviCom = nullptr;
+	CTransform*		m_pTrans = nullptr;
 
 	TCHAR m_szNaviTag[MAX_PATH];
 

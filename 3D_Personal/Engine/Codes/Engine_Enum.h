@@ -28,8 +28,9 @@ ENUMSPACES(eComponentID)
 	VIBuffer,
 	StaticMesh,
 	DynamicMesh,
-		NaviMesh,
+	NaviMesh,
 	Texture,
+	CColliderBox,
 	End
 };
 END
@@ -117,7 +118,18 @@ ENUMSPACES(eFileType)
 		End
 };
 END
+
+ENUMSPACES(eTextureType)
+{
+	Nomal,
+		Cube,
+		End
+};
+END
+
+
 END // for  Engine
+
 
 #define __ENGINE_ENUM_H__
 #endif

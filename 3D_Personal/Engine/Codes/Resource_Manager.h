@@ -4,12 +4,13 @@
 
 //Comp
 #include "Transform.h"
-
+#include "ColliderBox.h"
 //Resources
 #include "StaticMesh.h"
 #include "DynamicMesh.h"
 #include "NaviMesh.h"
 #include "Texture.h"
+
 
 BEGIN(Engine)
 class ENGINE_DLL CResource_Manager : public CBase

@@ -280,6 +280,15 @@ FONT 9, "MS Shell Dlg", 0, 0, 0x0
 BEGIN
 END
 
+IDD_COLLISIONTAB DIALOG 0, 0, 320, 200
+STYLE DS_SETFONT | DS_MODALFRAME | WS_POPUP | WS_CAPTION | WS_SYSMENU
+CAPTION "대화 상자"
+FONT 9, "MS Shell Dlg"
+BEGIN
+    DEFPUSHBUTTON   "확인",IDOK,209,179,50,14
+    PUSHBUTTON      "취소",IDCANCEL,263,179,50,14
+END
+
 
 /////////////////////////////////////////////////////////////////////////////
 //
@@ -359,6 +368,14 @@ BEGIN
         RIGHTMARGIN, 312
         TOPMARGIN, 7
         BOTTOMMARGIN, 192
+    END
+
+    IDD_COLLISIONTAB, DIALOG
+    BEGIN
+        LEFTMARGIN, 7
+        RIGHTMARGIN, 313
+        TOPMARGIN, 7
+        BOTTOMMARGIN, 193
     END
 END
 #endif    // APSTUDIO_INVOKED

@@ -39,7 +39,7 @@ HRESULT CNaviModifyScene::Awake_Scene()
 {
 	CManagement::Get_Instance()->Ready_GameObject(L"Proto_Camera", L"Layer_Camera");
 	CManagement::Get_Instance()->Ready_GameObject(L"Proto_Stage1", L"Layer_Terrain");
-
+	//스테틱 레이어를 만들어서 
 	return S_OK;
 }
 
