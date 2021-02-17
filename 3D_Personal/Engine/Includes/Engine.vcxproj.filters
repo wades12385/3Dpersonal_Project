@@ -31,12 +31,6 @@
     <Filter Include="00.Systems\01.Time_Manager">
       <UniqueIdentifier>{7f871dbb-803b-4214-9656-f58514dddad5}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utilities\04.Gameobject">
-      <UniqueIdentifier>{22247b7e-d39c-486f-8fd4-89801136d485}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utilities\04.Gameobject\99.Base">
-      <UniqueIdentifier>{48d62620-f5d4-45a6-af82-eb64b2e51193}</UniqueIdentifier>
-    </Filter>
     <Filter Include="01.Utilities\02.Scene\99.Base">
       <UniqueIdentifier>{bc9aa3bc-1cb8-4796-bda7-3218e83c3fb0}</UniqueIdentifier>
     </Filter>
@@ -60,9 +54,6 @@
     </Filter>
     <Filter Include="99.Headers">
       <UniqueIdentifier>{83308600-ab55-4f5b-b787-53c6008b7a67}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="01.Utilities\04.Gameobject\01.Layer">
-      <UniqueIdentifier>{c995581d-e98d-492f-bff5-9b2f89d79a6b}</UniqueIdentifier>
     </Filter>
     <Filter Include="00.Systems\99.Export_System">
       <UniqueIdentifier>{8fde47e8-9676-48a8-a01a-10fbadddf576}</UniqueIdentifier>
@@ -91,11 +82,62 @@
     <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\00.Base">
       <UniqueIdentifier>{822aafbe-1f99-4cd0-819f-b36e68786819}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\01.StaticMesh">
+      <UniqueIdentifier>{02cd33bd-aece-4f42-83de-f3d7134de8db}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh">
+      <UniqueIdentifier>{9d8520e7-7f21-4ca9-86c2-65cc6c447952}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\01.BoneHierarchy">
+      <UniqueIdentifier>{81bf0b68-7eda-412b-9b7f-374ebf342ce1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\02.AniCtrl">
+      <UniqueIdentifier>{5aba097c-4d37-4d17-9ffe-18ed933f20f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\03.Input">
+      <UniqueIdentifier>{78be9bfd-b805-4caa-95a4-f4fdd9a2f993}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\04.Font">
+      <UniqueIdentifier>{bc52b71a-2ebb-4c25-936f-7ddd7c2201e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\04.Font\01.Manager">
+      <UniqueIdentifier>{cf225da6-2178-46e3-b2f5-32a4a09dc288}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\99.Export_System\05.Light">
+      <UniqueIdentifier>{4f208365-52f2-491e-b2df-9692eb9d8194}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\99.Export_System\05.Light\01.Base">
+      <UniqueIdentifier>{dcdc1547-0980-4f21-9c65-a7df9698de78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.Systems\99.Export_System\05.Light\02.Light_Manager">
+      <UniqueIdentifier>{8b513697-d32f-40a3-8f89-2639b2f1b042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\04.Gameobject">
+      <UniqueIdentifier>{22247b7e-d39c-486f-8fd4-89801136d485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\04.Gameobject\99.Base">
+      <UniqueIdentifier>{48d62620-f5d4-45a6-af82-eb64b2e51193}</UniqueIdentifier>
+    </Filter>
     <Filter Include="01.Utilities\04.Gameobject\98.Manager">
       <UniqueIdentifier>{3206f272-58f1-4437-9a2c-3e86686337cb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\01.StaticMesh">
-      <UniqueIdentifier>{02cd33bd-aece-4f42-83de-f3d7134de8db}</UniqueIdentifier>
+    <Filter Include="01.Utilities\04.Gameobject\97.Layer">
+      <UniqueIdentifier>{c995581d-e98d-492f-bff5-9b2f89d79a6b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\04.Gameobject\01.Camera">
+      <UniqueIdentifier>{97d6bd4c-ca28-490d-a947-1772fea175e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh">
+      <UniqueIdentifier>{74beb967-e750-4a5c-894b-b9a0fbe44d7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\01.Line">
+      <UniqueIdentifier>{e755d19f-c1cd-44f4-9913-c535e46c6a22}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\02.Cell">
+      <UniqueIdentifier>{167d8d4e-1bcd-4cde-bb86-4a827cae2423}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\01.Resources\03.Texture">
+      <UniqueIdentifier>{5b334fb7-79a4-4a57-a34e-49b189b793a0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -139,7 +181,7 @@
       <Filter>01.Utilities\05.Component\02.Transform</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Layer.cpp">
-      <Filter>01.Utilities\04.Gameobject\01.Layer</Filter>
+      <Filter>01.Utilities\04.Gameobject\97.Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\Codes\Scene_Manager.cpp">
       <Filter>01.Utilities\02.Scene\00.Manager</Filter>
@@ -159,6 +201,43 @@
     <ClCompile Include="..\Codes\StaticMesh.cpp">
       <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\01.StaticMesh</Filter>
     </ClCompile>
+    <ClCompile Include="..\Codes\AniCtrl.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\02.AniCtrl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\BoneHierarchy.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\01.BoneHierarchy</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\DynamicMesh.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Cell.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\02.Cell</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Camera.cpp">
+      <Filter>01.Utilities\04.Gameobject\01.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Line.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\01.Line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\DXInput.cpp">
+      <Filter>00.Systems\03.Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Font.cpp">
+      <Filter>00.Systems\04.Font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Font_Manager.cpp">
+      <Filter>00.Systems\04.Font\01.Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Light.cpp">
+      <Filter>00.Systems\99.Export_System\05.Light\01.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Light_Manager.cpp">
+      <Filter>00.Systems\99.Export_System\05.Light\02.Light_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\NaviMesh.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\Codes\Renderer.h">
@@ -222,7 +301,7 @@
       <Filter>01.Utilities\05.Component\02.Transform</Filter>
     </ClInclude>
     <ClInclude Include="..\Codes\Layer.h">
-      <Filter>01.Utilities\04.Gameobject\01.Layer</Filter>
+      <Filter>01.Utilities\04.Gameobject\97.Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\Codes\Export_System.h">
       <Filter>00.Systems\99.Export_System</Filter>
@@ -245,6 +324,43 @@
     <ClInclude Include="..\Codes\StaticMesh.h">
       <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\01.StaticMesh</Filter>
     </ClInclude>
+    <ClInclude Include="..\Codes\AniCtrl.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\02.AniCtrl</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\BoneHierarchy.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh\01.BoneHierarchy</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\DynamicMesh.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\02.DynamicMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Cell.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\02.Cell</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\NaviMesh.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Camera.h">
+      <Filter>01.Utilities\04.Gameobject\01.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Line.h">
+      <Filter>01.Utilities\05.Component\01.Resources\02.Mesh\03.NaviMesh\01.Line</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\DXInput.h">
+      <Filter>00.Systems\03.Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Font.h">
+      <Filter>00.Systems\04.Font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Font_Manager.h">
+      <Filter>00.Systems\04.Font\01.Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Light.h">
+      <Filter>00.Systems\99.Export_System\05.Light\01.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Light_Manager.h">
+      <Filter>00.Systems\99.Export_System\05.Light\02.Light_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Texture.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Codes\Export_System.inl">

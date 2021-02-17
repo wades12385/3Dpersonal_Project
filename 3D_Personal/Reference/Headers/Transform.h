@@ -26,13 +26,13 @@ public:
 	void							UpdateWorld();
 public:
 	//////////////////////////////////////////////////////////////////////////
-	void							GetTransForm(const eTransform& eType,OUT _vec3& vInfo);
-	const _matrix				GetWorld();
+	void							GetTransForm(const eTransform::eTransform& eType,OUT _vec3& vInfo);
+	const _matrix					GetWorld();
 	const _matrix					GetParent();
-	const _vec3					GetRight();
-	const _vec3					GetUp();
-	const _vec3					GetLook();
-	const _vec3					GetPosition();
+	const _vec3						GetRight();
+	const _vec3						GetUp();
+	const _vec3						GetLook();
+	const _vec3						GetPosition();
 	//////////////////////////////////////////////////////////////////////////
 	void							SetScale(const _float& fX, const _float& fY, const _float& fZ);
 	void							SetPosition(const _vec3& vPos);
@@ -43,8 +43,8 @@ public:
 private:
 	_vec3							m_vTransDesc[eTransform::End];
 	_matrix							m_matWorld;
-	// 해제시 따로 reset 처리를 해줘야하는데 weak 로 잡아야하나 a
-	CTransform*				m_pParent = nullptr;
+	// row 로 받아서 쓰지 말고 그냥 setter 받아와서 쓰자  
+	CTransform*						m_pParent = nullptr;
 };
 END
 

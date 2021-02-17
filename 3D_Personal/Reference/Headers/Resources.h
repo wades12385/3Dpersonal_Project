@@ -15,7 +15,7 @@ public:
 	virtual void Free() override;
 
 	virtual CComponent* Clone()PURE;
-private:
+protected:
 	_bool				m_bClone;
 };
 END

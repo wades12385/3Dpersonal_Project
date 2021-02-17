@@ -19,10 +19,19 @@ public:
 	HRESULT					Ready_GameObject(const _int& iScene);
 	_uint					UpdateGameObject(const _int& iScene, const _float& fDeltaTime);
 	_uint					LateUpdateGameObject(const _int& iScene, const _float& fDeltaTime);
+
+	void					Add_InstantGameObject(const _int& iScene, CGameObject* pGameObj, const _tchar * pLayerTag);
+
 public:
 	HRESULT					Ready_SceneLayer(const _int& iScene);
-	HRESULT					Add_ProtoType(const _tchar* pProtoTag,  CGameObject* pPrototype);
+	HRESULT					Ready_ProtoType(const _tchar* pProtoTag,  CGameObject* pPrototype);
+	CGameObject*			Ready_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* GameObjectTag);
+	CGameObject*			LateAdd_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* GameObjectTag);
+
+	//Running Scene
 	CGameObject*			Add_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* GameObjectTag);
+
+
 	HRESULT					ClearForScene(const _int& iScene);
 public:
 	CGameObject*			Get_GameObject(const _int& iScene, const _tchar* pLayerTag);

@@ -21,6 +21,8 @@ public:
 	_uint	UpdateEngine(const _float& fTimeDelta);
 	HRESULT RenderEngine(HWND hWnd = nullptr);
 	HRESULT ClearForScene(_int iSceneIndex);
+	void	BegineRender();
+	void	EndRender(HWND hWnd);
 
 public:
 	/* For.GraphicDev */
@@ -31,14 +33,28 @@ public:
 	_int	Get_SceneID();
 public: 
 	/* For.GameObjectManager */
-	HRESULT		 AddGameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
-	CGameObject* AddGameObject(const size_t& nSceneID , const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	CGameObject* AddGameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
-public:
-	CComponent*	 Clone_Componet();
-public: /* For.Renderer */
-	HRESULT AddRenderer(eRenderID eID, CGameObject* pGameObject);
+	HRESULT		 Ready_GameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
+	CGameObject* Ready_GameObject(const size_t& nSceneID , const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	CGameObject* Ready_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	CGameObject* LateReady_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	
+	CGameObject* Add_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	void		 Add_InstantGameObject( CGameObject* pGameObj, const _tchar* pLayerTag);
 
+	CGameObject* Get_GameObjet(const _tchar* pLayerTag);  
+	list<CGameObject*>* Get_GameObjetList(const _tchar* pLayerTag);
+
+public:
+	/*For.ResourcesManagner*/
+	HRESULT		 Ready_Mesh(const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
+	HRESULT		 Load_NavMesh(const _tchar* pMeshTag,const _tchar* pFilePath);
+
+
+	HRESULT		 Ready_Texture(const _tchar * pResouceTag, const _tchar * pFilePath, const _uint & iCnt);
+	CComponent*	 Clone_Resource(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);
+public: 
+	/* For.Renderer */
+	HRESULT		 Add_Renderer(eRenderID eID, CGameObject* pGameObject);
 public:
 	virtual void Free() override;
 	static void ReleaseEngine();

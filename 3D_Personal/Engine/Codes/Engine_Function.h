@@ -40,7 +40,7 @@ _uint SafeRelease(T& ptr)
 {
 	unsigned int iRefCnt = 0;
 
-	if (ptr)
+	if (ptr != nullptr)
 	{
 		iRefCnt = ptr->Release();
 
@@ -95,21 +95,21 @@ public: // operator
 	}
 };
 
-class CObjDelete
+class CDeleteObj
 {
-	explicit CObjDelete() {}
-	~CObjDelete() {}
 public:
+	explicit CDeleteObj(void) {}
+	~CDeleteObj(void) {}
+public: // operator
 	template <typename T>
-	void operator() (T& pIns)
+	void operator () (T& pInstance)
 	{
 		_ulong dwRefCnt = 0;
-		dwRefCnt = pIns->Release();
+		dwRefCnt = pInstance->Release();
 		if (0 == dwRefCnt)
-			pIns  = nullptr;
+			pInstance = nullptr;
 	}
 };
-
 
 #define __ENGINE_FUNCTION_H__
 #endif

@@ -57,11 +57,32 @@ _uint CGameObject_Manager::LateUpdateGameObject(const _int& iScene, const _float
 
 	if (Scene_find == m_mapObjManager.end())
 	{
-		MSG_BOX(L"not exisit SceneID");
+		MSG_BOX(L"not exist SceneID");
 		return RETURN_FAILED;
 	}
 
 	return Scene_find->second->LateUpdate_Layer(fDeltaTime);
+}
+
+void CGameObject_Manager::Add_InstantGameObject(const _int& iScene, CGameObject * pGameObj, 
+													 const _tchar * pLayerTag)
+{
+	//Scene find 
+	auto Manager_Iterfind = m_mapObjManager.find(iScene);
+	if (Manager_Iterfind == m_mapObjManager.end())
+	{
+		MSG_BOX(L"Add Instant failed , no exist Scene");
+		return;
+	}
+
+	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pGameObj)))
+	{
+		SafeRelease(pGameObj);
+		return;
+	}
+	pGameObj->Awake_GameObject();
+	pGameObj->Ready_GameObject();
+	return ;
 }
 
 
@@ -77,14 +98,14 @@ HRESULT CGameObject_Manager::Ready_SceneLayer(const _int & iScene)
 	return S_OK;
 }
 
-HRESULT CGameObject_Manager::Add_ProtoType(const _tchar * pProtoTag,  CGameObject*  pPrototype)
+HRESULT CGameObject_Manager::Ready_ProtoType(const _tchar * pProtoTag,  CGameObject*  pPrototype)
 {
 	auto ProtoType_iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(pProtoTag));
 
 	if (m_mapPrototypes.end() != ProtoType_iterfind)
 	{
 		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Exisit %s Prototype", pProtoTag);
+		swprintf_s(szBuffer, L"exist %s Prototype", pProtoTag);
 		MSG_BOX(szBuffer);
 		return E_FAIL;
 	}
@@ -96,7 +117,7 @@ HRESULT CGameObject_Manager::Add_ProtoType(const _tchar * pProtoTag,  CGameObjec
 
 
 
-CGameObject* CGameObject_Manager::Add_GameObejct(const _int & iScene,
+CGameObject* CGameObject_Manager::Ready_GameObejct(const _int & iScene,
 	const _tchar* pLayerTag, const _tchar* GameObjectTag)
 {
 	//find Prototype
@@ -104,7 +125,7 @@ CGameObject* CGameObject_Manager::Add_GameObejct(const _int & iScene,
 	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
 	{
 		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Not found %s Prototype", GameObjectTag);
+		swprintf_s(szBuffer, L"Failed found %s Prototype", GameObjectTag);
 		MSG_BOX(szBuffer);
 		return nullptr;
 	}
@@ -127,7 +148,90 @@ CGameObject* CGameObject_Manager::Add_GameObejct(const _int & iScene,
 		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
 	}
 
-	Manager_Iterfind->second->Add_GameObject(pLayerTag, pClone);
+	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pClone)))
+	{
+		SafeRelease(pClone);
+		return nullptr;
+	}
+	return pClone;
+}
+
+CGameObject * CGameObject_Manager::LateAdd_GameObejct(const _int & iScene, const _tchar * pLayerTag, const _tchar * GameObjectTag)
+{
+	//find Prototype
+	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(GameObjectTag));
+	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed found %s Prototype", GameObjectTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	CGameObject* pClone = Proto_Iterfind->second->Clone();
+	// clone check
+	if (nullptr == pClone)
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", GameObjectTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	//find Scene
+	//SceneID 추가 끝 
+	auto Manager_Iterfind = m_mapObjManager.find(iScene);
+	if (Manager_Iterfind == m_mapObjManager.end())
+	{
+		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
+	}
+
+	if (FAILED(Manager_Iterfind->second->LateAdd_GameObject(pLayerTag, pClone)))
+	{
+		SafeRelease(pClone);
+		return nullptr;
+	}
+	return pClone;
+}
+
+CGameObject * CGameObject_Manager::Add_GameObejct(const _int & iScene, const _tchar * pLayerTag, const _tchar * GameObjectTag)
+{
+	//find Prototype
+	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(GameObjectTag));
+	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed found %s Prototype", GameObjectTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	CGameObject* pClone = Proto_Iterfind->second->Clone();
+	// clone check
+	if (nullptr == pClone)
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", GameObjectTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	//find Scene
+	//SceneID 추가 끝 
+	auto Manager_Iterfind = m_mapObjManager.find(iScene);
+	if (Manager_Iterfind == m_mapObjManager.end())
+	{
+		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
+	}
+
+	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pClone)))
+	{
+		SafeRelease(pClone);
+		return nullptr;
+	}
+	pClone->Awake_GameObject();
+	pClone->Ready_GameObject();
+
 	return pClone;
 }
 
@@ -137,7 +241,7 @@ HRESULT CGameObject_Manager::ClearForScene(const _int& iScene)
 	auto iter_find = m_mapObjManager.find(iScene);
 	if (m_mapObjManager.end() == iter_find)
 	{
-		MSG_BOX(L"not exisit SceneID");
+		MSG_BOX(L"not exist SceneID");
 		return E_FAIL;
 	}
 	SafeRelease(iter_find->second);

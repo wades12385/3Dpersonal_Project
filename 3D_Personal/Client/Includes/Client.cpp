@@ -42,6 +42,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 	FAILED_CHECK(Engine::Ready_Timer(L"Loop_Timer"));
 	FAILED_CHECK(Engine::Ready_Timer(L"FPS60"));
+	FAILED_CHECK(Engine::Ready_DXInput(hInstance,g_hWnd));
 
 	FAILED_CHECK(Engine::Ready_Frame(L"Frame60", 60.f));
 
@@ -80,13 +81,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 		}
 	}
 
+	Engine::Release_Engine();
 	if (SafeRelease(pMainApp))
 	{
 		MSG_BOX(L"MainApp Release Failed");
 		return FALSE;
 	}
 
-	SafeRelease(pMainApp);
     return (int) msg.wParam;
 }
 

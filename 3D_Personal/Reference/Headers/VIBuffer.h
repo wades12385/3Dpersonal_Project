@@ -12,8 +12,8 @@ protected:
 	virtual ~CVIBuffer() = default;
 
 public:
-	virtual HRESULT ReadyComponent()PURE;
-	virtual HRESULT Render_VIBuffer() PURE;
+	virtual HRESULT Ready_Component()PURE;
+	virtual HRESULT Render_VIBuffer();
 
 	virtual CComponent* Clone() PURE;
 public:
@@ -24,7 +24,10 @@ protected:
 	_uint					    m_iVertexSize = 0;
 	_uint					    m_iVertexCount = 0;
 	_uint					    m_iTriCount = 0;
-	_uint					    m_iFVF = 0;
+	_ulong					    m_dwFVF = 0;
+	_uint						m_iIdxSize;
+	D3DFORMAT					m_IdxFmt;
+
 };
 END
 

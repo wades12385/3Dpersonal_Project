@@ -9,6 +9,7 @@ CManagement::CManagement()
 	, m_pSceneManager(CScene_Manager::Get_Instance())
 	, m_pGameObjectManager(CGameObject_Manager::Get_Instance())
 	, m_pResource_Manager(CResource_Manager::Get_Instance())
+
 {
 	SafeAddRef(m_pGraphic_Dev);
 	SafeAddRef(m_pSceneManager);
@@ -57,7 +58,7 @@ HRESULT CManagement::RenderEngine(HWND hWnd)
 {
 	NULL_CHECK_RETURN(m_pRenderer, E_FAIL);
 
-	m_pGraphic_Dev->Render_Begine(D3DCOLOR_XRGB(0, 0, 255));
+	//m_pGraphic_Dev->Render_Begine(D3DCOLOR_XRGB(46, 116, 50));
 
 	if (FAILED(m_pRenderer->Render(hWnd)))
 	{
@@ -65,9 +66,20 @@ HRESULT CManagement::RenderEngine(HWND hWnd)
 		return E_FAIL;
 	}
 
-	m_pGraphic_Dev->Render_End(hWnd);
+	//m_pGraphic_Dev->Render_End(hWnd);
 
 	return S_OK;
+}
+
+void CManagement::BegineRender()
+{
+	m_pGraphic_Dev->Render_Begine(D3DCOLOR_XRGB(46, 116, 50));
+
+}
+
+void CManagement::EndRender(HWND hWnd)
+{
+	m_pGraphic_Dev->Render_End(hWnd);
 }
 
 HRESULT CManagement::ClearForScene(_int iSceneIndex)
@@ -110,27 +122,27 @@ _int CManagement::Get_SceneID()
 	return iSceneID;
 }
 
-HRESULT CManagement::AddGameObjectPrototype(
+HRESULT CManagement::Ready_GameObjectPrototype(
 	const _tchar* pProtoTag,
 	CGameObject* pPrototype)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, E_FAIL);
 
-	return m_pGameObjectManager->Add_ProtoType(pProtoTag, pPrototype);
+	return m_pGameObjectManager->Ready_ProtoType(pProtoTag, pPrototype);
 }
 
 //Call GameMgr
-CGameObject* CManagement::AddGameObject(const size_t & nSceneID, const _tchar*  pLayerTag , const _tchar*  GameObjectTag)
+CGameObject* CManagement::Ready_GameObject(const size_t & nSceneID, const _tchar*  pLayerTag , const _tchar*  GameObjectTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
 
 
-	return m_pGameObjectManager->Add_GameObejct(nSceneID, pLayerTag, GameObjectTag);
+	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
 
 //Call GameMgr
 
-CGameObject* CManagement::AddGameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
+CGameObject* CManagement::Ready_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
 	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
@@ -139,16 +151,100 @@ CGameObject* CManagement::AddGameObject(const _tchar * GameObjectTag, const _tch
 	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
 		return nullptr;
 
+	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, GameObjectTag);
+}
+
+CGameObject * CManagement::LateReady_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
+{
+	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
+	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
+
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return nullptr;
+
+	return m_pGameObjectManager->LateAdd_GameObejct(nSceneID, pLayerTag, GameObjectTag);
+}
+
+CGameObject * CManagement::Add_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
+{
+	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
+	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
+	
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return nullptr;
+
 	return m_pGameObjectManager->Add_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
 
-CComponent * CManagement::Clone_Componet()
+void  CManagement::Add_InstantGameObject(CGameObject * pGameObj,const _tchar * pLayerTag)
 {
-	return nullptr;
+	NULL_CHECK_RETURN(m_pGameObjectManager, );
+	NULL_CHECK_RETURN(m_pSceneManager, );
+
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return;
+
+	return m_pGameObjectManager->Add_InstantGameObject(nSceneID, pGameObj, pLayerTag);
+}
+
+CGameObject * CManagement::Get_GameObjet(const _tchar * pLayerTag)
+{
+	NULL_CHECK_RETURN(m_pGameObjectManager, NULL);
+	NULL_CHECK_RETURN(m_pSceneManager, NULL);
+
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return nullptr;
+
+	return m_pGameObjectManager->Get_GameObject(nSceneID, pLayerTag);
+}
+
+list<CGameObject*>* CManagement::Get_GameObjetList(const _tchar * pLayerTag)
+{
+	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
+	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
+
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return nullptr;
+
+	return m_pGameObjectManager->Get_Layer(nSceneID, pLayerTag);
+}
+
+HRESULT CManagement::Ready_Mesh(const _tchar * pMeshTag, eResourcesID::eResourcesID eType, const _tchar * pFilePath, const _tchar * pFileName)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, E_FAIL);
+
+
+	return m_pResource_Manager->Ready_Mesh(m_pGraphic_Dev->Get_Device(), pMeshTag, eType, pFilePath, pFileName);
+}
+
+HRESULT CManagement::Load_NavMesh(const _tchar * pMeshTag, const _tchar * pFilePath)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, E_FAIL);
+
+	return m_pResource_Manager->Load_Mesh(m_pGraphic_Dev->Get_Device(), pMeshTag, pFilePath);
+}
+
+HRESULT CManagement::Ready_Texture(const _tchar * pResouceTag, const _tchar * pFilePath, const _uint & iCnt)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, E_FAIL);
+
+	return m_pResource_Manager->Ready_Texture(m_pGraphic_Dev->Get_Device(), pResouceTag, pFilePath, iCnt);;
+}
+
+CComponent * CManagement::Clone_Resource(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, nullptr);
+
+	return m_pResource_Manager->Clone(pCompTag, eResourcesID);
 }
 
 //Call Renderer
-HRESULT CManagement::AddRenderer(eRenderID eID, CGameObject* pGameObject)
+HRESULT CManagement::Add_Renderer(eRenderID eID, CGameObject* pGameObject)
 {
 	NULL_CHECK_RETURN(m_pRenderer, E_FAIL);
 

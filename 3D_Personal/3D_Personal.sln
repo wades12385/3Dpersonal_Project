@@ -11,6 +11,10 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "01.Engine", "01.Engine", "{
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Engine", "Engine\Includes\Engine.vcxproj", "{9276BB67-7F1A-4520-ABF1-E55D1A1B41E5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "02.Tool", "02.Tool", "{F3CDEE7E-7EBA-44F9-BC3C-32979B105AB5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MFCApplication1", "MFCApplication1\MFCApplication1.vcxproj", "{79C02748-6E3A-4413-808A-8CEEFABF484D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -35,6 +39,14 @@ Global
 		{9276BB67-7F1A-4520-ABF1-E55D1A1B41E5}.Release|x64.Build.0 = Release|x64
 		{9276BB67-7F1A-4520-ABF1-E55D1A1B41E5}.Release|x86.ActiveCfg = Release|Win32
 		{9276BB67-7F1A-4520-ABF1-E55D1A1B41E5}.Release|x86.Build.0 = Release|Win32
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Debug|x64.ActiveCfg = Debug|x64
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Debug|x64.Build.0 = Debug|x64
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Debug|x86.ActiveCfg = Debug|Win32
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Debug|x86.Build.0 = Debug|Win32
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Release|x64.ActiveCfg = Release|x64
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Release|x64.Build.0 = Release|x64
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Release|x86.ActiveCfg = Release|Win32
+		{79C02748-6E3A-4413-808A-8CEEFABF484D}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -42,5 +54,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{BA8BCAB2-E54D-4859-8DF2-5715F3C4D460} = {FA7ECC30-D194-4F9F-A400-1615F3650022}
 		{9276BB67-7F1A-4520-ABF1-E55D1A1B41E5} = {0D94530D-46AA-4012-AF14-9A59924CC460}
+		{79C02748-6E3A-4413-808A-8CEEFABF484D} = {F3CDEE7E-7EBA-44F9-BC3C-32979B105AB5}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {CA7A48BA-9BA4-412D-B89B-576E7EACE339}
 	EndGlobalSection
 EndGlobal

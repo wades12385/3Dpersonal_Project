@@ -18,20 +18,23 @@ public:
 	_int LateUpdate_Layer(const _float& fTimeDelta);
 
 public:
-	CGameObject*			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
-	CComponent* 			Get_Component(const _tchar* pLayerTag,const eComponentID& ComponentID);
+	HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
+	HRESULT					LateAdd_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
+	CComponent* 			Get_Component(const _tchar* pLayerTag,const eComponentID::eComponentID& ComponentID);
 
 
 	CGameObject*			Get_GameObject(const _tchar* pLayerTag);
 	list<CGameObject*>*		Get_Layer(const _tchar* pLayerTag);
 private:
 	HRESULT					FindCheck_Layer(GAMEOBJECTS::iterator& rIter);
-
+	HRESULT					LateAwake();
 public:
 	static CLayer* Create();
 	void   Free();
 private:
 	GAMEOBJECTS m_mapLayers;
+	GAMEOBJECTS m_mapLateLayers;
+
 };
 
 END

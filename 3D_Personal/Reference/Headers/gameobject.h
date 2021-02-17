@@ -1,7 +1,6 @@
 #pragma once
 #ifndef __GAMEOBJECT_H__
 #include "Base.h"
-
 BEGIN(Engine)
 class CComponent;
 class ENGINE_DLL CGameObject abstract : public CBase
@@ -32,12 +31,12 @@ public:
 
 
 public:
-	HRESULT									Add_Component(const eComponentID& ComID ,CComponent* const pCom);
-	CComponent*								Get_Component(const eComponentID& ComID);
+	CComponent*								Get_Component(const eComponentID::eComponentID& ComID);
 	CComponent*								Get_Transform();
-public:
 	void									Set_Enalbe(_bool bEnable);
 	void									Set_Delete() { m_bDelete = true; }
+protected:
+	HRESULT									Add_Component(const eComponentID::eComponentID& ComID ,CComponent* const pCom);
 
 protected:
 	LPDIRECT3DDEVICE9						m_pDevice;
@@ -48,7 +47,7 @@ protected:
 	eRenderID								m_eRenderID;
 	
 	//Component							
-	typedef unordered_map<eComponentID, CComponent* > COMPONENTS;
+	typedef unordered_map<eComponentID::eComponentID, CComponent* > COMPONENTS;
 	COMPONENTS	m_mapComponents;
 	
 };
