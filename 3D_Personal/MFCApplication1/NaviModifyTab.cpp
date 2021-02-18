@@ -56,7 +56,7 @@ void CNaviModifyTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_SPIN1, m_spPosX);
 	DDX_Control(pDX, IDC_SPIN2, m_spPosY);
 	DDX_Control(pDX, IDC_SPIN3, m_spPosZ);
-	DDX_Control(pDX, IDC_TREE1, m_tcTreeCtrl);
+	DDX_Control(pDX, IDC_TREE1, m_NavTreeCtrl);
 	DDX_Control(pDX, IDC_RADIO1, m_CellTypeBnt[0]);
 	DDX_Control(pDX, IDC_RADIO2, m_CellTypeBnt[1]);
 	DDX_Control(pDX, IDC_RADIO3, m_CellTypeBnt[2]);
@@ -311,26 +311,26 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 	//4. 못찾으면 셀 인덱스 에러값으로 
 
 	int iIndex = 0;
-	HTREEITEM hItem = m_tcTreeCtrl.GetSelectedItem();
+	HTREEITEM hItem = m_NavTreeCtrl.GetSelectedItem();
 	HTREEITEM hLoop;
 	m_bNowPeeking = false;
 	Enable_LineOption(false);
 	//root 클릭 예외처리
-	if (hItem == m_tcTreeCtrl.GetRootItem())
+	if (hItem == m_NavTreeCtrl.GetRootItem())
 		return;
 	//매쉬 셀렉트 
-	if (m_tcTreeCtrl.ItemHasChildren(hItem))
+	if (m_NavTreeCtrl.ItemHasChildren(hItem))
 	{
 		m_iNavMeshIdx = 0;
-		hLoop = m_tcTreeCtrl.GetParentItem(hItem);
-		hLoop = m_tcTreeCtrl.GetChildItem(hLoop);
+		hLoop = m_NavTreeCtrl.GetParentItem(hItem);
+		hLoop = m_NavTreeCtrl.GetChildItem(hLoop);
 
 		while (hLoop != nullptr)
 		{
 			if (hLoop == hItem)
 			{
 				//select Nav name 설정 
-				m_sSelectNavName = m_tcTreeCtrl.GetItemText(hItem);
+				m_sSelectNavName = m_NavTreeCtrl.GetItemText(hItem);
 				UpdateData(FALSE);
 				m_bNowPeeking = true;
 				//m_pNavMesh 변경
@@ -346,7 +346,7 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 				return;
 			}
 
-			hLoop = m_tcTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
+			hLoop = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
 			++m_iNavMeshIdx;
 		}
 		m_iNavMeshIdx = NOT_FOUND;
@@ -356,10 +356,10 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 	{
 
 		m_iPeekCellIdx = 0;
-		hLoop = m_tcTreeCtrl.GetParentItem(hItem);
-		m_sSelectNavName = m_tcTreeCtrl.GetItemText(hLoop);
+		hLoop = m_NavTreeCtrl.GetParentItem(hItem);
+		m_sSelectNavName = m_NavTreeCtrl.GetItemText(hLoop);
 		UpdateData(FALSE);
-		hLoop = m_tcTreeCtrl.GetChildItem(hLoop);
+		hLoop = m_NavTreeCtrl.GetChildItem(hLoop);
 		while (hLoop != nullptr)
 		{
 			if (hLoop == hItem)
@@ -369,7 +369,7 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 				return;
 			}
 
-			hLoop = m_tcTreeCtrl.GetNextItem(hLoop, TVGN_NEXT);
+			hLoop = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXT);
 			++m_iPeekCellIdx;
 		}
 		m_iPeekCellIdx = NOT_FOUND;
@@ -442,13 +442,13 @@ void CNaviModifyTab::OnBnClickedClearTree()
 	if (m_pNavMesh == nullptr)
 		return;
 
-	HTREEITEM hLoop = m_tcTreeCtrl.GetRootItem(); // loot
-	hLoop = m_tcTreeCtrl.GetChildItem(hLoop);
+	HTREEITEM hLoop = m_NavTreeCtrl.GetRootItem(); // loot
+	hLoop = m_NavTreeCtrl.GetChildItem(hLoop);
 	// Tree Clear
 	while (hLoop != nullptr)
 	{
-		HTREEITEM hTemp  = m_tcTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
-		m_tcTreeCtrl.DeleteItem(hLoop);
+		HTREEITEM hTemp  = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
+		m_NavTreeCtrl.DeleteItem(hLoop);
 		hLoop = hTemp;
 	}
 	//obj layer Clear 
@@ -481,7 +481,7 @@ BOOL CNaviModifyTab::OnInitDialog()
 	m_CellTypeBnt[0].SetCheck(TRUE);
 
 	HTREEITEM root;
-	root = m_tcTreeCtrl.InsertItem(L"Root", 0, 0, TVI_ROOT, TVI_LAST);
+	root = m_NavTreeCtrl.InsertItem(L"Root", 0, 0, TVI_ROOT, TVI_LAST);
 
 	Enable_LineOption(false);
 
@@ -497,14 +497,14 @@ void CNaviModifyTab::SetUp_Tree(const CString& strName)
 
 
 	HTREEITEM root, NaviMesh, Vtx;
-	root = m_tcTreeCtrl.GetRootItem();
-	NaviMesh = m_tcTreeCtrl.InsertItem(strName, 0, 0, root, TVI_LAST);
+	root = m_NavTreeCtrl.GetRootItem();
+	NaviMesh = m_NavTreeCtrl.InsertItem(strName, 0, 0, root, TVI_LAST);
 
 	_uint idx = 0;
 	for (auto& pCell : m_pNavMesh->m_pNaviCom->Get_vCell())
 	{
 		ObjEntry.Format(L"Cell [%d]", idx);
-		m_tcTreeCtrl.InsertItem(ObjEntry, 0, 0, NaviMesh, TVI_LAST);
+		m_NavTreeCtrl.InsertItem(ObjEntry, 0, 0, NaviMesh, TVI_LAST);
 		++idx;
 	}
 	UpdateData(FALSE);
@@ -543,19 +543,19 @@ void CNaviModifyTab::OnBnClickedDeleteNavMesh()
 	m_pNavMesh->Set_Delete();
 
 	// Tree Delete
-	HTREEITEM hLoop = m_tcTreeCtrl.GetRootItem(); // loot
-	hLoop = m_tcTreeCtrl.GetChildItem(hLoop);
+	HTREEITEM hLoop = m_NavTreeCtrl.GetRootItem(); // loot
+	hLoop = m_NavTreeCtrl.GetChildItem(hLoop);
 	_uint iIdx = 0;
 	// Tree Clear
 	while (hLoop != nullptr)
 	{
 		if (iIdx == m_iNavMeshIdx)
 		{
-			m_tcTreeCtrl.DeleteItem(hLoop);
+			m_NavTreeCtrl.DeleteItem(hLoop);
 			m_iNavMeshIdx = NOT_FOUND;
 			break;
 		}
-		hLoop = m_tcTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
+		hLoop = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXTVISIBLE);
 		++iIdx;
 	}
 

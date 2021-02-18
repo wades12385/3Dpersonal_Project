@@ -15,9 +15,7 @@ HRESULT CNaviModifyScene::Initialize_Scene()
 	CGameObject* pObj = CStage1Mesh::Create(CManagement::Get_Instance()->Get_Device(),L"StaticMesh_Stage1");
 	CManagement::Get_Instance()->Ready_GameObjectPrototype(L"Proto_Stage1", pObj);
 
-
 	//Light 
-
 	D3DLIGHT9			tLightInfo;
 	ZeroMemory(&tLightInfo, sizeof(D3DLIGHT9));
 
@@ -35,11 +33,17 @@ HRESULT CNaviModifyScene::Initialize_Scene()
 	return S_OK;
 }
 
+HRESULT CNaviModifyScene::ReInitialize_Scene()
+{
+	return S_OK;
+}
+
+
 HRESULT CNaviModifyScene::Awake_Scene()
 {
+
 	CManagement::Get_Instance()->Ready_GameObject(L"Proto_Camera", L"Layer_Camera");
 	CManagement::Get_Instance()->Ready_GameObject(L"Proto_Stage1", L"Layer_Terrain");
-	//스테틱 레이어를 만들어서 
 	return S_OK;
 }
 
@@ -64,15 +68,11 @@ void CNaviModifyScene::Render_Scene()
 
 CNaviModifyScene * CNaviModifyScene::Create(LPDIRECT3DDEVICE9 pDevice)
 {
-	CNaviModifyScene*		pIns = new CNaviModifyScene(pDevice);
-
-	if (FAILED(pIns->Initialize_Scene()))
-		SafeRelease(pIns);
-
-	return	pIns;
+	return	new CNaviModifyScene(pDevice);
 }
 
 void CNaviModifyScene::Free()
 {
 	CScene::Free();
 }
+

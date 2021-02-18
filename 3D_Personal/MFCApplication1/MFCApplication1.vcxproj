@@ -208,9 +208,9 @@ call UpdateLib.bat</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BoxDeployTab.h" />
     <ClInclude Include="ColBox.h" />
-    <ClInclude Include="ColBoxDeployScene.h" />
-    <ClInclude Include="CollisionTab.h" />
+    <ClInclude Include="BoxDeployScene.h" />
     <ClInclude Include="MainFrm.h" />
     <ClInclude Include="MFCApplication.h" />
     <ClInclude Include="MFCApplicationDoc.h" />
@@ -232,9 +232,9 @@ call UpdateLib.bat</Command>
     <ClInclude Include="DirectApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="BoxDeployTab.cpp" />
     <ClCompile Include="ColBox.cpp" />
-    <ClCompile Include="ColBoxDeployScene.cpp" />
-    <ClCompile Include="CollisionTab.cpp" />
+    <ClCompile Include="BoxDeployScene.cpp" />
     <ClCompile Include="MainFrm.cpp" />
     <ClCompile Include="MFCApplication.cpp" />
     <ClCompile Include="MFCApplicationDoc.cpp" />

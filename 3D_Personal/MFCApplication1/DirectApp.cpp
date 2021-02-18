@@ -34,6 +34,7 @@ HRESULT CDirectApp::ReadyEngine(HWND hWnd)
 
 	Ready_ProtoType();
 
+	m_pManagement->SceneInitLog_Reserve(eToolScene::End);
 
 	if (FAILED(m_pManagement->SetUpCurrentScene(eToolScene::NaviModify, 
 		CNaviModifyScene::Create(CManagement::Get_Instance()->Get_Device()))))

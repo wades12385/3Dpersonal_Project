@@ -1,13 +1,14 @@
 #pragma once
-#ifndef __NAVIMODIFYSCENE_H__
+#ifndef __MFCCOLBOXDEPLOY_H__
 #include "Scene.h"
 USING(Engine)
-class CNaviModifyScene final : public CScene
+class CBoxDeployScene : public CScene
 {
-public:
-	explicit CNaviModifyScene(LPDIRECT3DDEVICE9 pDevice);
-	virtual ~CNaviModifyScene() = default;
+private:
+	explicit CBoxDeployScene(LPDIRECT3DDEVICE9 pDevice);
+	virtual ~CBoxDeployScene() = default;
 
+public:
 	// CScene을(를) 통해 상속됨
 	virtual HRESULT Initialize_Scene() override;
 	virtual HRESULT ReInitialize_Scene() override;
@@ -17,9 +18,10 @@ public:
 	virtual _uint LateUpdate_Scene(const _float & fTimeDeleta) override;
 	virtual void Render_Scene() override;
 
-	static CNaviModifyScene* Create(LPDIRECT3DDEVICE9 pDevice);
+	static CBoxDeployScene* Create(LPDIRECT3DDEVICE9 pDevice);
 	virtual void Free();
+
 };
 
-#define __NAVIMODIFYSCENE_H__
+#define __MFCCOLBOXDEPLOY_H__
 #endif

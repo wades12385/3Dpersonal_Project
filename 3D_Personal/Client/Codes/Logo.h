@@ -8,6 +8,7 @@ private:
 	explicit CLogo(LPDIRECT3DDEVICE9 pDevice);
 	virtual ~CLogo() = default;
 	virtual HRESULT Initialize_Scene() override;
+	virtual HRESULT ReInitialize_Scene() override;
 	virtual HRESULT Awake_Scene() override;
 	virtual HRESULT Ready_Scene() override;
 	virtual _uint Update_Scene(const _float& fTimeDeleta) override;

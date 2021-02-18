@@ -31,6 +31,7 @@ public:
 	/* For.SceneManager */
 	HRESULT SetUpCurrentScene(_int iSceneID, CScene* pCurrentScene);
 	_int	Get_SceneID();
+	HRESULT	SceneInitLog_Reserve(const _int& iSceneCnt);
 public: 
 	/* For.GameObjectManager */
 	HRESULT		 Ready_GameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);

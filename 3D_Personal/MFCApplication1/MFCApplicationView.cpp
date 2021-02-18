@@ -60,7 +60,6 @@ void CMFCApplicationView::OnDraw(CDC* /*pDC*/)
 	if (!pDoc)
 		return;
 
-	// TODO: 여기에 원시 데이터에 대한 그리기 코드를 추가합니다.
 }
 
 

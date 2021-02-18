@@ -48,11 +48,11 @@ void CLogo::Free()
 
 CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pDevice)
 {
-	CLogo* pIns = new CLogo(pDevice);
-	if (FAILED(pIns->Initialize_Scene()))
-	{
-		SafeRelease(pIns);
-	}
-	return pIns;
+	return new CLogo(pDevice);;
+}
+
+HRESULT CLogo::ReInitialize_Scene()
+{
+	return E_NOTIMPL;
 }
 

@@ -122,6 +122,14 @@ _int CManagement::Get_SceneID()
 	return iSceneID;
 }
 
+HRESULT CManagement::SceneInitLog_Reserve(const _int & iSceneCnt)
+{
+	NULL_CHECK_RETURN(m_pSceneManager, E_FAIL);
+
+
+	return m_pSceneManager->Scene_InitLogReserve(iSceneCnt);
+}
+
 HRESULT CManagement::Ready_GameObjectPrototype(
 	const _tchar* pProtoTag,
 	CGameObject* pPrototype)

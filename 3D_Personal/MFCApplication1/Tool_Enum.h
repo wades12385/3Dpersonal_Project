@@ -3,12 +3,26 @@
 
 ENUMSPACES(eToolScene)
 {
-	NaviModify,
-	Object,
-	ColBox,
-	End
+	NaviModify,Object,BoxDeploy,End
 };
 END
 
+ENUMSPACES(eClickOption)
+{
+	Create, Peeking, End
+};
+END
+
+ENUMSPACES(eBoxType)
+{
+	Collision, Trigger, End
+};
+END
+
+ENUMSPACES(eFloat3)
+{
+	X, Y, Z,End
+};
+END
 
 #endif

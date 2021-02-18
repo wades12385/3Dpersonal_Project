@@ -2,7 +2,7 @@
 #include "afxcmn.h"
 #include "NaviModifyTab.h"
 #include "DeploymentTab.h"
-#include "CollisionTab.h"
+#include "BoxDeployTab.h"
 // CToolForm Æû ºäÀÔ´Ï´Ù.
 
 class CToolForm : public CFormView
@@ -32,7 +32,7 @@ public:
 	CTabCtrl m_TabCtrl;
 	CDeploymentTab m_DeploymentTab;
 	CNaviModifyTab m_NaviModifyTab;
-	CCollisionTab  m_CollisionTab;
+	CBoxDeployTab  m_BoxDeployTab;
 	virtual void OnInitialUpdate();
 	afx_msg void OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult);
 };

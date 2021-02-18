@@ -5,7 +5,7 @@
 #include "resource.h"
 #include "ToolForm.h"
 #include "NaviModifyScene.h"
-
+#include "BoxDeployScene.h"
 
 // CToolForm
 
@@ -55,23 +55,19 @@ void CToolForm::Dump(CDumpContext& dc) const
 void CToolForm::OnInitialUpdate()
 {
 	CFormView::OnInitialUpdate();
-
 	CRect rcFormWnd;
 	CRect rcTabClien;
 
 	int TabCY = 20;	//tab Size y 
-
 	m_TabCtrl.InsertItem(0, L"NaviMeshModify");
 	m_TabCtrl.InsertItem(1, L"Depolyment");
-	m_TabCtrl.InsertItem(2, L"CollisionBox");
-
+	m_TabCtrl.InsertItem(2, L"BoxDeploy");
 
 	SetScrollSizes(MM_TEXT, CSize(0, 0));
 
 	GetClientRect(&rcFormWnd);
 	GetWindowRect(&rcFormWnd);
 	::SetRect(&rcFormWnd, 0, 0, rcFormWnd.right - rcFormWnd.left, rcFormWnd.bottom - rcFormWnd.top); // 클라좌표 변환 
-
 
 	m_TabCtrl.GetClientRect(&rcTabClien);
 	m_TabCtrl.SetWindowPos(nullptr, 0, 0, 450, WINCY, SWP_NOZORDER);
@@ -84,13 +80,9 @@ void CToolForm::OnInitialUpdate()
 	m_DeploymentTab.MoveWindow(0, TabCY, 450, WINCY);
 	m_DeploymentTab.ShowWindow(SW_HIDE);
 
-
-	m_CollisionTab.Create(IDD_OBJECTTAB, &m_TabCtrl);
-	m_CollisionTab.MoveWindow(0, TabCY, 450, WINCY);
-	m_CollisionTab.ShowWindow(SW_HIDE);
-	
-
-	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
+	m_BoxDeployTab.Create(IDD_BOXDEPLOYTAB, &m_TabCtrl);
+	m_BoxDeployTab.MoveWindow(0, TabCY, 450, WINCY);
+	m_BoxDeployTab.ShowWindow(SW_HIDE);
 }
 
 
@@ -99,33 +91,30 @@ void CToolForm::OnTcnSelchangeTab(NMHDR *pNMHDR, LRESULT *pResult)
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
 	int iSel = m_TabCtrl.GetCurSel();
+	_uint iPreIdx = CManagement::Get_Instance()->Get_SceneID();
+	CManagement::Get_Instance()->ClearForScene(iPreIdx);
 	switch (iSel)
 	{
 	case 0:
 		m_NaviModifyTab.ShowWindow(SW_SHOW);
 		m_DeploymentTab.ShowWindow(SW_HIDE);
-		m_CollisionTab.ShowWindow(SW_HIDE);
-
+		m_BoxDeployTab.ShowWindow(SW_HIDE);
 		CManagement::Get_Instance()->SetUpCurrentScene(eToolScene::NaviModify,
 			CNaviModifyScene::Create(CManagement::Get_Instance()->Get_Device()));
-
 		break;
 	case 1:
 		m_NaviModifyTab.ShowWindow(SW_HIDE);
 		m_DeploymentTab.ShowWindow(SW_SHOW);
-		m_CollisionTab.ShowWindow(SW_HIDE);
-
+		m_BoxDeployTab.ShowWindow(SW_HIDE);
 		break;
 	case 2:
 		m_NaviModifyTab.ShowWindow(SW_HIDE);
 		m_DeploymentTab.ShowWindow(SW_HIDE);
-		m_CollisionTab.ShowWindow(SW_SHOW);
-			CManagement::Get_Instance()->SetUpCurrentScene(eToolScene::NaviModify,
-			CNaviModifyScene::Create(CManagement::Get_Instance()->Get_Device()));
-
+		m_BoxDeployTab.ShowWindow(SW_SHOW);
+			CManagement::Get_Instance()->SetUpCurrentScene(eToolScene::BoxDeploy,
+			CBoxDeployScene::Create(CManagement::Get_Instance()->Get_Device()));
 		break;
 	}
-
 	// 씬 전환은 하는데 기존 씬의 레이어를 다 릴리즈 해야하나
 	*pResult = 0;
 }

@@ -14,13 +14,7 @@ HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tc
 	RESOURCEMAP::iterator Res_finditer;
 
 	if (FAILED(overlapCheck_Comp(pCompTag, eCompID, Res_finditer)))
-	{
-		_tchar szBuff[128] = L"";
-		swprintf_s(szBuff, L"Exisit %s Resource", pCompTag);
-		MSG_BOX(szBuff);
 		return E_FAIL;
-	}
-
 
 	return S_OK;
 }

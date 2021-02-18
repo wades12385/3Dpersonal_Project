@@ -74,7 +74,7 @@ public:
 	CButton			m_PeekingBnt[2];
 	CButton			m_CellTypeBnt[eCellType::End];
 
-	CTreeCtrl m_tcTreeCtrl;
+	CTreeCtrl m_NavTreeCtrl;
 	CString m_sNaviID;
 	CString m_sSelectNavName;
 
