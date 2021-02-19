@@ -139,7 +139,6 @@ HRESULT CManagement::Ready_GameObjectPrototype(
 	return m_pGameObjectManager->Ready_ProtoType(pProtoTag, pPrototype);
 }
 
-//Call GameMgr
 CGameObject* CManagement::Ready_GameObject(const size_t & nSceneID, const _tchar*  pLayerTag , const _tchar*  GameObjectTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
@@ -147,8 +146,6 @@ CGameObject* CManagement::Ready_GameObject(const size_t & nSceneID, const _tchar
 
 	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
-
-//Call GameMgr
 
 CGameObject* CManagement::Ready_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
 {
@@ -171,31 +168,33 @@ CGameObject * CManagement::LateReady_GameObject(const _tchar * GameObjectTag, co
 	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
 		return nullptr;
 
-	return m_pGameObjectManager->LateAdd_GameObejct(nSceneID, pLayerTag, GameObjectTag);
+	return m_pGameObjectManager->LateReady_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
 
-CGameObject * CManagement::Add_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
-{
-	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
-	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
-	
-	_int nSceneID = NONE_SCENE;
-	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
-		return nullptr;
 
-	return m_pGameObjectManager->Add_GameObejct(nSceneID, pLayerTag, GameObjectTag);
-}
 
 void  CManagement::Add_InstantGameObject(CGameObject * pGameObj,const _tchar * pLayerTag)
 {
-	NULL_CHECK_RETURN(m_pGameObjectManager, );
-	NULL_CHECK_RETURN(m_pSceneManager, );
+	NULL_CHECK(m_pGameObjectManager);
+	NULL_CHECK(m_pSceneManager);
 
 	_int nSceneID = NONE_SCENE;
 	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
 		return;
 
-	return m_pGameObjectManager->Add_InstantGameObject(nSceneID, pGameObj, pLayerTag);
+	return m_pGameObjectManager->Add_InstanceGameObject(nSceneID, pGameObj, pLayerTag);
+}
+
+CGameObject* CManagement::Add_InstantGameObject(const _tchar * pProtoTag, const _tchar * pLayerTag)
+{
+	NULL_CHECK(m_pGameObjectManager);
+	NULL_CHECK(m_pSceneManager);
+
+	_int nSceneID = NONE_SCENE;
+	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
+		return;
+
+	return m_pGameObjectManager->Add_InstanceGameObject(nSceneID, pProtoTag, pLayerTag);
 }
 
 CGameObject * CManagement::Get_GameObjet(const _tchar * pLayerTag)

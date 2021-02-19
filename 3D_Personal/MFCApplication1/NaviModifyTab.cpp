@@ -95,14 +95,13 @@ void CNaviModifyTab::ShowText_Vtx(int idx)
 	UpdateData(FALSE);
 }
 
-void CNaviModifyTab::ShowText_Cell(int idx)
+void CNaviModifyTab::ShowText_Cell()
 {
-	m_iPeekCellIdx = idx;
-	m_cPeekingCellIdx.Format(_T("%d"), idx);
+	m_cPeekingCellIdx.Format(_T("%d"), m_iPeekCellIdx);
 
 	//Line Option enable
 	if (m_pNavMesh != nullptr &&
-		m_pNavMesh->m_pNaviCom->Get_vCell()[idx]->Get_CellType() != eCellType::Base)
+		m_pNavMesh->m_pNaviCom->Get_vCell()[m_iPeekCellIdx]->Get_CellType() != eCellType::Base)
 			Enable_LineOption(true);
 	else
 		Enable_LineOption(false);
@@ -130,17 +129,15 @@ _uint CNaviModifyTab::Get_CellType()
 	return 0;
 }
 
-CNaviObj * CNaviModifyTab::Get_ObjFromNavLayer(const _uint & iIdx)
+CNaviObj * CNaviModifyTab::Find_NavMeshFromLayer()
 {
 	NULL_CHECK_RETURN(m_pListNavMeshObj, nullptr);
-
 	auto& iter = m_pListNavMeshObj->begin();
 	for (int i = 0; iter != m_pListNavMeshObj->end(); ++i, ++iter)
 	{
 		if (i == m_iNavMeshIdx)
 			return (CNaviObj*)(*iter);
 	}
-
 	return nullptr;
 }
 
@@ -300,9 +297,7 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	
-	if (m_pListNavMeshObj == nullptr)
-		return;
-
+	NULL_CHECK(m_pListNavMeshObj);
 
 	//  정리 
 	//1. 피킹셀 인덱스 초기화
@@ -340,7 +335,7 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 				{
 					m_pNavMesh->m_pNaviCom->Set_Select(false);
 				}
-				m_pNavMesh = Get_ObjFromNavLayer(m_iNavMeshIdx);
+				m_pNavMesh = Find_NavMeshFromLayer();
 				m_pNavMesh->m_pNaviCom->Set_Select(true);
 				SetUp_HideOption();
 				return;
@@ -364,7 +359,7 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 		{
 			if (hLoop == hItem)
 			{
-				ShowText_Cell(iIndex);
+				ShowText_Cell();
 				m_bNowPeeking = true;
 				return;
 			}
@@ -637,8 +632,9 @@ void CNaviModifyTab::OnBnClicked_LineOptionApply()
 
 void CNaviModifyTab::OnBnClickedNavMeshSave()
 {
-	if (m_pNavMesh == nullptr)
-		return;
+
+	NULL_CHECK(m_pNavMesh);
+
 	CFileDialog Dlg(FALSE,
 		L"dat",
 		L"*.dat",

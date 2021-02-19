@@ -34,22 +34,20 @@ public:
 	HRESULT	SceneInitLog_Reserve(const _int& iSceneCnt);
 public: 
 	/* For.GameObjectManager */
-	HRESULT		 Ready_GameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
-	CGameObject* Ready_GameObject(const size_t& nSceneID , const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	CGameObject* Ready_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	CGameObject* LateReady_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	
-	CGameObject* Add_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
-	void		 Add_InstantGameObject( CGameObject* pGameObj, const _tchar* pLayerTag);
+	HRESULT				Ready_GameObjectPrototype(const  _tchar* pProtoTag, CGameObject* pPrototype);
+	CGameObject*		Ready_GameObject(const size_t& nSceneID, const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	CGameObject*		Ready_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
+	CGameObject*		LateReady_GameObject(const _tchar* GameObjectTag, const _tchar* pLayerTag);
 
-	CGameObject* Get_GameObjet(const _tchar* pLayerTag);  
+	void				Add_InstantGameObject(CGameObject* pGameObj, const _tchar* pLayerTag);
+	CGameObject*		Add_InstantGameObject(const _tchar* pProtoTag, const _tchar* pLayerTag);
+
+	CGameObject*		Get_GameObjet(const _tchar* pLayerTag);
 	list<CGameObject*>* Get_GameObjetList(const _tchar* pLayerTag);
-
 public:
 	/*For.ResourcesManagner*/
 	HRESULT		 Ready_Mesh(const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
 	HRESULT		 Load_NavMesh(const _tchar* pMeshTag,const _tchar* pFilePath);
-
 
 	HRESULT		 Ready_Texture(const _tchar * pResouceTag, const _tchar * pFilePath, const _uint & iCnt);
 	CComponent*	 Clone_Resource(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);

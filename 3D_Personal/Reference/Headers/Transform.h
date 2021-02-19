@@ -26,20 +26,23 @@ public:
 	void							UpdateWorld();
 public:
 	//////////////////////////////////////////////////////////////////////////
-	void							GetTransForm(const eTransform::eTransform& eType,OUT _vec3& vInfo);
-	const _matrix					GetWorld();
-	const _matrix					GetParent();
-	const _vec3						GetRight();
-	const _vec3						GetUp();
-	const _vec3						GetLook();
-	const _vec3						GetPosition();
+	void							Get_TransForm(const eTransform::eTransform& eType, OUT _vec3& vInfo);
+	const _matrix					Get_World();
+	const _matrix					Get_Parent();
+	const _vec3						Get_Right();
+	const _vec3						Get_Up();
+	const _vec3						Get_Look();
+	const _vec3						Get_PositionWorld(); // 월드스페이스 적용 후  위치값 
+	const _vec3						Get_Position(); // 컴포넌트의 위치백터값  
+	const _vec3						Get_Sacle(); // 컴포넌트의 위치백터값  
+
 	//////////////////////////////////////////////////////////////////////////
-	void							SetScale(const _float& fX, const _float& fY, const _float& fZ);
-	void							SetPosition(const _vec3& vPos);
-	void							SetRotate(const _float& fX, const _float& fY, const _float& fZ);
-	void							SetRotate(const _vec3& vRot);
-	void							SetRevolve(const _float& fX, const _float& fY, const _float& fZ);
-	void							SetRevolve(const _vec3& vRev);
+	void							Set_Scale(const _float& fX, const _float& fY, const _float& fZ);
+	void							Set_Position(const _vec3& vPos);
+	void							Set_Rotate(const _float& fX, const _float& fY, const _float& fZ);
+	void							Set_Rotate(const _vec3& vRot);
+	void							Set_Revolve(const _float& fX, const _float& fY, const _float& fZ);
+	void							Set_Revolve(const _vec3& vRev);
 private:
 	_vec3							m_vTransDesc[eTransform::End];
 	_matrix							m_matWorld;
@@ -51,3 +54,10 @@ END
 #define __TRNSFORM_H__
 #endif
 
+/************************************************************************/
+/*  to Quaternion
+D3DXQuaternionRotationYawPitchRoll();
+D3DXMatrixRotationQuaternion();
+	
+*/
+/************************************************************************/

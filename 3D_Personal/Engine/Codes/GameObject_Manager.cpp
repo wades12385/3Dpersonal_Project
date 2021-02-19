@@ -64,18 +64,19 @@ _uint CGameObject_Manager::LateUpdateGameObject(const _int& iScene, const _float
 	return Scene_find->second->LateUpdate_Layer(fDeltaTime);
 }
 
-void CGameObject_Manager::Add_InstantGameObject(const _int& iScene, CGameObject * pGameObj, 
+// 러닝중에 오브젝트 추가 할떄 프로토타입 없이 생성한거 바로 넣어줌 
+void CGameObject_Manager::Add_InstanceGameObject(const _int& iScene, CGameObject * pGameObj, 
 													 const _tchar * pLayerTag)
 {
-	//Scene find 
-	auto Manager_Iterfind = m_mapObjManager.find(iScene);
-	if (Manager_Iterfind == m_mapObjManager.end())
+	//layers find 
+	auto Layer_FindIter = m_mapObjManager.find(iScene);
+	if (Layer_FindIter == m_mapObjManager.end())
 	{
 		MSG_BOX(L"Add Instant failed , no exist Scene");
 		return;
 	}
 
-	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pGameObj)))
+	if (FAILED(Layer_FindIter->second->Add_GameObject(pLayerTag, pGameObj)))
 	{
 		SafeRelease(pGameObj);
 		return;
@@ -85,6 +86,49 @@ void CGameObject_Manager::Add_InstantGameObject(const _int& iScene, CGameObject 
 	return ;
 }
 
+//런닝중에 오브젝트 추가 메서드 프로토타입으로 클론해서 
+CGameObject* CGameObject_Manager::Add_InstanceGameObject(const _int & iScene, const _tchar * pProtoTag, const _tchar * pLayerTag)
+{
+	//find Layer
+
+	auto Layer_FindIter = m_mapObjManager.find(iScene);
+	if (Layer_FindIter == m_mapObjManager.end())
+	{
+		MSG_BOX(L"Add Instant failed , no exist Scene");
+		return nullptr;
+	}
+
+	//find Prototype
+	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(pProtoTag));
+	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed found %s Prototype", pProtoTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	CGameObject* pClone = Proto_Iterfind->second->Clone();
+	// clone check
+	if (nullptr == pClone)
+	{
+		TCHAR szBuffer[128] = L"";
+		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", pProtoTag);
+		MSG_BOX(szBuffer);
+		return nullptr;
+	}
+
+	//Add in Layer
+	if (FAILED(Layer_FindIter->second->LateAdd_GameObject(pLayerTag, pClone)))
+	{
+		SafeRelease(pClone);
+		return nullptr;
+	}
+
+	pClone->Awake_GameObject();
+	pClone->Ready_GameObject();
+	return pClone;
+}
 
 HRESULT CGameObject_Manager::Ready_SceneLayer(const _int & iScene)
 {
@@ -142,13 +186,13 @@ CGameObject* CGameObject_Manager::Ready_GameObejct(const _int & iScene,
 
 	//find Scene
 	//SceneID 추가 끝 
-	auto Manager_Iterfind = m_mapObjManager.find(iScene);
-	if (Manager_Iterfind == m_mapObjManager.end())
+	auto Layer_FindIter = m_mapObjManager.find(iScene);
+	if (Layer_FindIter == m_mapObjManager.end())
 	{
-		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
+		Layer_FindIter = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
 	}
 
-	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pClone)))
+	if (FAILED(Layer_FindIter->second->Add_GameObject(pLayerTag, pClone)))
 	{
 		SafeRelease(pClone);
 		return nullptr;
@@ -156,7 +200,7 @@ CGameObject* CGameObject_Manager::Ready_GameObejct(const _int & iScene,
 	return pClone;
 }
 
-CGameObject * CGameObject_Manager::LateAdd_GameObejct(const _int & iScene, const _tchar * pLayerTag, const _tchar * GameObjectTag)
+CGameObject * CGameObject_Manager::LateReady_GameObejct(const _int & iScene, const _tchar * pLayerTag, const _tchar * GameObjectTag)
 {
 	//find Prototype
 	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(GameObjectTag));
@@ -180,13 +224,12 @@ CGameObject * CGameObject_Manager::LateAdd_GameObejct(const _int & iScene, const
 
 	//find Scene
 	//SceneID 추가 끝 
-	auto Manager_Iterfind = m_mapObjManager.find(iScene);
-	if (Manager_Iterfind == m_mapObjManager.end())
+	auto Layer_FindIter = m_mapObjManager.find(iScene);
+	if (Layer_FindIter == m_mapObjManager.end()) // no exist layer 
 	{
-		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
+		Layer_FindIter = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
 	}
-
-	if (FAILED(Manager_Iterfind->second->LateAdd_GameObject(pLayerTag, pClone)))
+	if (FAILED(Layer_FindIter->second->LateAdd_GameObject(pLayerTag, pClone)))
 	{
 		SafeRelease(pClone);
 		return nullptr;
@@ -194,46 +237,7 @@ CGameObject * CGameObject_Manager::LateAdd_GameObejct(const _int & iScene, const
 	return pClone;
 }
 
-CGameObject * CGameObject_Manager::Add_GameObejct(const _int & iScene, const _tchar * pLayerTag, const _tchar * GameObjectTag)
-{
-	//find Prototype
-	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(GameObjectTag));
-	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
-	{
-		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Failed found %s Prototype", GameObjectTag);
-		MSG_BOX(szBuffer);
-		return nullptr;
-	}
 
-	CGameObject* pClone = Proto_Iterfind->second->Clone();
-	// clone check
-	if (nullptr == pClone)
-	{
-		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", GameObjectTag);
-		MSG_BOX(szBuffer);
-		return nullptr;
-	}
-
-	//find Scene
-	//SceneID 추가 끝 
-	auto Manager_Iterfind = m_mapObjManager.find(iScene);
-	if (Manager_Iterfind == m_mapObjManager.end())
-	{
-		Manager_Iterfind = m_mapObjManager.emplace(iScene, CLayer::Create()).first;
-	}
-
-	if (FAILED(Manager_Iterfind->second->Add_GameObject(pLayerTag, pClone)))
-	{
-		SafeRelease(pClone);
-		return nullptr;
-	}
-	pClone->Awake_GameObject();
-	pClone->Ready_GameObject();
-
-	return pClone;
-}
 
 
 HRESULT CGameObject_Manager::ClearForScene(const _int& iScene)

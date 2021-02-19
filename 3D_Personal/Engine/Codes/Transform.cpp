@@ -94,83 +94,93 @@ void CTransform::UpdateWorld()
 	m_pDevice->SetTransform(D3DTS_WORLD, &m_matWorld);
 }
 
-void CTransform::GetTransForm(const eTransform::eTransform & eType, OUT _vec3 & vInfo)
+void CTransform::Get_TransForm(const eTransform::eTransform & eType, OUT _vec3 & vInfo)
 {
 	vInfo = m_vTransDesc[eType];
 }
 
-const _matrix  CTransform::GetWorld()
+const _matrix  CTransform::Get_World()
 {
 	// TODO: 여기에 반환 구문을 삽입합니다.
 	return m_matWorld;
 }
 
-const _matrix  CTransform::GetParent()
+const _matrix  CTransform::Get_Parent()
 {
 	// TODO: 여기에 반환 구문을 삽입합니다.
 	return _matrix();
 }
 
-const _vec3 CTransform::GetRight()
+const _vec3 CTransform::Get_Right()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[0][0], sizeof(_vec3));
 	return vInfo;
 }
 
-const _vec3 CTransform::GetUp()
+const _vec3 CTransform::Get_Up()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[1][0], sizeof(_vec3));
 	return vInfo;
 }
 
-const _vec3 CTransform::GetLook()
+const _vec3 CTransform::Get_Look()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[2][0], sizeof(_vec3));
 	return vInfo;
 }
 
-const _vec3 CTransform::GetPosition()
+const _vec3 CTransform::Get_PositionWorld()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[3][0], sizeof(_vec3));
 	return vInfo;
 }
 
-void CTransform::SetScale(const _float & fX, const _float & fY, const _float & fZ)
+const _vec3 CTransform::Get_Position()
+{
+	return m_vTransDesc[eTransform::Posision];
+}
+
+const _vec3 CTransform::Get_Sacle()
+{
+	return m_vTransDesc[eTransform::Scale];
+}
+
+void CTransform::Set_Scale(const _float & fX, const _float & fY, const _float & fZ)
 {
 	m_vTransDesc[eTransform::Scale].x = fX;
 	m_vTransDesc[eTransform::Scale].y = fY;
 	m_vTransDesc[eTransform::Scale].z = fZ;
 }
 
-void CTransform::SetPosition(const _vec3 & vPos)
+void CTransform::Set_Position(const _vec3 & vPos)
 {
 	m_vTransDesc[eTransform::Posision] = vPos;
 }
 
-void CTransform::SetRotate(const _float & fX, const _float & fY, const _float & fZ)
+void CTransform::Set_Rotate(const _float & fX, const _float & fY, const _float & fZ)
 {
 	m_vTransDesc[eTransform::Rotate].x = fX;
 	m_vTransDesc[eTransform::Rotate].y = fY;
 	m_vTransDesc[eTransform::Rotate].z = fZ;
 }
 
-void CTransform::SetRotate(const _vec3 & vRot)
+void CTransform::Set_Rotate(const _vec3 & vRot)
 {
 	m_vTransDesc[eTransform::Rotate] = vRot;
 }
 
-void CTransform::SetRevolve(const _float & fX, const _float & fY, const _float & fZ)
+void CTransform::Set_Revolve(const _float & fX, const _float & fY, const _float & fZ)
 {
 	m_vTransDesc[eTransform::Revolve].x = fX;
 	m_vTransDesc[eTransform::Revolve].y = fY;
 	m_vTransDesc[eTransform::Revolve].z = fZ;
 }
 
-void CTransform::SetRevolve(const _vec3 & vRev)
+void CTransform::Set_Revolve(const _vec3 & vRev)
 {
 	m_vTransDesc[eTransform::Revolve] = vRev;
 }

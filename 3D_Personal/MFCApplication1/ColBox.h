@@ -17,12 +17,18 @@ public:
 	virtual HRESULT RenderGameObject() override;
 	virtual CGameObject * Clone() override;
 
-	static CColBox* Create(LPDIRECT3DDEVICE9 pDevice, const _tchar* pComTag);
-public:
-	CTransform*		m_pTrans = nullptr;
-	CColliderBox*		m_pCollsion = nullptr;
-	_bool			m_bHide;
+
+	void	Set_Pos(const _vec3& vPos);
+	void	Set_Scale(const _vec3& vScale);
+	_bool   Peeking( _vec3 vRayPos ,  _vec3 vRayDir);
 	
+	static CColBox* Create(LPDIRECT3DDEVICE9 pDevice);
+public:
+	CTransform*			m_pTrans = nullptr;
+	CColliderBox*		m_pCollsion = nullptr;
+	eBoxType::eBoxType  m_eType;
+	_int				m_iNavID;
+	_bool				m_bHide;
 	
 };
 

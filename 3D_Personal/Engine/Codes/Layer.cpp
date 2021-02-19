@@ -21,7 +21,7 @@ HRESULT CLayer::Awake_Layer()
 
 	}
 	//  [2/7/2021 wades] 
-	LateAwake();
+	LateAwake_Layer();
 	return S_OK;
 }
 
@@ -138,7 +138,6 @@ CComponent*  CLayer::Get_Component(const _tchar * pLayerTag, const eComponentID:
 
 	return Iter_find->second.front()->Get_Component(ComponentID);
 }
-//유니크한 오브젝트 전용
 CGameObject * CLayer::Get_GameObject(const _tchar * pLayerTag)
 {
 	auto Iter_find = find_if(m_mapLayers.begin(), m_mapLayers.end(), CTagFinder(pLayerTag));
@@ -170,8 +169,7 @@ list<CGameObject*>* CLayer::Get_Layer(const _tchar * pLayerTag)
 	return &Iter_find->second;
 }
 
-//Awake 단계에서 추가된 오브젝트들이 Ready 전에 awake 한 다음 기존 레이어에 추가되는 함수
-HRESULT CLayer::LateAwake()
+HRESULT CLayer::LateAwake_Layer()
 {
 	for (auto& pair : m_mapLateLayers)
 	{
@@ -188,7 +186,6 @@ HRESULT CLayer::LateAwake()
 		}
 
 	}
-
 	m_mapLateLayers.clear();
 	return S_OK;
 }
@@ -202,8 +199,6 @@ HRESULT CLayer::FindCheck_Layer(GAMEOBJECTS::iterator & rIter)
 
 	return S_OK;
 }
-
-
 
 CLayer* CLayer::Create()
 {

@@ -47,10 +47,10 @@ public:
 	void				SetUp_Tree(const CString& strName);
 	void				Update_NaviModityTab();
 	void				ShowText_Vtx(int idx);
-	void				ShowText_Cell(int idx);
+	void				ShowText_Cell();
 	void				Update_VtxPosEdit(_vec3 vPos);
 	_uint				Get_CellType();
-	CNaviObj*		    Get_ObjFromNavLayer(const _uint& iIdx);
+	CNaviObj*		    Find_NavMeshFromLayer();
 	void				SetUp_HideOption();
 	void				LineID_CheckBoxClear();
 

@@ -15,58 +15,36 @@ enum class eWinMode
 
 enum class eRenderID
 {
-	Priority,
-	NoAlpha,
-	Alpha,
-	UI,
-	End
+	Priority,NoAlpha,Alpha,UI,End
 };
 
 ENUMSPACES(eComponentID)
 {
-	Transform,
-	VIBuffer,
-	StaticMesh,
-	DynamicMesh,
-	NaviMesh,
-	Texture,
-	CColliderBox,
-	End
+	Transform,VIBuffer,StaticMesh,DynamicMesh,NaviMesh,Texture,CColliderBox,End
 };
 END
 
 ENUMSPACES(eResourcesID)
 {
-	StaticMesh,
-	DynamicMesh,
-	NaviMesh,
-	Texture,
-	End
+	StaticMesh,DynamicMesh,NaviMesh,Texture,CollisionBox,End
 };
 END
 
 ENUMSPACES(eTransform)
 {
-	Scale,
-	Rotate,
-	Posision,
-	Revolve,
-	End
+	Scale,Rotate,Posision,Revolve,End
 };
 END
 // CLine
 ENUMSPACES(eLinePt)
 { 
-	Start, 
-	Last, 
-	End 
+	Start, Last, End 
 };
 END
 
 ENUMSPACES(eRelationLine)
 {
-	OutLine,
-	InLine
+	OutLine,InLine
 };
 END
 
@@ -74,56 +52,40 @@ END
 
 ENUMSPACES(eCellpt)
 {
-	A,B,C,
-	End
+	A,B,C,End
 };
 END
 ENUMSPACES(eNeighbor)
 {
-	AB,
-	BC,
-	CA,
-	End
+	AB,BC,CA,End
 };
 END
 ENUMSPACES(eLineID)
 {
-		AB,
-		BC,
-		CA,
-		End
+	AB,BC,CA,End
 };
 END
 ENUMSPACES(eCompare)
 {
-	Move,
-	Stop,
-	End
+	Move,Stop,End
 };
 END
 
 ENUMSPACES(eCellType)
 {
-		Base,
-		Leave,
-		Connect,
-		End
+	Base,Leave,Connect,End
 };
 END
 
 ENUMSPACES(eFileType)
 {
-		Obj,
-		Dat,
-		End
+	Obj,Dat,End
 };
 END
 
 ENUMSPACES(eTextureType)
 {
-	Nomal,
-		Cube,
-		End
+	Nomal,Cube,End
 };
 END
 
