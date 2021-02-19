@@ -148,46 +148,47 @@ void CMFCApplicationView::OnLButtonDown(UINT nFlags, CPoint point)
 
 	int iIdx = 0;
 
-	if (m_pNaviModiTab->m_PeekingBnt[0].GetCheck() == TRUE)
-	{
-		//버텍스 피킹 상태에서  Cell idx 랑 라인옵션 그룹 비활성화 
-		m_pNaviModiTab->Enable_LineOption(false);
-		m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
+	//Navi Tab의 함수로 
+	//if (m_pNaviModiTab->m_PeekingBnt[0].GetCheck() == TRUE)
+	//{
+	//	//버텍스 피킹 상태에서  Cell idx 랑 라인옵션 그룹 비활성화 
+	//	m_pNaviModiTab->Enable_LineOption(false);
+	//	m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
 
-		if (m_pNaviModiTab->m_pNavMesh->Vertex_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
-		{
-			m_pNaviModiTab->ShowText_Vtx(iIdx);
-			m_pNaviModiTab->m_bNowPeeking = true;
-		}
-		else
-		{
-			m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
-			m_pNaviModiTab->m_bNowPeeking = false;
-			m_pNaviModiTab->Update_NaviModityTab();
-		}
-	}
-	//Cell Peeking
-	else
-	{
-		m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
-		if (m_pNaviModiTab->m_pNavMesh->Cell_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
-		{
-			m_pNaviModiTab->m_bNowPeeking = true;
+	//	if (m_pNaviModiTab->m_pNavMesh->Vertex_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
+	//	{
+	//		m_pNaviModiTab->ShowText_Vtx(iIdx);
+	//		m_pNaviModiTab->m_bNowPeeking = true;
+	//	}
+	//	else
+	//	{
+	//		m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
+	//		m_pNaviModiTab->m_bNowPeeking = false;
+	//		m_pNaviModiTab->Update_NaviModityTab();
+	//	}
+	//}
+	////Cell Peeking
+	//else
+	//{
+	//	m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
+	//	if (m_pNaviModiTab->m_pNavMesh->Cell_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
+	//	{
+	//		m_pNaviModiTab->m_bNowPeeking = true;
 
-			eCellType::eCellType Type = (eCellType::eCellType)m_pNaviModiTab->Get_CellType();
-			//위에서 UpdateData 했으니 
-			if (m_pNaviModiTab->m_cbModifyOption)
-				m_pNaviModiTab->m_pNavMesh->m_pNaviCom->Get_vCell()[iIdx]->Set_CellType(Type);
+	//		eCellType::eCellType Type = (eCellType::eCellType)m_pNaviModiTab->Get_CellType();
+	//		//위에서 UpdateData 했으니 
+	//		if (m_pNaviModiTab->m_cbModifyOption)
+	//			m_pNaviModiTab->m_pNavMesh->m_pNaviCom->Get_vCell()[iIdx]->Set_CellType(Type);
 
-			m_pNaviModiTab->ShowText_Cell(iIdx);
-		}
-		else
-		{
-			m_pNaviModiTab->Enable_LineOption(false);
-			m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
-			m_pNaviModiTab->Update_NaviModityTab();
-		}
-	}
+	//		m_pNaviModiTab->ShowText_Cell(iIdx);
+	//	}
+	//	else
+	//	{
+	//		m_pNaviModiTab->Enable_LineOption(false);
+	//		m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
+	//		m_pNaviModiTab->Update_NaviModityTab();
+	//	}
+	//}
 }
 
 void CMFCApplicationView::Peeking_Process(const CPoint& point)

@@ -126,22 +126,22 @@ void CToolCamera::Move(const _float fDeltaTime)
 		m_tCameraDesc.vAt -= vLength;
 	}
 
-	////
+	//
 
-	//if (KeyPress(DIK_R))
-	//{
-	//	_vec3	vLength =  m_fSpeed * fDeltaTime;
+	if (KeyPress(DIK_R))
+	{
+		_vec3	vLength =  _vec3(0,1,0) * m_fSpeed * fDeltaTime;
 
-	//	m_tCameraDesc.vEye -= vLength;
-	//	m_tCameraDesc.vAt -= vLength;
-	//}
-	//if (KeyPress(DIK_F))
-	//{
-	//	_vec3	vLength =  m_fSpeed * fDeltaTime;
+		m_tCameraDesc.vEye += vLength;
+		m_tCameraDesc.vAt += vLength;
+	}
+	if (KeyPress(DIK_F))
+	{
+		_vec3	vLength = _vec3(0, 1, 0)  * m_fSpeed * fDeltaTime;
 
-	//	m_tCameraDesc.vEye -= vLength;
-	//	m_tCameraDesc.vAt -= vLength;
-	//}
+		m_tCameraDesc.vEye -= vLength;
+		m_tCameraDesc.vAt -= vLength;
+	}
 	_long	dwMouseMove = 0;
 
 	if (dwMouseMove = Engine::Get_DIMouseMove(DIMS_Y))

@@ -297,8 +297,9 @@ void CNaviModifyTab::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	
-	NULL_CHECK(m_pListNavMeshObj);
-
+	//처음 초기화 과정에서  호출되는거 떄문에 매크로로 안썼음 
+	if (m_pListNavMeshObj == nullptr) 
+		return;
 	//  정리 
 	//1. 피킹셀 인덱스 초기화
 	//2. 셀 리스트 순회 검사 
@@ -491,7 +492,7 @@ void CNaviModifyTab::SetUp_Tree(const CString& strName)
 	CString NaviMeshRoot, ObjEntry;
 
 
-	HTREEITEM root, NaviMesh, Vtx;
+	HTREEITEM root, NaviMesh;
 	root = m_NavTreeCtrl.GetRootItem();
 	NaviMesh = m_NavTreeCtrl.InsertItem(strName, 0, 0, root, TVI_LAST);
 

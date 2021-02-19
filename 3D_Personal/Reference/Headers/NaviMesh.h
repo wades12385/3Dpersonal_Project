@@ -59,7 +59,7 @@ private:
 	vector<list<CCell*>>    m_listRelation; // 정점하나와 관계가 있는 셀의 리스트 
 	vector<LOADDATA>		m_vecLoadData;
 	_bool					m_bHideCell;
-	_bool					m_bSelect;
+	_bool					m_bSelect; //맵툴에서 선택한 네비매쉬 강조 표시용
 	_bool					m_bLoad; //로드 확인
 //////////////////////////////////////////////////////////////////////////
 public:
