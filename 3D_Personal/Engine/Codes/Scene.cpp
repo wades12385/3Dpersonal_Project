@@ -8,10 +8,6 @@ CScene::CScene(LPDIRECT3DDEVICE9  pDevice)
 	SafeAddRef(pDevice);
 }
 
-HRESULT CScene::Ready_Scene()
-{
-	return S_OK;
-}
 
 
 void CScene::Free()

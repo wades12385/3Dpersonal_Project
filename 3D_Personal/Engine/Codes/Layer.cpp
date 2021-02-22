@@ -20,6 +20,8 @@ HRESULT CLayer::Awake_Layer()
 		}
 
 	}
+	//  [2/7/2021 wades] 
+	LateAwake_Layer();
 	return S_OK;
 }
 
@@ -29,7 +31,7 @@ HRESULT CLayer::Ready_Layer()
 	{
 		for (auto& Obj : pair.second)
 		{
-			if (FAILED(Obj->Awake_GameObject()))
+			if (FAILED(Obj->Ready_GameObject()))
 			{
 				MSG_BOX(L"Faild Obj Start");
 				return E_FAIL;
@@ -52,7 +54,6 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			{
 				SafeRelease(*ObjList_iter);
 				ObjList_iter = pair.second.erase(ObjList_iter);
-				++ObjList_iter;
 				continue;
 			}
 			if ((*ObjList_iter)->IsEnalble() == false)
@@ -62,6 +63,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 			}
 
 			 (*ObjList_iter)->UpdateGameObject(fTimeDelta);
+			 ++ObjList_iter;
 		}
 
 	}
@@ -80,15 +82,15 @@ _int CLayer::LateUpdate_Layer(const _float & fTimeDelta)
 				++ObjList_iter;
 				continue;
 			}
-
 			(*ObjList_iter)->LateUpdateGameObject(fTimeDelta);
+			++ObjList_iter;
 		}
 	}
 
 	return _int();
 }
 
-CGameObject * CLayer::Add_GameObject(const _tchar * pLayerTag, CGameObject* pGameObject)
+HRESULT CLayer::Add_GameObject(const _tchar * pLayerTag, CGameObject* pGameObject)
 {
 	auto Iter_find = find_if(m_mapLayers.begin(), m_mapLayers.end(), CTagFinder(pLayerTag));
 
@@ -101,11 +103,25 @@ CGameObject * CLayer::Add_GameObject(const _tchar * pLayerTag, CGameObject* pGam
 
 	Iter_find->second.emplace_back(pGameObject);
 
-	return nullptr;
+	return S_OK;
+}
+
+HRESULT CLayer::LateAdd_GameObject(const _tchar * pLayerTag, CGameObject * pGameObject)
+{
+	auto Iter_find = find_if(m_mapLateLayers.begin(), m_mapLateLayers.end(), CTagFinder(pLayerTag));
+
+	if (FAILED(FindCheck_Layer(Iter_find)))
+	{
+		Iter_find = m_mapLayers.emplace(pLayerTag, list<CGameObject*>()).first;
+	}
+
+	Iter_find->second.emplace_back(pGameObject);
+
+	return S_OK;
 }
 
 //유니크한 오브젝트 전용
-CComponent*  CLayer::Get_Component(const _tchar * pLayerTag, const eComponentID & ComponentID)
+CComponent*  CLayer::Get_Component(const _tchar * pLayerTag, const eComponentID::eComponentID & ComponentID)
 {
 	auto Iter_find = find_if(m_mapLayers.begin(), m_mapLayers.end(), CTagFinder(pLayerTag));
 
@@ -122,7 +138,6 @@ CComponent*  CLayer::Get_Component(const _tchar * pLayerTag, const eComponentID 
 
 	return Iter_find->second.front()->Get_Component(ComponentID);
 }
-
 CGameObject * CLayer::Get_GameObject(const _tchar * pLayerTag)
 {
 	auto Iter_find = find_if(m_mapLayers.begin(), m_mapLayers.end(), CTagFinder(pLayerTag));
@@ -154,6 +169,26 @@ list<CGameObject*>* CLayer::Get_Layer(const _tchar * pLayerTag)
 	return &Iter_find->second;
 }
 
+HRESULT CLayer::LateAwake_Layer()
+{
+	for (auto& pair : m_mapLateLayers)
+	{
+		for (auto& Obj : pair.second)
+		{
+			if (FAILED(Obj->Awake_GameObject()))
+			{
+				MSG_BOX(L"Faild Obj LateAwake");
+				return E_FAIL;
+			}
+			//  [2/7/2021 wades] 기존 레이어로 이동
+			auto layer_find  = find_if(m_mapLayers.begin(), m_mapLayers.end(), CTagFinder(pair.first));
+			layer_find->second.emplace_back(Obj);
+		}
+
+	}
+	m_mapLateLayers.clear();
+	return S_OK;
+}
 
 //////////////////////////////////////////////////////////////////////////
 

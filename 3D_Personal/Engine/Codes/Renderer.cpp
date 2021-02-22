@@ -81,7 +81,6 @@ HRESULT CRenderer::RenderAlpha()
 		if (FAILED(pObject->RenderGameObject()))
 			return E_FAIL;
 		SafeRelease(pObject);
-
 	}
 
 	m_GameObjects[(_int)eRenderID::Alpha].clear();

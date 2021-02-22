@@ -63,7 +63,7 @@ void CGameObject::DisEnable()
 {
 }
 
-HRESULT CGameObject::Add_Component(const eComponentID & ComID,  CComponent* const pCom)
+HRESULT CGameObject::Add_Component(const eComponentID::eComponentID & ComID,  CComponent* const pCom)
 {
 	auto& Comp_iterfind = m_mapComponents.find(ComID);
 
@@ -80,7 +80,7 @@ HRESULT CGameObject::Add_Component(const eComponentID & ComID,  CComponent* cons
 	return S_OK;
 }
 
-CComponent*	 CGameObject::Get_Component(const eComponentID & ComID)
+CComponent*	 CGameObject::Get_Component(const eComponentID::eComponentID & ComID)
 {
 	auto& Comp_iterfind = m_mapComponents.find(ComID);
 
@@ -123,5 +123,9 @@ void CGameObject::Set_Enalbe(_bool bEnable)
 void CGameObject::Free()
 {
 	SafeRelease(m_pDevice);
+	for (auto& pair : m_mapComponents)
+	{
+		SafeRelease(pair.second);
+	}
 	m_mapComponents.clear();
 }

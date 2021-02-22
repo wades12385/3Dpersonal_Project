@@ -2,6 +2,9 @@
 
 USING(Engine)
 CLine::CLine()
+	:m_tColor(COLOR_LIGHTGRAY)
+	,m_eType(eCellType::Base)
+	,m_iNextNavMeshID(NOT_FOUND)
 {
 }
 
@@ -26,6 +29,23 @@ eRelationLine::eRelationLine CLine::Compare(const _vec2 * pEndPos)
 		return eRelationLine::OutLine;
 	else
 		return eRelationLine::InLine;
+}
+
+void CLine::Set_Type(eCellType::eCellType eType)
+{
+	switch (eType)
+	{
+	case Engine::eCellType::Base:
+		Set_Color(COLOR_LIGHTGRAY);
+		break;
+	case Engine::eCellType::Leave:
+		Set_Color(COLOR_BLUE);
+		break;
+	case Engine::eCellType::Connect:
+		Set_Color(COLOR_ORANGE);
+		break;
+	}
+	m_eType = eType;
 }
 
 CLine * CLine::Create(const _vec2 * pPointA, const _vec2 * pPointB)

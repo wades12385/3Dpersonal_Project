@@ -12,26 +12,30 @@ private:
 	virtual ~CLayer() = default;
 	typedef unordered_map<const _tchar*, list<CGameObject*>> GAMEOBJECTS;
 public:
-	HRESULT Awake_Layer();
-	HRESULT Ready_Layer();
-	_int Update_Layer(const _float& fTimeDelta);
-	_int LateUpdate_Layer(const _float& fTimeDelta);
+	HRESULT				Awake_Layer();
+	//Awake 단계에서 추가된 오브젝트들을 awake 콜 한후 기존 레이어에 추가
+	HRESULT				LateAwake_Layer();
+	HRESULT				Ready_Layer();
+	_int				Update_Layer(const _float& fTimeDelta);
+	_int				LateUpdate_Layer(const _float& fTimeDelta);
 
 public:
-	CGameObject*			Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
-	CComponent* 			Get_Component(const _tchar* pLayerTag,const eComponentID& ComponentID);
-
-
+	HRESULT					Add_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
+	//Awake 단계에서 추가된 오브젝트들이 Ready 전에 awake 한 다음 현 레이어에 추가되는 함수
+	HRESULT					LateAdd_GameObject(const _tchar* pLayerTag, CGameObject* pGameObject);
+	CComponent* 			Get_Component(const _tchar* pLayerTag,const eComponentID::eComponentID& ComponentID);
+	//유니크한 오브젝트 전용
 	CGameObject*			Get_GameObject(const _tchar* pLayerTag);
 	list<CGameObject*>*		Get_Layer(const _tchar* pLayerTag);
 private:
 	HRESULT					FindCheck_Layer(GAMEOBJECTS::iterator& rIter);
-
 public:
 	static CLayer* Create();
 	void   Free();
 private:
 	GAMEOBJECTS m_mapLayers;
+	GAMEOBJECTS m_mapLateLayers;
+
 };
 
 END

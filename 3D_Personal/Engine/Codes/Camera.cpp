@@ -29,7 +29,7 @@ HRESULT CCamera::Ready_GameObject()
 	if (FAILED(m_pDevice->SetTransform(D3DTS_PROJECTION, &m_tCameraDesc.matProj)))
 		return 0;
 
-	return E_NOTIMPL;
+	return S_OK;
 }
 _uint CCamera::LateUpdateGameObject(const _float & fDeltaTime)
 {

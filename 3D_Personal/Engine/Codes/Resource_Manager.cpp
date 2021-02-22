@@ -16,8 +16,6 @@ HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tc
 	if (FAILED(overlapCheck_Comp(pCompTag, eCompID, Res_finditer)))
 		return E_FAIL;
 
-
-
 	return S_OK;
 }
 
@@ -35,8 +33,23 @@ CComponent* CResource_Manager::Clone(const _tchar * pCompTag, const eResourcesID
 	return pClone;
 }
 
+HRESULT CResource_Manager::Ready_Texture(LPDIRECT3DDEVICE9 pDevice, const _tchar * pTextureTag, const _tchar * pPath, const _uint & iCnt)
+{
+	RESOURCEMAP::iterator Res_finditer;
 
-HRESULT CResource_Manager::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar * pMeshTag, eResourcesID::eResourcesID eType, const _tchar * pFilePath, const _tchar * pFileName)
+	if (FAILED(overlapCheck_Comp(pTextureTag, eResourcesID::Texture, Res_finditer)))
+		return E_FAIL;
+
+	CResources*	pResources = CTexture::Create(pDevice, pPath, iCnt);
+	NULL_CHECK_RETURN(pResources, E_FAIL);
+
+	m_mapResouces[eResourcesID::Texture].emplace(pTextureTag, pResources);
+	return S_OK;
+}
+
+
+HRESULT CResource_Manager::Ready_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar * pMeshTag, eResourcesID::eResourcesID eType,
+	const _tchar * pFilePath, const _tchar * pFileName)
 {
 	NULL_CHECK_RETURN(m_mapResouces, E_FAIL);
 	
@@ -50,19 +63,36 @@ HRESULT CResource_Manager::Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _tc
 	switch (eType)
 	{
 	case Engine::eResourcesID::StaticMesh:
-		pResource = CStaticMesh::Create(pGraphicDev, pFilePath, pFileName);
+		pResource = CStaticMesh::Create(pDevice, pFilePath, pFileName);
 		break;
 	case Engine::eResourcesID::DynamicMesh:
-		pResource = CDynamicMesh::Create(pGraphicDev, pFilePath, pFileName);
+		pResource = CDynamicMesh::Create(pDevice, pFilePath, pFileName);
 		break;
 	case Engine::eResourcesID::NaviMesh:
-		pResource = CNaviMesh::Create(pGraphicDev);
+		pResource = CNaviMesh::Create(pDevice,pFilePath);
 		break;
 	default:
 		return E_FAIL;
 	}
 	NULL_CHECK_RETURN(pResource, E_FAIL);
 	m_mapResouces[eType].emplace(pMeshTag, pResource);
+
+	return S_OK;
+}
+
+HRESULT CResource_Manager::Load_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar * pMeshTag, const _tchar * pFilePath)
+{
+	NULL_CHECK_RETURN(m_mapResouces, E_FAIL);
+
+	RESOURCEMAP::iterator Res_finditer;
+
+	if (FAILED(overlapCheck_Comp(pMeshTag, eResourcesID::NaviMesh, Res_finditer)))
+		return E_FAIL;
+
+	CResources*	pResource = nullptr;
+	pResource = CNaviMesh::Load(pDevice, pFilePath);
+	NULL_CHECK_RETURN(pResource, E_FAIL);
+	m_mapResouces[eResourcesID::NaviMesh].emplace(pMeshTag, pResource);
 
 	return S_OK;
 }
@@ -74,9 +104,7 @@ HRESULT CResource_Manager::overlapCheck_Comp(const _tchar* pCompTag, const eReso
 
 	if (iter != m_mapResouces[eResourceID].end())
 	{
-		_tchar szBuff[128] = L"";
-		swprintf_s(szBuff, L"Exisit %s Resource", pCompTag);
-		MSG_BOX(szBuff);
+	
 		return E_FAIL;
 	}
 

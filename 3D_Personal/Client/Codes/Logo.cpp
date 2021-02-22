@@ -7,18 +7,27 @@ CLogo::CLogo(LPDIRECT3DDEVICE9 pDevice)
 {
 }
 
-HRESULT CLogo::Ready_Scene()
+HRESULT CLogo::Initialize_Scene()
 {
 	return S_OK;
 }
 
 HRESULT CLogo::Awake_Scene()
 {
+
+	return S_OK;
+}
+
+HRESULT CLogo::Ready_Scene()
+{
+
 	return S_OK;
 }
 
 _uint CLogo::Update_Scene(const _float& fTimeDeleta)
 {
+
+
 	return 0;
 }
 
@@ -39,11 +48,11 @@ void CLogo::Free()
 
 CLogo * CLogo::Create(LPDIRECT3DDEVICE9 pDevice)
 {
-	CLogo* pIns = new CLogo(pDevice);
-	if (FAILED(pIns->Ready_Scene()))
-	{
-		SafeRelease(pIns);
-	}
-	return pIns;
+	return new CLogo(pDevice);;
+}
+
+HRESULT CLogo::ReInitialize_Scene()
+{
+	return E_NOTIMPL;
 }
 

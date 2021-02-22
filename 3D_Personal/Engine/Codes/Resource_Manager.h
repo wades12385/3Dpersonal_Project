@@ -4,12 +4,13 @@
 
 //Comp
 #include "Transform.h"
-
+#include "ColliderBox.h"
 //Resources
-#include "Resources.h" // 나중에 추가하면 지워
 #include "StaticMesh.h"
 #include "DynamicMesh.h"
 #include "NaviMesh.h"
+#include "Texture.h"
+
 
 BEGIN(Engine)
 class ENGINE_DLL CResource_Manager : public CBase
@@ -24,10 +25,14 @@ public:
 	HRESULT			Ready_Resourece(LPDIRECT3DDEVICE9 pDevice, const _tchar* pCompTag, const eResourcesID::eResourcesID& eCompID , const CComponent* pComp);
 	CComponent*		Clone(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);
 
-	HRESULT			Ready_Buffer(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pBufferTag , const eResourcesID::eResourcesID& eResourcesID);
-	HRESULT			Ready_Texture(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pTextureTag, const _tchar* pPath, const _uint& iCnt = 1); //이건 루트경로 받아서 싹 읽는 형식으로 
-	HRESULT			Ready_Meshes(LPDIRECT3DDEVICE9 pGraphicDev, const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
+	HRESULT			Ready_Buffer(LPDIRECT3DDEVICE9 pDevice, const _tchar* pBufferTag , const eResourcesID::eResourcesID& eResourcesID);
+	//이건 루트경로 받아서 싹 읽는 형식으로 추가를 하던가 
+	HRESULT			Ready_Texture(LPDIRECT3DDEVICE9 pDevice, const _tchar* pTextureTag, const _tchar* pPath, const _uint& iCnt = 1);
 
+
+
+	HRESULT			Ready_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
+	HRESULT			Load_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar* pMeshTag, const _tchar* pFilePath);
 
 	HRESULT			overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, RESOURCEMAP::iterator& iter);
 	HRESULT			FindCheck_Comp(RESOURCEMAP::iterator& iter, const eResourcesID::eResourcesID& eResourceID);

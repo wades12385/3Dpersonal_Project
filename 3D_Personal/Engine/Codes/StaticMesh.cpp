@@ -4,6 +4,8 @@ USING(Engine)
 
 Engine::CStaticMesh::CStaticMesh(LPDIRECT3DDEVICE9 pDevice)
 	: CMesh(pDevice)
+	, m_ppTextures(nullptr)
+	, m_bNoTexture(false)
 {
 
 }
@@ -18,13 +20,18 @@ Engine::CStaticMesh::CStaticMesh(const CStaticMesh& other)
 	, m_pOriMesh(other.m_pOriMesh)
 	, m_pVtxPos(other.m_pVtxPos)
 	, m_dwVtxCnt(other.m_dwVtxCnt)
+	, m_ppTextures(nullptr)
+	, m_bNoTexture(other.m_bNoTexture)
 {
-	m_ppTextures = new LPDIRECT3DTEXTURE9[other.m_dwSubsetCnt];
-
-	for (_ulong i = 0; i < other.m_dwSubsetCnt; ++i)
+	if (!(other.m_pMtrl[0].pTextureFilename == nullptr))
 	{
-		m_ppTextures[i] = other.m_ppTextures[i];
-		m_ppTextures[i]->AddRef();
+		m_ppTextures = new LPDIRECT3DTEXTURE9[other.m_dwSubsetCnt];
+
+		for (_ulong i = 0; i < other.m_dwSubsetCnt; ++i)
+		{
+			m_ppTextures[i] = other.m_ppTextures[i];
+			m_ppTextures[i]->AddRef();
+		}
 	}
 
 	m_pMesh->AddRef();
@@ -55,9 +62,9 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	else
 		m_pOriMesh->CloneMeshFVF(m_pOriMesh->GetOptions(), dwFVF, m_pDevice, &m_pMesh);
 
-	// 메시 크기에 맞는 바운딩 박스 생성
 	void*		pVertex = nullptr;
 	m_dwVtxCnt = m_pMesh->GetNumVertices();	
+	// 메시 크기에 맞는 바운딩 박스 생성 용으로 쓸 버텍스배열 받기
 	m_pVtxPos = new _vec3[m_dwVtxCnt];
 	//////////////////////////////////////////////////////////////////////////
 	m_pMesh->LockVertexBuffer(0, &pVertex);
@@ -108,12 +115,22 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 	*/
 	m_pMtrl = (D3DXMATERIAL*)m_pSubset->GetBufferPointer();
 
+	//디버깅용 스테틱 매쉬 로드할때 텍스쳐 없음 경우 
+	if (m_dwSubsetCnt == 1 && m_pMtrl[0].pTextureFilename == nullptr)
+	{
+		m_bNoTexture = true;
+		return S_OK;
+	}
+
 	m_ppTextures = new LPDIRECT3DTEXTURE9[m_dwSubsetCnt];
 
 	for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
 	{
 		_tchar	szFileName[MAX_PATH] = L"";
 		lstrcpy(szFullPath, pFilePath);
+
+	
+
 		MultiByteToWideChar(CP_ACP, 0, m_pMtrl[i].pTextureFilename,
 			strlen(m_pMtrl[i].pTextureFilename), szFileName, MAX_PATH);
 
@@ -133,7 +150,18 @@ void Engine::CStaticMesh::Render_Meshes()
 
 	for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
 	{
-		m_pDevice->SetTexture(0, m_ppTextures[i]);
+		if (m_bNoTexture)
+		{
+			m_pDevice->SetTexture(0, nullptr);
+			m_pDevice->SetMaterial(&m_pMtrl[i].MatD3D);
+		}
+		else
+		{
+			m_pDevice->SetMaterial(&m_pMtrl[i].MatD3D);
+			m_pDevice->SetTexture(0, m_ppTextures[i]);
+		}
+
+
 		m_pMesh->DrawSubset(i);
 	}
 }
@@ -155,8 +183,13 @@ CComponent * CStaticMesh::Clone()
 
 void Engine::CStaticMesh::Free()
 {
+
+	if (m_bNoTexture == false)
+	{
+
 	for (_ulong i = 0; i < m_dwSubsetCnt; ++i)
 		SafeRelease(m_ppTextures[i]);
+	}
 
 	SafeDeleteArray(m_ppTextures);
 

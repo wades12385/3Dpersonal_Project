@@ -13,7 +13,23 @@ typedef struct VertexTexture
 	D3DXVECTOR2 vUV;
 }VTX_TEXTURE;
 
-const _uint FVF_VTX_TEXTURE = D3DFVF_XYZ | D3DFVF_TEX1 /*| D3DFVF_TEXCOORDSIZE2(0)*/;
+const _ulong FVF_VTX_TEXTURE = D3DFVF_XYZ | D3DFVF_TEX1 /*| D3DFVF_TEXCOORDSIZE2(0)*/;
+
+typedef struct VertexColor
+{
+	D3DXVECTOR3 vPosition;
+	_ulong		dwColor;
+}VTX_COLOR;
+
+const _ulong FVF_VTX_COLOR = D3DFVF_XYZ | D3DFVF_DIFFUSE | D3DFVF_TEX0;
+
+typedef struct CubeTexture
+{
+	D3DXVECTOR3 vPosition;
+	D3DXVECTOR3 vUV;
+}VTXCUBE;
+
+const _ulong	FVF_CUBE = D3DFVF_XYZ | D3DFVF_TEX1 | D3DFVF_TEXCOORDSIZE3(0);	
 
 typedef struct VertexTex
 {
@@ -27,7 +43,7 @@ const _ulong	FVF_TEX = D3DFVF_XYZ | D3DFVF_NORMAL | D3DFVF_TEX1;
 
 typedef struct Index16
 {
-	_ushort		_0;
+	_ushort		_0; 
 	_ushort		_1;
 	_ushort		_2;
 
@@ -82,5 +98,13 @@ typedef struct CameraDesc
 	_matrix	matView;
 	_matrix matProj;
 }CAMERA_DESC;
+
+
+typedef struct CellVertexIdx
+{
+	_uint _A;
+	_uint _B;
+	_uint _C;
+}CELLVTXIDX;
 #define __ENGINE_STRUCT_H__
 #endif

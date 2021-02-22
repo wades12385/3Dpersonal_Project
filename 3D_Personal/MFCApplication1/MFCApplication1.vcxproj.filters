@@ -1,0 +1,220 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{78d3b416-a3e2-4214-81ea-9ea3d0857331}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="01.MainFrame">
+      <UniqueIdentifier>{e6f6a8e1-ed0e-4f77-a9fe-91e69eb70cb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View">
+      <UniqueIdentifier>{238fee89-df25-484b-927b-e55b76a78ea3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View\00.MFCApp">
+      <UniqueIdentifier>{ddce1336-60e0-47e7-8c6e-91b39d35b9b9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View\01.MFCToolView">
+      <UniqueIdentifier>{58569fbc-1bd8-454b-89d6-57f82d9e98df}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView">
+      <UniqueIdentifier>{8a1588f1-bc9a-4eb4-9a4c-cd638dba778e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView\00.Base">
+      <UniqueIdentifier>{b4a45e3a-3221-4380-bb89-79956be6489b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView\01.NaviModifyTab">
+      <UniqueIdentifier>{c327d8f2-e18c-4387-9542-09bbab55daeb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView\02.ObjectTab">
+      <UniqueIdentifier>{cd3d5022-29c6-47e0-9cd7-3d18b4e37a26}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp">
+      <UniqueIdentifier>{8a12ed0e-8717-4662-8f0e-c8fa96ecaaf9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\00.Main">
+      <UniqueIdentifier>{9170efbd-5d45-4c39-bbeb-f5b4fa8da1bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene">
+      <UniqueIdentifier>{3961a39f-5fea-4347-a3c8-09e70d8e3300}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\01.NaviMeshModifyTab">
+      <UniqueIdentifier>{a0ed28e8-6e0b-4e0d-b32a-900f41b38cf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\02.ObjectDeploy">
+      <UniqueIdentifier>{d55544dc-957b-494b-b44a-d0b97516f127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject">
+      <UniqueIdentifier>{99ac4ec4-7c88-4f65-a265-cfe443f24232}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\01.Camera">
+      <UniqueIdentifier>{6bd7db43-0f7b-4749-b285-b580bde3eb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\02.NaviObj">
+      <UniqueIdentifier>{c18230f6-3bb1-470e-b615-7c14ed6389f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\03.StaticMesh">
+      <UniqueIdentifier>{b22a8571-9200-4c09-8fa2-27f20e7d48c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1">
+      <UniqueIdentifier>{1e9ecc8f-7a49-4fb3-b44e-087c4f8fb9da}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\04.ColBox">
+      <UniqueIdentifier>{bfc579b3-aef4-4621-8fea-d32241bdb30d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\03.BoxDeploy">
+      <UniqueIdentifier>{d55561fc-f3f3-4d54-a9e1-e4e8d22c1195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView\03.BoxDeployTab">
+      <UniqueIdentifier>{b27e836c-9a3d-4f1f-85a0-7a970963c6b6}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>01.MainFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCApplication.h">
+      <Filter>02.View\00.MFCApp</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCApplicationDoc.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="ToolForm.h">
+      <Filter>03.FormView\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCApplicationView.h">
+      <Filter>02.View\01.MFCToolView</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool_Define.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool_Extern.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Tool_Enum.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="DirectApp.h">
+      <Filter>04.DirectApp\00.Main</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviModifyScene.h">
+      <Filter>04.DirectApp\01.Scene\01.NaviMeshModifyTab</Filter>
+    </ClInclude>
+    <ClInclude Include="DeploymentScene.h">
+      <Filter>04.DirectApp\01.Scene\02.ObjectDeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="DeploymentTab.h">
+      <Filter>03.FormView\02.ObjectTab</Filter>
+    </ClInclude>
+    <ClInclude Include="ToolCamera.h">
+      <Filter>04.DirectApp\02.GameObject\01.Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviObj.h">
+      <Filter>04.DirectApp\02.GameObject\02.NaviObj</Filter>
+    </ClInclude>
+    <ClInclude Include="Stage1Mesh.h">
+      <Filter>04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviModifyTab.h">
+      <Filter>03.FormView\01.NaviModifyTab</Filter>
+    </ClInclude>
+    <ClInclude Include="ColBox.h">
+      <Filter>04.DirectApp\02.GameObject\04.ColBox</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxDeployTab.h">
+      <Filter>03.FormView\03.BoxDeployTab</Filter>
+    </ClInclude>
+    <ClInclude Include="BoxDeployScene.h">
+      <Filter>04.DirectApp\01.Scene\03.BoxDeploy</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>01.MainFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCApplication.cpp">
+      <Filter>02.View\00.MFCApp</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCApplicationDoc.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolForm.cpp">
+      <Filter>03.FormView\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviModifyTab.cpp">
+      <Filter>03.FormView\01.NaviModifyTab</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCApplicationView.cpp">
+      <Filter>02.View\01.MFCToolView</Filter>
+    </ClCompile>
+    <ClCompile Include="DirectApp.cpp">
+      <Filter>04.DirectApp\00.Main</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviModifyScene.cpp">
+      <Filter>04.DirectApp\01.Scene\01.NaviMeshModifyTab</Filter>
+    </ClCompile>
+    <ClCompile Include="DeploymentScene.cpp">
+      <Filter>04.DirectApp\01.Scene\02.ObjectDeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="DeploymentTab.cpp">
+      <Filter>03.FormView\02.ObjectTab</Filter>
+    </ClCompile>
+    <ClCompile Include="ToolCamera.cpp">
+      <Filter>04.DirectApp\02.GameObject\01.Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviObj.cpp">
+      <Filter>04.DirectApp\02.GameObject\02.NaviObj</Filter>
+    </ClCompile>
+    <ClCompile Include="Stage1Mesh.cpp">
+      <Filter>04.DirectApp\02.GameObject\03.StaticMesh\01.Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="ColBox.cpp">
+      <Filter>04.DirectApp\02.GameObject\04.ColBox</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxDeployTab.cpp">
+      <Filter>03.FormView\03.BoxDeployTab</Filter>
+    </ClCompile>
+    <ClCompile Include="BoxDeployScene.cpp">
+      <Filter>04.DirectApp\01.Scene\03.BoxDeploy</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MFCApplication1.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\MFCApplication1Doc.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>99.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MFCApplication1.rc">
+      <Filter>99.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MFCApplication1.rc2">
+      <Filter>99.Default</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.Default</Filter>
+    </Text>
+  </ItemGroup>
+</Project>

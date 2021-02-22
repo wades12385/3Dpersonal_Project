@@ -40,7 +40,7 @@ _uint SafeRelease(T& ptr)
 {
 	unsigned int iRefCnt = 0;
 
-	if (ptr)
+	if (ptr != nullptr)
 	{
 		iRefCnt = ptr->Release();
 
@@ -105,9 +105,7 @@ public: // operator
 	void operator () (T& pInstance)
 	{
 		_ulong dwRefCnt = 0;
-
 		dwRefCnt = pInstance->Release();
-
 		if (0 == dwRefCnt)
 			pInstance = nullptr;
 	}

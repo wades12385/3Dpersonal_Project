@@ -4,6 +4,9 @@
 
 CMainApp::CMainApp()
 	: m_pManagement(CManagement::Get_Instance())
+	,m_iFPS(0)
+	,m_fTime(0)
+
 {
 	m_pManagement->AddRef();
 }
@@ -26,23 +29,37 @@ HRESULT CMainApp::ReadyMainApp()
 		return E_FAIL;
 	}
 
+
+	ZeroMemory(m_szFPS, sizeof(_tchar) * 64);
+
 	return S_OK;
 }
 
 void CMainApp::Running(const _float & fTimeDelta)
 {
-
+	ShowFPS(fTimeDelta);
+	Engine::Update_InputDev();
 	m_pManagement->UpdateEngine(fTimeDelta);
-
 	m_pManagement->RenderEngine(g_hWnd);
-
-	return ;
 }
 
 
 HRESULT CMainApp::ReadyStaticResources()
 {
 	return S_OK;
+}
+
+void CMainApp::ShowFPS(const _float & fTimeDelta)
+{
+	++m_iFPS;
+	m_fTime += fTimeDelta;
+	if (m_fTime >= 1.f)
+	{
+		wsprintf(m_szFPS, L"FPS: %d", m_iFPS);
+		m_fTime = 0.f;
+		m_iFPS = 0;
+	}
+	SetWindowText(g_hWnd, m_szFPS);
 }
 
 CMainApp* CMainApp::Create()

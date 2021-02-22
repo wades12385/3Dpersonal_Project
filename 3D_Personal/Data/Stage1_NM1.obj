@@ -1,0 +1,16 @@
+# 3ds Max Wavefront OBJ Exporter v0.97b - (c)2007 guruware
+# 파일 생성됨: 08.02.2021 08:25:48
+
+#
+# object default
+#
+
+v  -34.7682 -3.5742 10.7391
+v  -33.5978 -3.5763 7.9046
+v  -37.1388 -3.5777 2.5100
+
+
+g default
+f 1 2 3 
+
+

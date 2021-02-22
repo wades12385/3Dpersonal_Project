@@ -19,6 +19,9 @@ public:
 	virtual HRESULT		Ready_Meshes(const _tchar* pFilePath, const _tchar* pFileName)override;
 	virtual void		Render_Meshes()override;
 
+
+	LPD3DXMESH			Get_Mesh() { return m_pMesh; }
+	LPD3DXMESH			Get_OriMesh() { return m_pOriMesh; }
 	static CStaticMesh*	Create(LPDIRECT3DDEVICE9 pDevice, const _tchar* pFilePath, const _tchar* pFileName);
 private:
 	virtual void		Free();
@@ -40,6 +43,8 @@ private:
 	_ulong				m_dwStride;		// 버텍스의 크기를 저장하기 위한 변수
 	_vec3*				m_pVtxPos;		// 메쉬가 지닌 정점의 포지션 정보를 보관하기 위한 동적 배열 주소 값
 	_ulong				m_dwVtxCnt;		// 메사가 지닌 정점의 개수
+	//  [2/9/2021 wades]
+	_bool				m_bNoTexture;
 };
 END
 #define __STATICMESH_H__
