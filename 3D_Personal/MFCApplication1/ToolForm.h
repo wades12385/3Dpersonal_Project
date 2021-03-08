@@ -1,7 +1,7 @@
 #pragma once
 #include "afxcmn.h"
 #include "NaviModifyTab.h"
-#include "DeploymentTab.h"
+#include "staticDeploymentTab.h"
 #include "BoxDeployTab.h"
 // CToolForm Æû ºäÀÔ´Ï´Ù.
 
@@ -30,7 +30,7 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	CTabCtrl m_TabCtrl;
-	CDeploymentTab m_DeploymentTab;
+	CStaticDeploymentTab m_StaticDeployTab;
 	CNaviModifyTab m_NaviModifyTab;
 	CBoxDeployTab  m_BoxDeployTab;
 	virtual void OnInitialUpdate();

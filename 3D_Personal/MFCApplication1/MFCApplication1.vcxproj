@@ -76,7 +76,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86;C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(DXSKX_DIR)\lib\x86\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -86,7 +86,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files %28x86%29\Microsoft DirectX SDK %28June 2010%29\Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -96,7 +96,7 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;__MFCTOOL;_AFX;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_AFX;__MFCTOOL;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../Reference/Headers/;./;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -152,7 +152,7 @@ call UpdateLib.bat</Command>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;_WINDOWS;ENGINE_EXPORT;__MFCTOOL;_AFX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;_WINDOWS;_AFX;__MFCTOOL;__MFCTOOL_MFCTOOLENGINE_EXPORT;__MFCTOOL;_AFX;NDEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
       <AdditionalIncludeDirectories>../Reference/Headers/;./;</AdditionalIncludeDirectories>
     </ClCompile>
@@ -208,6 +208,7 @@ call UpdateLib.bat</Command>
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Axis.h" />
     <ClInclude Include="BoxDeployTab.h" />
     <ClInclude Include="ColBox.h" />
     <ClInclude Include="BoxDeployScene.h" />
@@ -215,8 +216,10 @@ call UpdateLib.bat</Command>
     <ClInclude Include="MFCApplication.h" />
     <ClInclude Include="MFCApplicationDoc.h" />
     <ClInclude Include="MFCApplicationView.h" />
+    <ClInclude Include="MfcStaticItem.h" />
     <ClInclude Include="NaviModifyScene.h" />
-    <ClInclude Include="DeploymentScene.h" />
+    <ClInclude Include="SizeCheck.h" />
+    <ClInclude Include="StaticDeployScene.h" />
     <ClInclude Include="NaviObj.h" />
     <ClInclude Include="Stage1Mesh.h" />
     <ClInclude Include="ToolCamera.h" />
@@ -224,7 +227,7 @@ call UpdateLib.bat</Command>
     <ClInclude Include="Tool_Enum.h" />
     <ClInclude Include="Tool_Extern.h" />
     <ClInclude Include="NaviModifyTab.h" />
-    <ClInclude Include="DeploymentTab.h" />
+    <ClInclude Include="StaticDeploymentTab.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="targetver.h" />
@@ -232,6 +235,7 @@ call UpdateLib.bat</Command>
     <ClInclude Include="DirectApp.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Axis.cpp" />
     <ClCompile Include="BoxDeployTab.cpp" />
     <ClCompile Include="ColBox.cpp" />
     <ClCompile Include="BoxDeployScene.cpp" />
@@ -239,10 +243,12 @@ call UpdateLib.bat</Command>
     <ClCompile Include="MFCApplication.cpp" />
     <ClCompile Include="MFCApplicationDoc.cpp" />
     <ClCompile Include="MFCApplicationView.cpp" />
+    <ClCompile Include="MfcStaticItem.cpp" />
     <ClCompile Include="NaviModifyScene.cpp" />
     <ClCompile Include="NaviModifyTab.cpp" />
-    <ClCompile Include="DeploymentScene.cpp" />
-    <ClCompile Include="DeploymentTab.cpp" />
+    <ClCompile Include="SizeCheck.cpp" />
+    <ClCompile Include="StaticDeployScene.cpp" />
+    <ClCompile Include="StaticDeploymentTab.cpp" />
     <ClCompile Include="NaviObj.cpp" />
     <ClCompile Include="Stage1Mesh.cpp" />
     <ClCompile Include="stdafx.cpp">

@@ -11,7 +11,7 @@ protected:
 
 public:
 	virtual HRESULT Ready_GameObject() override;
-	virtual _uint	LateUpdateGameObject(const _float & fDeltaTime) override;
+	virtual _uint	LateUpdate_GameObject(const _float & fDeltaTime) override;
 public:
 	const CAMERA_DESC& Get_Camera() { return m_tCameraDesc; }
 	void  Set_Camera(const CAMERA_DESC tCameraDesc) { m_tCameraDesc = tCameraDesc; };

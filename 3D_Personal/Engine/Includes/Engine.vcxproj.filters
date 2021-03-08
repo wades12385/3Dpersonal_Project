@@ -133,9 +133,6 @@
     <Filter Include="01.Utilities\05.Component\01.Resources\02.Mesh\04.SectionMesh">
       <UniqueIdentifier>{5111bf5a-6428-4b63-bf39-dbf0c37c3d71}</UniqueIdentifier>
     </Filter>
-    <Filter Include="01.Utilities\05.Component\01.Resources\04.ColliderBox">
-      <UniqueIdentifier>{9f1f4d9b-05f3-4e38-b91a-b45ef1624b07}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.Systems\05.Light">
       <UniqueIdentifier>{4f208365-52f2-491e-b2df-9692eb9d8194}</UniqueIdentifier>
     </Filter>
@@ -144,6 +141,15 @@
     </Filter>
     <Filter Include="00.Systems\05.Light\02.Light_Manager">
       <UniqueIdentifier>{8b513697-d32f-40a3-8f89-2639b2f1b042}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\05.Component\03.Collider">
+      <UniqueIdentifier>{9f1f4d9b-05f3-4e38-b91a-b45ef1624b07}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\04.Gameobject\02.Item">
+      <UniqueIdentifier>{00cc8f37-ab13-41f5-bc3f-6e9676b21d7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Utilities\06.DataTable">
+      <UniqueIdentifier>{acc946bb-2119-452f-a9ad-81cccd4e61df}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -246,8 +252,17 @@
     <ClCompile Include="..\Codes\Texture.cpp">
       <Filter>01.Utilities\05.Component\01.Resources\03.Texture</Filter>
     </ClCompile>
-    <ClCompile Include="..\Codes\ColliderBox.cpp">
-      <Filter>01.Utilities\05.Component\01.Resources\04.ColliderBox</Filter>
+    <ClCompile Include="..\Codes\RectBuffer.cpp">
+      <Filter>01.Utilities\05.Component\01.Resources\01.VIBuffer\01.Rect_Buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Collider.cpp">
+      <Filter>01.Utilities\05.Component\03.Collider</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Item.cpp">
+      <Filter>01.Utilities\04.Gameobject\02.Item</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Datatable_Manager.cpp">
+      <Filter>01.Utilities\06.DataTable</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -374,8 +389,17 @@
     <ClInclude Include="..\Codes\Texture.h">
       <Filter>01.Utilities\05.Component\01.Resources\03.Texture</Filter>
     </ClInclude>
-    <ClInclude Include="..\Codes\ColliderBox.h">
-      <Filter>01.Utilities\05.Component\01.Resources\04.ColliderBox</Filter>
+    <ClInclude Include="..\Codes\RectBuffer.h">
+      <Filter>01.Utilities\05.Component\01.Resources\01.VIBuffer\01.Rect_Buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Collider.h">
+      <Filter>01.Utilities\05.Component\03.Collider</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Item.h">
+      <Filter>01.Utilities\04.Gameobject\02.Item</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Datatable_Manager.h">
+      <Filter>01.Utilities\06.DataTable</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

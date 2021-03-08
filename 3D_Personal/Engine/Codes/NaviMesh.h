@@ -1,69 +1,87 @@
 #pragma once
 #ifndef __NAVIMESH_H__
-#include "Mesh.h"
+#include "Component.h"
 #include "Cell.h"
 BEGIN(Engine)
-class ENGINE_DLL CNaviMesh : public CMesh
+class ENGINE_DLL CNaviMesh : public CComponent
 {
 	typedef struct LineData
 	{
-		_uint iLineType;
+		eCellType::eCellType iLineType;
+		vector<LINKCELL> vecLinkCells;
+
 	}LINEDATA;
 	typedef struct LoadData
 	{
-		_uint iCellIdx;
-		_uint iCellType;
-		vector<LINEDATA> vLine;
+		_int iCellIdx;
+		vector<LINKCELL> vecLinkCells;
+		_bool bOnLineTrigger;
+		LINEDATA vLine[eLineID::End];
 	}LOADDATA;
-
-
 private:
 	explicit CNaviMesh(LPDIRECT3DDEVICE9 pDevice);
 	explicit CNaviMesh(const CNaviMesh& rhs);
 	virtual ~CNaviMesh() = default;
 
 public:
-	virtual HRESULT			Ready_Meshes(const _tchar * pFilePath, const _tchar * pFileName) override; // .obj data Loading 
-	HRESULT					Load_Mesh(const _tchar * pFilePath);
-	HRESULT					Ready_NavigationMesh();  //  Cell instancing
-	virtual void			Render_Meshes() override;
+	HRESULT						Ready_Meshes(const _tchar * pFilePath, const _bool& bToolMod); // .obj data Loading 
+	HRESULT						Load_Mesh(const _tchar * pFilePath, const _bool& bToolMod);
+	HRESULT						Ready_NavigationMesh(vector<CNaviMesh*>* pNaviMeshs = nullptr);  //  Cell instancing
+	void						Render_Meshes() ;
 
 public:
-	HRESULT					Link_Cell();
-	_vec3					Move_OnNaviMesh(const _vec3* pTargetPos, const _vec3* pTargetDir);
-public:
-	void					Set_CellIndex(const _ulong& iIndex) { m_iCurIndex = iIndex; }
-	void					Set_HideCell(const _bool& bHide) { m_bHideCell = bHide; }
-	void					Set_Select(const _bool& bSelect) { m_bSelect = bSelect; }
-
-	vector<_vec3>&				Get_vCellVtx() { return m_vecVTX; }
-	vector<CELLVTXIDX>&			Get_vIndex() { return m_vecIndex; }
-
-	vector<CCell*>&			Get_vCell() { return m_vecCell; }
-	_bool					IsHideCell() { return m_bHideCell; };
+	HRESULT						Link_Cell();
+	//현재 위치에 해당하는 쉘 번호 찾기
+	HRESULT						Find_CurCellIdx(const _vec3& vPos, _int& iCellIdx);
+	//Navi 태우기 
+	void						OnNaviMesh(_vec3& vPos , const _int& iCellidx);
+	// 1차 range 값에는 대상의 반지름값 
+	eCompare::eCompare			CompareCell(_int& iNavID, _int& iCellIdx,const  _vec3&	vEndPos,const _float& fRange);
+	_vec3						MoveNaviMesh(_int& iNavID, _int& CellIdx, const _vec3& vTargetPos, const _vec3& vTargetDir, const _float& fRange);
 	
-	void					Modifying_Vertex(const _uint& iVtxIdx);
-	void					Modifying_CellIdx(const _uint& iCellIdx);
+	//////////////////////////////////////////////////////////////////////////
 public:
-	static CNaviMesh*		Create(LPDIRECT3DDEVICE9 pDevice, const _tchar * pFilePath);
-	static CNaviMesh*		Load(LPDIRECT3DDEVICE9 pDevice, const _tchar* pFilePath);
-	virtual CComponent *	Clone() override;
-private:
-	virtual void			Free();
-private:
-	_uint					m_iCurIndex;
-	vector<CELLVTXIDX>		m_vecIndex;
-	vector<CCell*>			m_vecCell;
-	vector<_vec3>			m_vecVTX;
+	void						Set_HideCell(const _bool& bHide) { m_bHideCell = bHide; }
+	void						Set_Select(const _bool& bSelect) { m_bSelect = bSelect; }
+	void						Set_BaseColor(const _vec3& dwColor);
+	void						Set_NaviID(const _int& iID) { m_iNaviID = iID; }
 
-	vector<list<CCell*>>    m_listRelation; // 정점하나와 관계가 있는 셀의 리스트 
-	vector<LOADDATA>		m_vecLoadData;
-	_bool					m_bHideCell;
-	_bool					m_bSelect; //맵툴에서 선택한 네비매쉬 강조 표시용
-	_bool					m_bLoad; //로드 확인
-//////////////////////////////////////////////////////////////////////////
+	vector<_vec3>&				Get_Vertex() { return m_vecVTX; }
+	vector<CELLVTXIDX>&			Get_vIndex() { return m_vecIndex; }
+	const _int&					Get_NaviID(){ return m_iNaviID; }
+	_vec3&						Get_Color() { return m_vBaseColor; }
+
+	vector<CCell*>&				Get_vCell() { return m_vecCell; }
+	_bool						IsHideCell() { return m_bHideCell; };
+
+	void						Modifying_Vertex(const _uint& iVtxIdx);
+	void						Modifying_CellIdx(const _uint& iCellIdx);
 public:
+	static CNaviMesh*			Create(LPDIRECT3DDEVICE9 pDevice, const _tchar * pFilePath, const _bool& bToolMode = false);
+	static CNaviMesh*			Load(LPDIRECT3DDEVICE9 pDevice, const _tchar* pFilePath,const _bool& bToolMode = false, vector<CNaviMesh*>* pNaviMeshs = nullptr);
+private:
+	virtual void				Free();
+private:
+	vector<CELLVTXIDX>			m_vecIndex;
+	vector<CCell*>				m_vecCell;
+	vector<_vec3>				m_vecVTX;
+	vector<list<CCell*>>		m_listRelation; // 정점하나와 관계가 있는 셀의 리스트 
 
+	vector<LOADDATA>			m_vecLoadData;//로드 시 라인 정보 보관용
+	_bool						m_bLoad; //로드 확인
+
+	_bool						m_bHideCell;
+	_bool						m_bSelect; //맵툴에서 선택한 네비매쉬 강조 표시용
+
+	_vec3						m_vBaseColor;
+	_int						m_iNaviID;
+
+	_bool						m_bToolMode;
+
+	// CComponent을(를) 통해 상속됨
+	virtual HRESULT Ready_Component() override;
+	virtual HRESULT Update_Component(const _float & fTimeDelta = 0.f) override;
+	//////////////////////////////////////////////////////////////////////////
 };
 END
 #define __NAVIMESH_H__

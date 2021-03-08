@@ -3,7 +3,7 @@
 
 ENUMSPACES(eToolScene)
 {
-	NaviModify,Object,BoxDeploy,End
+	NaviModify,StaticObject,Dynamic, BoxDeploy,End
 };
 END
 
@@ -19,9 +19,20 @@ ENUMSPACES(eBoxType)
 };
 END
 
+ENUMSPACES(ePeekingMod)
+{
+	VTX,CELL,End
+};
+END
 ENUMSPACES(eFloat3)
 {
 	X, Y, Z,End
+};
+END
+
+ENUMSPACES(eStaticItemPeek)
+{
+	Create, Delete, Modify, None, End
 };
 END
 

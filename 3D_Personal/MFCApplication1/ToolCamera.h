@@ -12,8 +12,8 @@ public:
 	virtual HRESULT Ready_Prototype() override;
 	virtual HRESULT Awake_GameObject() override;
 	virtual HRESULT Ready_GameObject() override;
-	virtual _uint UpdateGameObject(const _float & fDeltaTime) override;
-	virtual _uint LateUpdateGameObject(const _float & fDeltaTime) override;
+	virtual _uint Update_GameObject(const _float & fDeltaTime) override;
+	virtual _uint LateUpdate_GameObject(const _float & fDeltaTime) override;
 	virtual HRESULT RenderGameObject() override;
 	
 	static CToolCamera* Create(LPDIRECT3DDEVICE9 pDevice);

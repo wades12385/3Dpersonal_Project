@@ -36,7 +36,7 @@ HRESULT CDirectApp::ReadyEngine(HWND hWnd)
 
 	m_pManagement->SceneInitLog_Reserve(eToolScene::End);
 
-	if (FAILED(m_pManagement->SetUpCurrentScene(eToolScene::NaviModify, 
+	if (FAILED(m_pManagement->SetUp_ChangeScene(eToolScene::NaviModify, 
 		CNaviModifyScene::Create(CManagement::Get_Instance()->Get_Device()))))
 		return E_FAIL;
 
@@ -80,4 +80,8 @@ void CDirectApp::Ready_ProtoType()
 	//카메라 프로토 생성
 	CGameObject* pObj = CToolCamera::Create(m_pManagement->Get_Device());
 	CManagement::Get_Instance()->Ready_GameObjectPrototype(L"Proto_Camera",pObj);
+
+	CManagement::Get_Instance()->Ready_Mesh(L"Cube", eResourcesID::StaticMesh, L"../Data/", L"Cube.X");
+	CManagement::Get_Instance()->Ready_Mesh(L"Sphere", eResourcesID::StaticMesh, L"../Data/", L"Sphere.X");
+
 }

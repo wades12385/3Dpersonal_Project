@@ -12,6 +12,7 @@
 #include <algorithm>
 #include <functional>
 #include <tchar.h>
+#include <string.h>
 
 
 
@@ -30,6 +31,8 @@
 #include <iostream>
 #endif
 
+
+//////////////////////////////////////////////////////////////////////////
 #ifndef __MFCTOOL
 
 #ifdef _DEBUG
@@ -42,13 +45,12 @@
 #define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ ) 
 #define new DBG_NEW 
 #endif
-
 #endif
 
 #endif
 
+//////////////////////////////////////////////////////////////////////////
 using namespace std;
-using namespace Engine;
 
 #define __ENGINE_INCLUDE_H__
 #endif

@@ -9,7 +9,8 @@ CManagement::CManagement()
 	, m_pSceneManager(CScene_Manager::Get_Instance())
 	, m_pGameObjectManager(CGameObject_Manager::Get_Instance())
 	, m_pResource_Manager(CResource_Manager::Get_Instance())
-
+	, m_pDataTable_Manager(CDatatable_Manager::Get_Instance())
+	, m_bWaitChangeScene(false)
 {
 	SafeAddRef(m_pGraphic_Dev);
 	SafeAddRef(m_pSceneManager);
@@ -32,24 +33,15 @@ HRESULT CManagement::ReadyEngine( HWND hWnd,
 
 _uint CManagement::UpdateEngine(const _float& fTimeDelta)
 {
-
 	NULL_CHECK_RETURN(m_pSceneManager, 0);
-
-
-	_int nSceneID = -1;
-	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
-		return 0;
 
 	/*update*/
 	m_pSceneManager->Update_SceneMgr(fTimeDelta);
-	m_pGameObjectManager->UpdateGameObject(nSceneID, fTimeDelta);
-
-	//  [2/3/2021 wades]
-	//Update 랑 late 에서 실패값을 넘기고 있음 이걸로 씬전환 바로 들어가도 됨 
+	m_pGameObjectManager->UpdateGameObject(m_pSceneManager->Get_SceneID(), fTimeDelta);
 
 	/* LateUpdate */
 	m_pSceneManager->LateUpdate_SceneMgr(fTimeDelta);
-	m_pGameObjectManager->LateUpdateGameObject(nSceneID, fTimeDelta);
+	m_pGameObjectManager->LateUpdateGameObject(m_pSceneManager->Get_SceneID(), fTimeDelta);
 
 	return 0;
 }
@@ -58,7 +50,6 @@ HRESULT CManagement::RenderEngine(HWND hWnd)
 {
 	NULL_CHECK_RETURN(m_pRenderer, E_FAIL);
 
-	//m_pGraphic_Dev->Render_Begine(D3DCOLOR_XRGB(46, 116, 50));
 
 	if (FAILED(m_pRenderer->Render(hWnd)))
 	{
@@ -66,15 +57,25 @@ HRESULT CManagement::RenderEngine(HWND hWnd)
 		return E_FAIL;
 	}
 
-	//m_pGraphic_Dev->Render_End(hWnd);
+	m_pSceneManager->Render_Scene();
 
+	//현재 씬을 랜더 까지 끝내고 릴리즈 
+	if (m_bWaitChangeScene)
+	{
+		for (auto& iScneneID : m_listChangeSeneIdReservation)
+		{
+			m_pGameObjectManager->ClearForScene(iScneneID);
+		}
+		m_pSceneManager->Check_WaitChange();
+
+		m_listChangeSeneIdReservation.clear();
+		m_bWaitChangeScene = false;
+	}
 	return S_OK;
 }
-
 void CManagement::BegineRender()
 {
 	m_pGraphic_Dev->Render_Begine(D3DCOLOR_XRGB(46, 116, 50));
-
 }
 
 void CManagement::EndRender(HWND hWnd)
@@ -84,9 +85,20 @@ void CManagement::EndRender(HWND hWnd)
 
 HRESULT CManagement::ClearForScene(_int iSceneIndex)
 {
-	if (FAILED(m_pGameObjectManager->ClearForScene(iSceneIndex)))
+	//둘 이상의 예약이 들어올경우 중복 체크 
+	if(m_listChangeSeneIdReservation.empty() == false)
+	{
+		auto& Find_iter = find( m_listChangeSeneIdReservation.begin() , m_listChangeSeneIdReservation.end() ,iSceneIndex);
+		if (Find_iter == m_listChangeSeneIdReservation.end())
+		{
+			m_bWaitChangeScene = true;
+			m_listChangeSeneIdReservation.emplace_back(iSceneIndex);
+			return S_OK;
+		}
 		return E_FAIL;
-
+	}
+	m_listChangeSeneIdReservation.emplace_back(iSceneIndex);
+	m_bWaitChangeScene = true;
 	return S_OK;
 }
 
@@ -97,11 +109,12 @@ LPDIRECT3DDEVICE9 CManagement::Get_Device()
 	return m_pGraphic_Dev->Get_Device();
 }
 
-HRESULT CManagement::SetUpCurrentScene(_int iSceneID, CScene * pCurrentScene)
+HRESULT CManagement::SetUp_ChangeScene(_int iSceneID, CScene * pCurrentScene)
 {
 	NULL_CHECK_RETURN(m_pSceneManager, E_FAIL);
 
 	FAILED_CHECK(m_pSceneManager->Set_CurrentScene(iSceneID, pCurrentScene));
+	m_bWaitChangeScene = true;
 	m_pGameObjectManager->Ready_SceneLayer(iSceneID);
 
 	//////////////////////////////////////////////////////////////////////////
@@ -147,7 +160,7 @@ CGameObject* CManagement::Ready_GameObject(const size_t & nSceneID, const _tchar
 	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, GameObjectTag);
 }
 
-CGameObject* CManagement::Ready_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
+CGameObject* CManagement::Ready_GameObject(const _tchar * ProtoTag, const _tchar * pLayerTag)
 {
 	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
 	NULL_CHECK_RETURN(m_pSceneManager, nullptr);
@@ -156,7 +169,7 @@ CGameObject* CManagement::Ready_GameObject(const _tchar * GameObjectTag, const _
 	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
 		return nullptr;
 
-	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, GameObjectTag);
+	return m_pGameObjectManager->Ready_GameObejct(nSceneID, pLayerTag, ProtoTag);
 }
 
 CGameObject * CManagement::LateReady_GameObject(const _tchar * GameObjectTag, const _tchar * pLayerTag)
@@ -187,12 +200,12 @@ void  CManagement::Add_InstantGameObject(CGameObject * pGameObj,const _tchar * p
 
 CGameObject* CManagement::Add_InstantGameObject(const _tchar * pProtoTag, const _tchar * pLayerTag)
 {
-	NULL_CHECK(m_pGameObjectManager);
-	NULL_CHECK(m_pSceneManager);
+	NULL_CHECK_RETURN(m_pGameObjectManager, nullptr);
+	NULL_CHECK_RETURN(m_pSceneManager,nullptr);
 
 	_int nSceneID = NONE_SCENE;
 	if (FAILED(m_pSceneManager->Get_SceneID(nSceneID)))
-		return;
+		return nullptr;
 
 	return m_pGameObjectManager->Add_InstanceGameObject(nSceneID, pProtoTag, pLayerTag);
 }
@@ -219,6 +232,14 @@ list<CGameObject*>* CManagement::Get_GameObjetList(const _tchar * pLayerTag)
 		return nullptr;
 
 	return m_pGameObjectManager->Get_Layer(nSceneID, pLayerTag);
+}
+
+HRESULT CManagement::Ready_Resource(const _tchar * pCompTag, const eResourcesID::eResourcesID & eCompID, CResources * pComp)
+{
+	NULL_CHECK_RETURN(m_pResource_Manager, E_FAIL);
+
+
+	return m_pResource_Manager->Ready_Resourece(m_pGraphic_Dev->Get_Device(), pCompTag, eCompID, pComp);
 }
 
 HRESULT CManagement::Ready_Mesh(const _tchar * pMeshTag, eResourcesID::eResourcesID eType, const _tchar * pFilePath, const _tchar * pFileName)
@@ -258,8 +279,28 @@ HRESULT CManagement::Add_Renderer(eRenderID eID, CGameObject* pGameObject)
 	return m_pRenderer->Add_Renderer(eID, pGameObject);
 }
 
+HRESULT CManagement::Load_DataTable(const _tchar * pFilePath)
+{
+	NULL_CHECK_RETURN(m_pDataTable_Manager, E_FAIL);
+
+	return m_pDataTable_Manager->Load_DataTable(pFilePath);
+}
+
+HRESULT CManagement::Save_DataTable(const _tchar * pFilePath)
+{
+	return m_pDataTable_Manager->Save_DataTable(pFilePath);
+}
+
+vector<OBJDATA>* CManagement::Get_DataTableVector()
+{
+	return m_pDataTable_Manager->Get_DataTableVector();
+}
+
 void CManagement::Free()
 {
+	m_listChangeSeneIdReservation.clear();
+
+
 	SafeRelease(m_pRenderer);
 	SafeRelease(m_pSceneManager);
 	SafeRelease(m_pGameObjectManager);
@@ -272,6 +313,8 @@ void CManagement::ReleaseEngine()
 	if (CManagement::Release_Instance())
 		MSG_BOX(L"Faild Release to Management");
 
+	if(CDatatable_Manager::Release_Instance())
+		MSG_BOX(L"Faild Release to Release_Instance");
 	if (CGameObject_Manager::Release_Instance())
 		MSG_BOX(L"Faild Release to CGameObject_Manager");
 	if (CResource_Manager::Release_Instance())

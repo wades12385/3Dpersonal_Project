@@ -29,7 +29,7 @@ public:
 	//Ready : Ready Awake 를 나중에 미루고 레이어에 추가  ( 씬 초기화 단계)
 	HRESULT					Ready_ProtoType(const _tchar* pProtoTag,  CGameObject* pPrototype);
 	HRESULT					Ready_SceneLayer(const _int& iScene);
-	CGameObject*			Ready_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* GameObjectTag);
+	CGameObject*			Ready_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* ProtoTag);
 	//Awake 메서드에서 오브젝트 추가 할떄는 이걸로 
 	CGameObject*			LateReady_GameObejct(const _int& iScene, const _tchar* pLayerTag, const _tchar* GameObjectTag);
 
@@ -46,6 +46,7 @@ private:
 private:
 	PROTOTYPES	m_mapPrototypes; // Proto
 	LAYERS		m_mapObjManager; // GameObj
+	_bool		m_bChangeScene; 
 };
 END
 

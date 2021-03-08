@@ -7,6 +7,7 @@ class CLogo final : public CScene
 private:
 	explicit CLogo(LPDIRECT3DDEVICE9 pDevice);
 	virtual ~CLogo() = default;
+public:
 	virtual HRESULT Initialize_Scene() override;
 	virtual HRESULT ReInitialize_Scene() override;
 	virtual HRESULT Awake_Scene() override;
@@ -15,10 +16,12 @@ private:
 	virtual _uint LateUpdate_Scene(const _float& fTimeDeleta) override;
 	virtual void Render_Scene() override;
 
+	static CLogo* Create(LPDIRECT3DDEVICE9 pDevice);
+private:
+	class CLoading* m_pLoading;
+
 private:
 	virtual void Free() override;
-public:
-	static CLogo* Create(LPDIRECT3DDEVICE9 pDevice);
 };
 
 #define __LOGO_H___

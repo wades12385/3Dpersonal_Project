@@ -13,8 +13,8 @@ public:
 	virtual HRESULT		  Ready_Prototype() override;
 	virtual HRESULT		  Awake_GameObject() override;
 	virtual HRESULT		  Ready_GameObject() override;
-	virtual _uint		  UpdateGameObject(const _float & fDeltaTime) override;
-	virtual _uint		  LateUpdateGameObject(const _float & fDeltaTime) override;
+	virtual _uint		  Update_GameObject(const _float & fDeltaTime) override;
+	virtual _uint		  LateUpdate_GameObject(const _float & fDeltaTime) override;
 	virtual HRESULT		  RenderGameObject() override;
 	virtual CGameObject*  Clone() override;
 
@@ -22,7 +22,7 @@ public:
 
 	static CStage1Mesh* Create(LPDIRECT3DDEVICE9 pDevice, const _tchar* pComTag);
 	Engine::CStaticMesh*		m_pMeshCom = nullptr;
-	Engine::CTransform*		m_pTrans = nullptr;
+	Engine::CTransform*			m_pTrans = nullptr;
 	TCHAR m_szMeshTag[MAX_PATH];
 
 	virtual void Free();

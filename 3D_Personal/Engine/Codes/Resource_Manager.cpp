@@ -9,13 +9,15 @@ CResource_Manager::CResource_Manager()
 
 
 HRESULT CResource_Manager::Ready_Resourece(LPDIRECT3DDEVICE9 pDevice , const _tchar * pCompTag, 
-	const eResourcesID::eResourcesID & eCompID, const CComponent * pComp)
+	const eResourcesID::eResourcesID & eCompID, CResources * pComp)
 {
+	NULL_CHECK_RETURN(pComp, E_FAIL);
 	RESOURCEMAP::iterator Res_finditer;
 
 	if (FAILED(overlapCheck_Comp(pCompTag, eCompID, Res_finditer)))
 		return E_FAIL;
 
+	m_mapResouces[eCompID].emplace(pCompTag, pComp);
 	return S_OK;
 }
 
@@ -69,7 +71,7 @@ HRESULT CResource_Manager::Ready_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar * 
 		pResource = CDynamicMesh::Create(pDevice, pFilePath, pFileName);
 		break;
 	case Engine::eResourcesID::NaviMesh:
-		pResource = CNaviMesh::Create(pDevice,pFilePath);
+		//pResource = CNaviMesh::Create(pDevice,pFilePath);
 		break;
 	default:
 		return E_FAIL;
@@ -90,7 +92,7 @@ HRESULT CResource_Manager::Load_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar * p
 		return E_FAIL;
 
 	CResources*	pResource = nullptr;
-	pResource = CNaviMesh::Load(pDevice, pFilePath);
+	//pResource = CNaviMesh::Load(pDevice, pFilePath);
 	NULL_CHECK_RETURN(pResource, E_FAIL);
 	m_mapResouces[eResourcesID::NaviMesh].emplace(pMeshTag, pResource);
 
@@ -100,8 +102,8 @@ HRESULT CResource_Manager::Load_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar * p
 //Áßº¹Ã¼Å© ¹Ø Å½»ö¿ë
 HRESULT CResource_Manager::overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, RESOURCEMAP::iterator& iter )
 {
-	iter = find_if(m_mapResouces[eResourceID].begin(), m_mapResouces[eResourceID].end(), CTagFinder(pCompTag));
-
+	//iter = find_if(m_mapResouces[eResourceID].begin(), m_mapResouces[eResourceID].end(), CTagFinder(pCompTag));
+	iter = m_mapResouces[eResourceID].find(wstring(pCompTag));
 	if (iter != m_mapResouces[eResourceID].end())
 	{
 	

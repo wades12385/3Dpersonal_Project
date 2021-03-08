@@ -41,16 +41,16 @@ HRESULT CToolCamera::Ready_GameObject()
 	return S_OK;
 }
 
-_uint CToolCamera::UpdateGameObject(const _float & fDeltaTime)
+_uint CToolCamera::Update_GameObject(const _float & fDeltaTime)
 {
 	Move(fDeltaTime);
 	return _uint();
 }
 
-_uint CToolCamera::LateUpdateGameObject(const _float & fDeltaTime)
+_uint CToolCamera::LateUpdate_GameObject(const _float & fDeltaTime)
 {
 
-	return CCamera::LateUpdateGameObject(fDeltaTime);
+	return CCamera::LateUpdate_GameObject(fDeltaTime);
 }
 
 

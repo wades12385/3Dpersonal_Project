@@ -1,9 +1,7 @@
 #pragma once
 
 #ifndef __ENGINE_STRUCT_H__
-
 BEGIN(Engine)
-
 // ¼öÁ¤  [1/18/2021 Administrator]
 
 //Test
@@ -106,5 +104,57 @@ typedef struct CellVertexIdx
 	_uint _B;
 	_uint _C;
 }CELLVTXIDX;
-#define __ENGINE_STRUCT_H__
+
+typedef struct LinkCell
+{
+	LinkCell()
+		:iNaviID(NOT_FOUND)
+		,iCellIdx(NOT_FOUND)
+	{ }
+	LinkCell(const _int& ID , const _int& IDX)
+		:iNaviID(ID)
+		, iCellIdx(IDX)
+	{
+	}
+	_int	iNaviID;
+	_int	iCellIdx;
+}LINKCELL;
+
+
+typedef struct tagBound
+{
+	_vec3		vMin;
+	_vec3		vMax;
+	_vec3		vCenter;
+	float		fRadius;
+	float		fLength;
+	float		fHeight;
+	float		fDepth;
+}BOUND, *LPBOUND;
+
+
+typedef struct tagObjetDataTable
+{
+	tagObjetDataTable()
+		:iItemID(NOT_FOUND)
+		,wstrTag(L"")
+		,fSacle(1.f)
+		,fSize(0.f)
+		,fWeight(0.f)
+		, bDecoration(false)
+		, bFloating(false)
+		, bStationary(false)
+	{
+	}
+	_int				iItemID;
+	std::wstring		wstrTag;
+	_float				fSacle;
+	_float				fSize;
+	_float				fWeight;
+	_bool				bDecoration;
+	_bool				bFloating;
+	_bool				bStationary;
+}OBJDATA;
+
+#define __ENGINE_STRUCT_H__ 
 #endif

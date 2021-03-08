@@ -15,6 +15,7 @@
 #include "MainFrm.h"
 #include "NaviModifyTab.h"
 #include "ToolForm.h"
+#include "StaticDeploymentTab.h"
 
 #ifdef _DEBUG
 #define new DEBUG_NEW
@@ -137,62 +138,39 @@ void CMFCApplicationView::OnInitialUpdate()
 
 	CToolForm* pForm = (CToolForm*)(pMain->m_tSplitter.GetPane(0, 0));
 	m_pNaviModiTab = &pForm->m_NaviModifyTab;
+	m_pBoxDeployTab = &pForm->m_BoxDeployTab;
+	m_pStaticDeployTab = &pForm->m_StaticDeployTab;
 	// TODO: 여기에 특수화된 코드를 추가 및/또는 기본 클래스를 호출합니다.
 }
 
 
 void CMFCApplicationView::OnLButtonDown(UINT nFlags, CPoint point)
 {
-	if (m_pNaviModiTab->m_bVtxModing == false)
-		return;
 
-	int iIdx = 0;
 
-	//Navi Tab의 함수로 
-	//if (m_pNaviModiTab->m_PeekingBnt[0].GetCheck() == TRUE)
-	//{
-	//	//버텍스 피킹 상태에서  Cell idx 랑 라인옵션 그룹 비활성화 
-	//	m_pNaviModiTab->Enable_LineOption(false);
-	//	m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
+	int iIdx = NOT_FOUND;
+	CMainFrame* pMain = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+	CToolForm* pForm = (CToolForm*)(pMain->m_tSplitter.GetPane(0, 0));
+	iIdx = pForm->m_TabCtrl.GetCurSel();
 
-	//	if (m_pNaviModiTab->m_pNavMesh->Vertex_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
-	//	{
-	//		m_pNaviModiTab->ShowText_Vtx(iIdx);
-	//		m_pNaviModiTab->m_bNowPeeking = true;
-	//	}
-	//	else
-	//	{
-	//		m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
-	//		m_pNaviModiTab->m_bNowPeeking = false;
-	//		m_pNaviModiTab->Update_NaviModityTab();
-	//	}
-	//}
-	////Cell Peeking
-	//else
-	//{
-	//	m_pNaviModiTab->m_cPeekingVtxIdx.Format(_T("NULL"));
-	//	if (m_pNaviModiTab->m_pNavMesh->Cell_Peeking(_vec2((float)point.x, (float)point.y), iIdx))
-	//	{
-	//		m_pNaviModiTab->m_bNowPeeking = true;
-
-	//		eCellType::eCellType Type = (eCellType::eCellType)m_pNaviModiTab->Get_CellType();
-	//		//위에서 UpdateData 했으니 
-	//		if (m_pNaviModiTab->m_cbModifyOption)
-	//			m_pNaviModiTab->m_pNavMesh->m_pNaviCom->Get_vCell()[iIdx]->Set_CellType(Type);
-
-	//		m_pNaviModiTab->ShowText_Cell(iIdx);
-	//	}
-	//	else
-	//	{
-	//		m_pNaviModiTab->Enable_LineOption(false);
-	//		m_pNaviModiTab->m_cPeekingCellIdx.Format(L"NULL");
-	//		m_pNaviModiTab->Update_NaviModityTab();
-	//	}
-	//}
-}
-
-void CMFCApplicationView::Peeking_Process(const CPoint& point)
-{
-
+	switch (iIdx)
+	{
+	case 0:
+		if (m_pNaviModiTab->m_bVtxModing == false)
+			return;
+		m_pNaviModiTab->Peeking(point);
+		break;
+	case 1:
+		if (m_pStaticDeployTab->m_rbPeektype[eStaticItemPeek::None].GetCheck())
+			return;
+		m_pStaticDeployTab->Peeking(point);
+		break;
+	case 2:
+		m_pBoxDeployTab->Peeking(point);
+	default:
+		break;
+	}
 
 }
+
+

@@ -44,8 +44,14 @@
     <Filter Include="04.DirectApp\01.Scene\01.NaviMeshModifyTab">
       <UniqueIdentifier>{a0ed28e8-6e0b-4e0d-b32a-900f41b38cf2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.DirectApp\01.Scene\02.ObjectDeploy">
-      <UniqueIdentifier>{d55544dc-957b-494b-b44a-d0b97516f127}</UniqueIdentifier>
+    <Filter Include="04.DirectApp\01.Scene\03.BoxDeploy">
+      <UniqueIdentifier>{d55561fc-f3f3-4d54-a9e1-e4e8d22c1195}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="03.FormView\03.BoxDeployTab">
+      <UniqueIdentifier>{b27e836c-9a3d-4f1f-85a0-7a970963c6b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\04.DynamicTab">
+      <UniqueIdentifier>{0426a49c-9584-4a87-9bec-6ff1b54e65ae}</UniqueIdentifier>
     </Filter>
     <Filter Include="04.DirectApp\02.GameObject">
       <UniqueIdentifier>{99ac4ec4-7c88-4f65-a265-cfe443f24232}</UniqueIdentifier>
@@ -65,11 +71,17 @@
     <Filter Include="04.DirectApp\02.GameObject\04.ColBox">
       <UniqueIdentifier>{bfc579b3-aef4-4621-8fea-d32241bdb30d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="04.DirectApp\01.Scene\03.BoxDeploy">
-      <UniqueIdentifier>{d55561fc-f3f3-4d54-a9e1-e4e8d22c1195}</UniqueIdentifier>
+    <Filter Include="04.DirectApp\02.GameObject\05.CAxis">
+      <UniqueIdentifier>{65f61d82-6ba1-40eb-b4fc-7ff1fbe36206}</UniqueIdentifier>
     </Filter>
-    <Filter Include="03.FormView\03.BoxDeployTab">
-      <UniqueIdentifier>{b27e836c-9a3d-4f1f-85a0-7a970963c6b6}</UniqueIdentifier>
+    <Filter Include="04.DirectApp\02.GameObject\06.SizeCheck">
+      <UniqueIdentifier>{23d9e0b5-6f02-4bd3-84d4-af4f8d8b8f73}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\01.Scene\03.StaticDeploy">
+      <UniqueIdentifier>{d55544dc-957b-494b-b44a-d0b97516f127}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="04.DirectApp\02.GameObject\07.MfcStaticItem">
+      <UniqueIdentifier>{78986015-7e56-4065-a057-fc2040c9015d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -110,12 +122,6 @@
     <ClInclude Include="NaviModifyScene.h">
       <Filter>04.DirectApp\01.Scene\01.NaviMeshModifyTab</Filter>
     </ClInclude>
-    <ClInclude Include="DeploymentScene.h">
-      <Filter>04.DirectApp\01.Scene\02.ObjectDeploy</Filter>
-    </ClInclude>
-    <ClInclude Include="DeploymentTab.h">
-      <Filter>03.FormView\02.ObjectTab</Filter>
-    </ClInclude>
     <ClInclude Include="ToolCamera.h">
       <Filter>04.DirectApp\02.GameObject\01.Camera</Filter>
     </ClInclude>
@@ -136,6 +142,21 @@
     </ClInclude>
     <ClInclude Include="BoxDeployScene.h">
       <Filter>04.DirectApp\01.Scene\03.BoxDeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticDeployScene.h">
+      <Filter>04.DirectApp\01.Scene\03.StaticDeploy</Filter>
+    </ClInclude>
+    <ClInclude Include="Axis.h">
+      <Filter>04.DirectApp\02.GameObject\05.CAxis</Filter>
+    </ClInclude>
+    <ClInclude Include="SizeCheck.h">
+      <Filter>04.DirectApp\02.GameObject\06.SizeCheck</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticDeploymentTab.h">
+      <Filter>03.FormView\02.ObjectTab</Filter>
+    </ClInclude>
+    <ClInclude Include="MfcStaticItem.h">
+      <Filter>04.DirectApp\02.GameObject\07.MfcStaticItem</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -166,12 +187,6 @@
     <ClCompile Include="NaviModifyScene.cpp">
       <Filter>04.DirectApp\01.Scene\01.NaviMeshModifyTab</Filter>
     </ClCompile>
-    <ClCompile Include="DeploymentScene.cpp">
-      <Filter>04.DirectApp\01.Scene\02.ObjectDeploy</Filter>
-    </ClCompile>
-    <ClCompile Include="DeploymentTab.cpp">
-      <Filter>03.FormView\02.ObjectTab</Filter>
-    </ClCompile>
     <ClCompile Include="ToolCamera.cpp">
       <Filter>04.DirectApp\02.GameObject\01.Camera</Filter>
     </ClCompile>
@@ -189,6 +204,21 @@
     </ClCompile>
     <ClCompile Include="BoxDeployScene.cpp">
       <Filter>04.DirectApp\01.Scene\03.BoxDeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticDeployScene.cpp">
+      <Filter>04.DirectApp\01.Scene\03.StaticDeploy</Filter>
+    </ClCompile>
+    <ClCompile Include="Axis.cpp">
+      <Filter>04.DirectApp\02.GameObject\05.CAxis</Filter>
+    </ClCompile>
+    <ClCompile Include="SizeCheck.cpp">
+      <Filter>04.DirectApp\02.GameObject\06.SizeCheck</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticDeploymentTab.cpp">
+      <Filter>03.FormView\02.ObjectTab</Filter>
+    </ClCompile>
+    <ClCompile Include="MfcStaticItem.cpp">
+      <Filter>04.DirectApp\02.GameObject\07.MfcStaticItem</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

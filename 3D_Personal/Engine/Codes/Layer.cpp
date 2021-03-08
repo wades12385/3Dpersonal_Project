@@ -62,7 +62,7 @@ _int CLayer::Update_Layer(const _float & fTimeDelta)
 				continue;
 			}
 
-			 (*ObjList_iter)->UpdateGameObject(fTimeDelta);
+			 (*ObjList_iter)->Update_GameObject(fTimeDelta);
 			 ++ObjList_iter;
 		}
 
@@ -82,7 +82,7 @@ _int CLayer::LateUpdate_Layer(const _float & fTimeDelta)
 				++ObjList_iter;
 				continue;
 			}
-			(*ObjList_iter)->LateUpdateGameObject(fTimeDelta);
+			(*ObjList_iter)->LateUpdate_GameObject(fTimeDelta);
 			++ObjList_iter;
 		}
 	}

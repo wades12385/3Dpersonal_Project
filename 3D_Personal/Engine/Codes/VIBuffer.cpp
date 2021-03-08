@@ -45,7 +45,7 @@ HRESULT CVIBuffer::Ready_Component()
 HRESULT CVIBuffer::Render_VIBuffer()
 {
 	//이전 텍스쳐 세팅이 랜더링에 (컬러) 영향줌
-	m_pDevice->SetTexture(0, nullptr);
+	//m_pDevice->SetTexture(0, nullptr);
 	m_pDevice->SetFVF(m_dwFVF);
 	m_pDevice->SetIndices(m_pIB);
 

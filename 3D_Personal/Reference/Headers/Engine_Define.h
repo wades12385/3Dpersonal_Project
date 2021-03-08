@@ -18,7 +18,6 @@
 #endif // _AFX
 
 
-
 #define BEGIN(Name) namespace Name {
 #define END }
 #define USING(Name) using namespace Name;
@@ -124,7 +123,19 @@ public:												\
 #define COLOR_ORANGE			D3DCOLOR_XRGB(255,128,0)
 #define COLOR_LIGHTGRAY			D3DCOLOR_XRGB(192,192,192)
 #define COLOR_PURPLE			D3DCOLOR_XRGB(128,0,128)
-	
 
-#define __ENGINE_DEFINE_H__
+#define VCOLOR_GRAY				D3DXVECTOR3(125,125,125)
+#define VCOLOR_RED				D3DXVECTOR3(255,0,0)
+#define VCOLOR_BLUE				D3DXVECTOR3(0,0,255)
+#define VCOLOR_SKYBLUE			D3DXVECTOR3(0,255,255)
+#define VCOLOR_GREEN			D3DXVECTOR3(0,255,0)
+#define VCOLOR_PINK				D3DXVECTOR3(255,0,255)
+#define VCOLOR_YELLOW			D3DXVECTOR3(255,255,0)
+#define VCOLOR_ORANGE			D3DXVECTOR3(255,128,0)
+#define VCOLOR_LIGHTGRAY		D3DXVECTOR3(192,192,192)
+#define VCOLOR_PURPLE			D3DXVECTOR3(128,0,128)
+	
+#define VecToColor_XRGB(vec3)  D3DCOLOR_XRGB((int)vec3.x , (int)vec3.y, (int)vec3.z)
+
+#define __ENGINE_DEFINE_H__ 
 #endif

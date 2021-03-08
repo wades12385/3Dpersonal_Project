@@ -12,23 +12,32 @@ public:
 	virtual HRESULT Ready_Prototype() override;
 	virtual HRESULT Awake_GameObject() override;
 	virtual HRESULT Ready_GameObject() override;
-	virtual _uint UpdateGameObject(const _float & fDeltaTime) override;
-	virtual _uint LateUpdateGameObject(const _float & fDeltaTime) override;
+	virtual _uint Update_GameObject(const _float & fDeltaTime) override;
+	virtual _uint LateUpdate_GameObject(const _float & fDeltaTime) override;
 	virtual HRESULT RenderGameObject() override;
 	virtual CGameObject * Clone() override;
 
+
+	// 텍스쳐 변경 작업  안됨 
+	void	Set_Type(eBoxType::eBoxType eType);
+	void	Set_Select(_bool bSelect);
 
 	void	Set_Pos(const _vec3& vPos);
 	void	Set_Scale(const _vec3& vScale);
 	_bool   Peeking( _vec3 vRayPos ,  _vec3 vRayDir);
 	
 	static CColBox* Create(LPDIRECT3DDEVICE9 pDevice);
+	virtual void Free() override;
 public:
 	CTransform*			m_pTrans = nullptr;
-	CColliderBox*		m_pCollsion = nullptr;
+	CCollider*			m_pCollsion = nullptr;
+
 	eBoxType::eBoxType  m_eType;
 	_int				m_iNavID;
+
+	_bool				m_bTrigger;
 	_bool				m_bHide;
+	_bool				m_bSelect;
 	
 };
 

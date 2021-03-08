@@ -11,7 +11,7 @@ protected:
 public:
 	// CComponent을(를) 통해 상속됨
 	virtual HRESULT Ready_Component() override;
-	virtual HRESULT Update_Component(const _float & fTimeDelta) override;
+	virtual HRESULT Update_Component(const _float & fTimeDelta = 0.f) override;
 	virtual void Free() override;
 
 	virtual CComponent* Clone()PURE;

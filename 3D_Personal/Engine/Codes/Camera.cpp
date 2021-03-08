@@ -1,7 +1,7 @@
 #include "Camera.h"
 
 
-
+USING(Engine)
 CCamera::CCamera(LPDIRECT3DDEVICE9 pDevice)
 	:CGameObject(pDevice)
 {
@@ -31,7 +31,7 @@ HRESULT CCamera::Ready_GameObject()
 
 	return S_OK;
 }
-_uint CCamera::LateUpdateGameObject(const _float & fDeltaTime)
+_uint CCamera::LateUpdate_GameObject(const _float & fDeltaTime)
 {
 	D3DXMatrixLookAtLH(&m_tCameraDesc.matView, &m_tCameraDesc.vEye,
 		&m_tCameraDesc.vAt, &m_tCameraDesc.vUp);

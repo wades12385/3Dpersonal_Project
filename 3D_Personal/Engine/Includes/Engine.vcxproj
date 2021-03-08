@@ -73,7 +73,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -85,7 +85,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>../Bin/</OutDir>
     <IncludePath>$(WindowsSDK_IncludePath);$(DXSDK_DIR)Include;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(DXSDK_DIR)lib\x86;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -98,7 +98,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;ENGINE_EXPORT;_DEBUG;_WINDOWS;_USRDLL;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Codes/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Codes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,7 +141,7 @@ call UpdateLib.bat</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;ENGINE_EXPORT;NDEBUG;_WINDOWS;_USRDLL;ENGINE_EXPORTS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>../Codes/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../Codes;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -179,17 +179,20 @@ call UpdateLib.bat</Command>
     <ClInclude Include="..\Codes\BoneHierarchy.h" />
     <ClInclude Include="..\Codes\Camera.h" />
     <ClInclude Include="..\Codes\Cell.h" />
-    <ClInclude Include="..\Codes\ColliderBox.h" />
+    <ClInclude Include="..\Codes\Collider.h" />
     <ClInclude Include="..\Codes\Component.h" />
+    <ClInclude Include="..\Codes\Datatable_Manager.h" />
     <ClInclude Include="..\Codes\DXInput.h" />
     <ClInclude Include="..\Codes\DynamicMesh.h" />
     <ClInclude Include="..\Codes\Font.h" />
     <ClInclude Include="..\Codes\Font_Manager.h" />
+    <ClInclude Include="..\Codes\Item.h" />
     <ClInclude Include="..\Codes\Light.h" />
     <ClInclude Include="..\Codes\Light_Manager.h" />
     <ClInclude Include="..\Codes\Line.h" />
     <ClInclude Include="..\Codes\Mesh.h" />
     <ClInclude Include="..\Codes\NaviMesh.h" />
+    <ClInclude Include="..\Codes\RectBuffer.h" />
     <ClInclude Include="..\Codes\Resources.h" />
     <ClInclude Include="..\Codes\Resource_Manager.h" />
     <ClInclude Include="..\Codes\Engine_Define.h" />
@@ -223,17 +226,20 @@ call UpdateLib.bat</Command>
     <ClCompile Include="..\Codes\BoneHierarchy.cpp" />
     <ClCompile Include="..\Codes\Camera.cpp" />
     <ClCompile Include="..\Codes\Cell.cpp" />
-    <ClCompile Include="..\Codes\ColliderBox.cpp" />
+    <ClCompile Include="..\Codes\Collider.cpp" />
     <ClCompile Include="..\Codes\Component.cpp" />
+    <ClCompile Include="..\Codes\Datatable_Manager.cpp" />
     <ClCompile Include="..\Codes\DXInput.cpp" />
     <ClCompile Include="..\Codes\DynamicMesh.cpp" />
     <ClCompile Include="..\Codes\Font.cpp" />
     <ClCompile Include="..\Codes\Font_Manager.cpp" />
+    <ClCompile Include="..\Codes\Item.cpp" />
     <ClCompile Include="..\Codes\Light.cpp" />
     <ClCompile Include="..\Codes\Light_Manager.cpp" />
     <ClCompile Include="..\Codes\Line.cpp" />
     <ClCompile Include="..\Codes\Mesh.cpp" />
     <ClCompile Include="..\Codes\NaviMesh.cpp" />
+    <ClCompile Include="..\Codes\RectBuffer.cpp" />
     <ClCompile Include="..\Codes\Resources.cpp" />
     <ClCompile Include="..\Codes\Resource_Manager.cpp" />
     <ClCompile Include="..\Codes\Frame.cpp" />

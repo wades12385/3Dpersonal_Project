@@ -17,16 +17,19 @@
 #include <stdlib.h>
 #include <malloc.h>
 #include <memory.h>
-
+#include <process.h>
+#include <float.h>
 
 // TODO: 프로그램에 필요한 추가 헤더는 여기에서 참조합니다.
-#include "Client_Define.h"
-#include "Client_Extern.h"
-#include "Client_Enum.h"
 
 #include "Management.h"
 #include "Export_System.h"
 
+#include "Client_Define.h"
+#include "Client_Extern.h"
+#include "Client_Enum.h"
+
+#include "NaviMesh_Manager.h"
 
 //console
 #ifdef UNICODE

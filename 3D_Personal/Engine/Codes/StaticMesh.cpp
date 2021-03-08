@@ -50,7 +50,10 @@ HRESULT Engine::CStaticMesh::Ready_Meshes(const _tchar* pFilePath, const _tchar*
 
 	if (FAILED(D3DXLoadMeshFromX(szFullPath, D3DXMESH_MANAGED, m_pDevice,
 		&m_pAdjacency, &m_pSubset, NULL, &m_dwSubsetCnt, &m_pOriMesh)))
+	{
+		MSG_BOX(L"Failed Load");
 		return E_FAIL;
+	}
 	//fvf 로 노말정보 검색 후 추가 
 	_ulong	dwFVF = m_pOriMesh->GetFVF();
 	if (!(dwFVF & D3DFVF_NORMAL))
@@ -152,7 +155,6 @@ void Engine::CStaticMesh::Render_Meshes()
 	{
 		if (m_bNoTexture)
 		{
-			m_pDevice->SetTexture(0, nullptr);
 			m_pDevice->SetMaterial(&m_pMtrl[i].MatD3D);
 		}
 		else

@@ -19,6 +19,69 @@
     <Filter Include="01.Scene\00.Logo">
       <UniqueIdentifier>{8a3977f3-3bfe-456b-861a-7aa96a9f5fda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="01.Scene\01.TestScene">
+      <UniqueIdentifier>{eac07bb6-f037-4b1d-9161-bf17dd55cfb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.Scene\99.Loading">
+      <UniqueIdentifier>{5fea7b78-12c4-4773-ba89-c8bdb955f276}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Player">
+      <UniqueIdentifier>{47747301-213f-4181-b61a-6062fcbf022e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\02.Camera">
+      <UniqueIdentifier>{949dc310-2028-4e84-a320-92fd8475042d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Image">
+      <UniqueIdentifier>{0a03a3b8-dd86-49a4-9ea6-7937d68e9a03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\99.Image\01.LogoImg">
+      <UniqueIdentifier>{f71e1da8-4357-4749-91a7-a2aa17760e27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\03.Terrain">
+      <UniqueIdentifier>{8606c4a1-a9e3-4d16-beca-c3b676839d4d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.NaviMesh">
+      <UniqueIdentifier>{742db0f8-7aad-4adb-92b3-5eb02147249f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.NaviMesh\01.Stage1">
+      <UniqueIdentifier>{c3218611-9092-48d3-8ab4-bd369a11d8f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.NaviMesh\02.Stage2">
+      <UniqueIdentifier>{a93ed3a8-89c3-4726-a993-3ccdcc2be958}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.NaviMesh\03.Stage3">
+      <UniqueIdentifier>{8c2eaa62-fdc0-49fd-b9e6-12f9cb9231ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\10.NaviMesh\03.Stage3\01.S3_Part1">
+      <UniqueIdentifier>{fd8c0f40-7a4a-4f83-837e-a57dcc812183}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Player\02.Ouji">
+      <UniqueIdentifier>{66f2c47b-3f0c-468b-b109-f2ab07c03899}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Player\01.PlayerCore">
+      <UniqueIdentifier>{208ce689-f760-4f69-8f76-42ccfa0f50b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\02.Camera\01.PlayerCamera">
+      <UniqueIdentifier>{b4c4bab1-2aff-48ba-a426-9813fdd7e52b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\03.Terrain\03.Stage3">
+      <UniqueIdentifier>{ba3eebc8-9f61-4bf2-a692-d99fc7860db8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager">
+      <UniqueIdentifier>{76cabf62-224b-4df4-b2a0-af9c48888846}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\01.Navi_Manager">
+      <UniqueIdentifier>{1d57e6f8-3e10-4d9d-b1e1-38ad3d0f1bfe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\01.Player\00.Base">
+      <UniqueIdentifier>{fa47db13-d32c-420a-82b8-e83a86bda776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="97.Manager\02.Collision_Manaver">
+      <UniqueIdentifier>{a57ba24d-6b42-4694-8afd-bcbe0caeaafb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.GameObject\98.CollisonBox">
+      <UniqueIdentifier>{4e66e6f7-9c27-4cbe-bc87-6e20baed4435}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Client.h">
@@ -48,6 +111,39 @@
     <ClInclude Include="..\Codes\MainApp.h">
       <Filter>00.MainApp</Filter>
     </ClInclude>
+    <ClInclude Include="..\Codes\Loading.h">
+      <Filter>01.Scene\99.Loading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\TestScene.h">
+      <Filter>01.Scene\01.TestScene</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\LogoImg.h">
+      <Filter>02.GameObject\99.Image\01.LogoImg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\PlayerCore.h">
+      <Filter>02.GameObject\01.Player\01.PlayerCore</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\PlayerCamera.h">
+      <Filter>02.GameObject\02.Camera\01.PlayerCamera</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Stage3.h">
+      <Filter>02.GameObject\03.Terrain\03.Stage3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\NaviMeshObj.h">
+      <Filter>02.GameObject\10.NaviMesh\01.Stage1</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\NaviMesh_Manager.h">
+      <Filter>97.Manager\01.Navi_Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Player.h">
+      <Filter>02.GameObject\01.Player\00.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\Collision_Manager.h">
+      <Filter>97.Manager\02.Collision_Manaver</Filter>
+    </ClInclude>
+    <ClInclude Include="..\Codes\ColliBox.h">
+      <Filter>02.GameObject\98.CollisonBox</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
@@ -61,6 +157,39 @@
     </ClCompile>
     <ClCompile Include="..\Codes\Logo.cpp">
       <Filter>01.Scene\00.Logo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Loading.cpp">
+      <Filter>01.Scene\99.Loading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\TestScene.cpp">
+      <Filter>01.Scene\01.TestScene</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\LogoImg.cpp">
+      <Filter>02.GameObject\99.Image\01.LogoImg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PlayerCore.cpp">
+      <Filter>02.GameObject\01.Player\01.PlayerCore</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\PlayerCamera.cpp">
+      <Filter>02.GameObject\02.Camera\01.PlayerCamera</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Stage3.cpp">
+      <Filter>02.GameObject\03.Terrain\03.Stage3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\codes\NaviMeshObj.cpp">
+      <Filter>02.GameObject\10.NaviMesh\01.Stage1</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\NaviMesh_Manager.cpp">
+      <Filter>97.Manager\01.Navi_Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Player.cpp">
+      <Filter>02.GameObject\01.Player\00.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\Collision_Manager.cpp">
+      <Filter>97.Manager\02.Collision_Manaver</Filter>
+    </ClCompile>
+    <ClCompile Include="..\Codes\ColliBox.cpp">
+      <Filter>02.GameObject\98.CollisonBox</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

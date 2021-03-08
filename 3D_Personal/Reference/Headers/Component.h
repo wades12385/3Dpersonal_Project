@@ -11,7 +11,7 @@ protected:
 
 public:
 	virtual HRESULT Ready_Component() PURE;
-	virtual HRESULT Update_Component(const _float& fTimeDelta) PURE;
+	virtual HRESULT Update_Component(const _float& fTimeDelta = 0.f) PURE;
 
 	virtual void Free()PURE;
 

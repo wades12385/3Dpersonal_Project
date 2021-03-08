@@ -1,7 +1,7 @@
 #include "Texture.h"
 
 
-
+USING(Engine)
 CTexture::CTexture(LPDIRECT3DDEVICE9 pDevice)
 	:CResources(pDevice)
 {

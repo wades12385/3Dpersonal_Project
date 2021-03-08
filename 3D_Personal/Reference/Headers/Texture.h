@@ -1,7 +1,7 @@
 #pragma once
 #ifndef __TEXTURE_H__
 #include "Resources.h"
-
+BEGIN(Engine)
 class ENGINE_DLL CTexture : public CResources
 {
 public:
@@ -25,6 +25,6 @@ public:
 	virtual CComponent*		Clone();
 	virtual void			Free();
 };
-
+END
 #define __TEXTURE_H__
 #endif

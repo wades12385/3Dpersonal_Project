@@ -10,19 +10,21 @@ public:
 	virtual ~CTransform() = default;
 
 	// CComponent을(를) 통해 상속됨
-	virtual HRESULT Update_Component(const _float& fTimeDelta) override;
+	virtual HRESULT Update_Component(const _float& fTimeDelta = 0.f) override;
 	virtual HRESULT Ready_Component() override;
 
 	static	CTransform*				Create(LPDIRECT3DDEVICE9 pDevice);
-private:
-	virtual void					Free() override;
+public:
+	//지점을 바라보는 업뎃
+	HRESULT							Update_TargetComponet(const _vec3& vTargetPos);
+
+
 public:
 	void							AddPosition(const _vec3& vPos);
 	void							AddRotate(const _float& fX, const _float& fY, const _float& fZ);
 	void							AddRotate(const _vec3& vRot);
 	void							AddRevolve(const _float& fX, const _float& fY, const _float& fZ);
 	void							AddRevolve(const _vec3& vRev);
-
 	void							UpdateWorld();
 public:
 	//////////////////////////////////////////////////////////////////////////
@@ -43,11 +45,14 @@ public:
 	void							Set_Rotate(const _vec3& vRot);
 	void							Set_Revolve(const _float& fX, const _float& fY, const _float& fZ);
 	void							Set_Revolve(const _vec3& vRev);
+	void							Set_World(const _matrix& matworld) { m_matWorld = matworld; }
 private:
 	_vec3							m_vTransDesc[eTransform::End];
 	_matrix							m_matWorld;
 	// row 로 받아서 쓰지 말고 그냥 setter 받아와서 쓰자  
 	CTransform*						m_pParent = nullptr;
+private:
+	virtual void					Free() override;
 };
 END
 

@@ -6,7 +6,6 @@
 #define WINCX 1200
 #define WINCY 800
 
-#define BOOLTobool(x) (x == 1 )? true : false
+#define BOOLTobool(x) (x >= 1 )? true : false
 
-//#define DEVICE CManagement::Get_Instance()->Get_Device()
 #endif

@@ -4,13 +4,13 @@
 
 CNaviModifyScene::CNaviModifyScene(LPDIRECT3DDEVICE9 pDevice)
 	:CScene(pDevice)
+	
 {
 }
 
 HRESULT CNaviModifyScene::Initialize_Scene()
 {
 	CManagement::Get_Instance()->Ready_Mesh(L"StaticMesh_Stage1", eResourcesID::StaticMesh, L"../Data/Mesh/", L"Stage1.X");
-	CManagement::Get_Instance()->Ready_Mesh(L"Sphere", eResourcesID::StaticMesh, L"../Data/", L"Sphere.X");
 
 	CGameObject* pObj = CStage1Mesh::Create(CManagement::Get_Instance()->Get_Device(),L"StaticMesh_Stage1");
 	CManagement::Get_Instance()->Ready_GameObjectPrototype(L"Proto_Stage1", pObj);

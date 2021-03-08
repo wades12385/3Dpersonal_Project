@@ -14,7 +14,6 @@ IMPLEMENT_DYNAMIC(CBoxDeployTab, CDialog)
 CBoxDeployTab::CBoxDeployTab(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_BOXDEPLOYTAB, pParent)
 	, m_sSelectNaviName(_T(""))
-	, m_cbSelected_Navi(FALSE)
 	, m_sTriBoxNavID(_T(""))
 	, m_pBox(nullptr)
 	, m_sSelectNavID(_T(""))
@@ -31,7 +30,6 @@ void CBoxDeployTab::DoDataExchange(CDataExchange* pDX)
 	CDialog::DoDataExchange(pDX);
 	DDX_Control(pDX, IDC_TREE1, m_NavTreeCtrl);
 	DDX_Text(pDX, IDC_EDIT2, m_sSelectNaviName);
-	DDX_Check(pDX, IDC_CHECK1, m_cbSelected_Navi);
 	DDX_Control(pDX, IDC_RADIO1, m_rbClickOption[eClickOption::Create]);
 	DDX_Control(pDX, IDC_RADIO2, m_rbClickOption[eClickOption::Peeking]);
 	DDX_Control(pDX, IDC_RADIO3, m_rbCreateOption[eBoxType::Collision]);
@@ -51,6 +49,7 @@ void CBoxDeployTab::DoDataExchange(CDataExchange* pDX)
 
 	DDX_Text(pDX, IDC_EDIT19, m_sTriBoxNavID);
 	DDX_Text(pDX, IDC_EDIT8, m_sSelectNavID);
+	DDX_Control(pDX, IDC_CHECK2, m_cbPeekAble);
 }
 
 
@@ -59,8 +58,8 @@ void CBoxDeployTab::DoDataExchange(CDataExchange* pDX)
 BEGIN_MESSAGE_MAP(CBoxDeployTab, CDialog)
 	ON_BN_CLICKED(IDC_BUTTON9, &CBoxDeployTab::OnBnClickedButtonNaviLoad)
 	ON_BN_CLICKED(IDC_BUTTON13, &CBoxDeployTab::OnBnClickedButtonNaviDelete)
-	ON_BN_CLICKED(IDC_RADIO1, &CBoxDeployTab::OnBnClickedCreateBox)
-	ON_BN_CLICKED(IDC_RADIO2, &CBoxDeployTab::OnBnClickedPeekingBox)
+	ON_BN_CLICKED(IDC_RADIO1, &CBoxDeployTab::OnBnClicked_EnableCreateBox)
+	ON_BN_CLICKED(IDC_RADIO2, &CBoxDeployTab::OnBnClicked_EnablePeekingBox)
 	ON_BN_CLICKED(IDC_BUTTON3, &CBoxDeployTab::OnBnClickedClearColBox)
 	ON_BN_CLICKED(IDC_BUTTON1, &CBoxDeployTab::OnBnClickedSaveColBox)
 	ON_BN_CLICKED(IDC_BUTTON2, &CBoxDeployTab::OnBnClickedLoadColBox)
@@ -77,6 +76,7 @@ BEGIN_MESSAGE_MAP(CBoxDeployTab, CDialog)
 	ON_BN_CLICKED(IDC_RADIO10, &CBoxDeployTab::OnBnClickedPeekTypeTri)
 	ON_BN_CLICKED(IDC_BUTTON4, &CBoxDeployTab::OnBnClickedTriBoxIDApply)
 	ON_NOTIFY(TVN_SELCHANGED, IDC_TREE1, &CBoxDeployTab::OnTvnSelchangedNavTree)
+	ON_BN_CLICKED(IDC_BUTTON21, &CBoxDeployTab::OnBnClicked_DeleteTriBox)
 END_MESSAGE_MAP()
 
 
@@ -84,57 +84,78 @@ END_MESSAGE_MAP()
 
 void CBoxDeployTab::SetUp_Tree(const CString & NavName)
 {
-	if (m_pNavMesh == nullptr)
-		return;
-	CString NaviMeshRoot, ObjEntry;
-	HTREEITEM root, NaviMesh;
+	HTREEITEM root;
 	root = m_NavTreeCtrl.GetRootItem();
-	NaviMesh = m_NavTreeCtrl.InsertItem(NavName, 0, 0, root, TVI_LAST);
+	m_NavTreeCtrl.InsertItem(NavName, 0, 0, TVI_ROOT, TVI_LAST);
+	cout << m_NavTreeCtrl.GetCount() << endl;
+
 	UpdateData(FALSE);
 }
 
+void CBoxDeployTab::Peeking(const CPoint & point)
+{
+	if (m_cbPeekAble.GetCheck() == false)
+		return;
+
+	if (m_rbClickOption[eClickOption::Create].GetCheck())
+	{
+		Peeking_Create(_vec2((float)point.x, (float)point.y));
+	}
+	else
+	{
+		Peeking_Box(_vec2((float)point.x, (float)point.y));
+	}
+}
+
+void CBoxDeployTab::Peeking_Create(const _vec2 & vPt)
+{
+	NULL_CHECK(m_pNavMesh)
+
+	_int temp;
+	_vec3 vPeekingPos;
+	if (m_pNavMesh->Cell_Peeking(vPt, temp, vPeekingPos))
+	{
+		CString str;
+		
+		CColBox* pBox = CColBox::Create(CManagement::Get_Instance()->Get_Device());
+		if (m_rbCreateOption[eBoxType::Collision].GetCheck())
+		{
+			pBox->Set_Type(eBoxType::Collision);
+			CManagement::Get_Instance()->Add_InstantGameObject(pBox, L"Layer_ColBox");
+			m_pColBoxList = CManagement::Get_Instance()->Get_GameObjetList(L"Layer_ColBox");
+			Add_ColBox();
+		}
+		else
+		{
+			pBox->Set_Type(eBoxType::Trigger);
+			CManagement::Get_Instance()->Add_InstantGameObject(pBox, L"Layer_TriBox");
+			m_pTriBoxList = CManagement::Get_Instance()->Get_GameObjetList(L"Layer_TriBox");
+			Add_TriBox();
+		}
+
+		pBox->m_pTrans->Set_Position(vPeekingPos);
+
+		if (m_pBox != nullptr)
+		{
+			m_pBox->Set_Select(false);
+		}
+		m_pBox = pBox;
+		m_pBox->Set_Select(true);
+	}
+}
+
+//Peeking box 
 void CBoxDeployTab::Peeking_Box(const _vec2 & vPt)
 {
 	if (m_rbClickOption[eClickOption::Peeking].GetCheck() == false )
 		return;
-
-	_vec3	 vViewPortPt;
-	_vec3	 vRayDir, vRayPos ;
-
-	D3DVIEWPORT9		ViewPort;
-	ZeroMemory(&ViewPort, sizeof(D3DVIEWPORT9));
-	_matrix matProj, matView;
-
-	CManagement::Get_Instance()->Get_Device()->GetViewport(&ViewPort);
-	CManagement::Get_Instance()->Get_Device()->GetTransform(D3DTS_PROJECTION, &matProj);
-	CManagement::Get_Instance()->Get_Device()->GetTransform(D3DTS_VIEW, &matView);
-
-	// to Proj
-	vViewPortPt.x = vPt.x / (ViewPort.Width * 0.5f) - 1.f;
-	vViewPortPt.y = vPt.y / -(ViewPort.Height * 0.5f) + 1.f;
-	vViewPortPt.z = 0.1f;
-
-
-	// To Veiw
-	D3DXMatrixInverse(&matProj, NULL, &matProj);
-	D3DXVec3TransformCoord(&vViewPortPt, &vViewPortPt, &matProj);
-
-
-	vRayPos = _vec3(0.f, 0.f, 0.f);
-	vRayDir = vViewPortPt - vRayPos;
-
-	// To world
-	D3DXMatrixInverse(&matView, NULL, &matView);
-	D3DXVec3TransformCoord(&vRayPos, &vRayPos, &matView);
-	D3DXVec3TransformNormal(&vRayDir, &vRayDir, &matView);
-
 
 	//박스리스트를 받고 피킹메서드 콜  성공시 인덱스와 포인터 out
 	auto& SearchPeekingBox = [&](list<CGameObject*>* pList, _int& iBoxIdx,const CColBox* pBox) {
 		iBoxIdx = 0;
 		for (auto& pBox : *pList)
 		{
-			if (static_cast<CColBox*>(pBox)->Peeking(vRayPos, vRayDir))
+			if (static_cast<CColBox*>(pBox)->m_pCollsion->RayPeeking(vPt))
 			{
 				pBox = (CColBox*)pBox;
 				return true;
@@ -170,6 +191,24 @@ void CBoxDeployTab::Peeking_Box(const _vec2 & vPt)
 	UpdateData(FALSE);
 }
 
+void CBoxDeployTab::Update_TransInfo()
+{
+	if (m_pBox->m_eType)
+	{
+		m_sTriBoxNavID.Format(L"%d", m_pBox->m_eType);
+	}
+
+	m_sPos[eFloat3::X].Format(L"%d", m_pBox->m_pTrans->Get_Position().x);
+	m_sPos[eFloat3::Y].Format(L"%d", m_pBox->m_pTrans->Get_Position().y);
+	m_sPos[eFloat3::Z].Format(L"%d", m_pBox->m_pTrans->Get_Position().z);
+
+	m_sSacle[eFloat3::X].Format(L"%d", m_pBox->m_pTrans->Get_Sacle().x);
+	m_sSacle[eFloat3::Y].Format(L"%d", m_pBox->m_pTrans->Get_Sacle().y);
+	m_sSacle[eFloat3::Z].Format(L"%d", m_pBox->m_pTrans->Get_Sacle().z);
+
+	UpdateData(FALSE);
+}
+
 
 
 void CBoxDeployTab::OnBnClickedButtonNaviLoad()
@@ -190,15 +229,12 @@ void CBoxDeployTab::OnBnClickedButtonNaviLoad()
 		CString strFilePath = Dlg.GetPathName();
 		CString strFileName = Dlg.GetFileName();
 
-		//추가하고  
-		CManagement::Get_Instance()->Load_NavMesh(strFileName, strFilePath);
+		CNaviObj* pMesh = CNaviObj::Create(CManagement::Get_Instance()->Get_Device());
+		CNaviMesh* pNaviMeshCom = CNaviMesh::Load(CManagement::Get_Instance()->Get_Device(), Dlg.GetPathName(),true);
+		pMesh->Set_Navi(pNaviMeshCom);
 
-		//load로 obj 만든건 load 값 검사해서 다른 로직으로 
-		m_pNavMesh = CNaviObj::Create(CManagement::Get_Instance()->Get_Device(), strFileName);
-
-		CManagement::Get_Instance()->Add_InstantGameObject(m_pNavMesh, L"Layer_NaviMesh");
+		CManagement::Get_Instance()->Add_InstantGameObject(pMesh, L"Layer_NaviMesh");
 		m_pNavMeshList = CManagement::Get_Instance()->Get_GameObjetList(L"Layer_NaviMesh");
-		CManagement::Get_Instance()->Get_GameObjet(L"Layer_NaviMesh");
 
 		SetUp_Tree(Dlg.GetFileTitle());
 	}
@@ -244,7 +280,7 @@ void CBoxDeployTab::OnBnClickedButtonNaviDelete()
 //DDX_Text(pDX, IDC_EDIT21, m_sPos[eFloat3::Y]);
 //DDX_Text(pDX, IDC_EDIT22, m_sPos[eFloat3::Z]);
 
-void CBoxDeployTab::OnBnClickedCreateBox()
+void CBoxDeployTab::OnBnClicked_EnableCreateBox()
 {
 	GetDlgItem(IDC_RADIO3)->EnableWindow(TRUE);
 	GetDlgItem(IDC_RADIO4)->EnableWindow(TRUE);
@@ -268,7 +304,7 @@ void CBoxDeployTab::OnBnClickedCreateBox()
 }
 
 
-void CBoxDeployTab::OnBnClickedPeekingBox()
+void CBoxDeployTab::OnBnClicked_EnablePeekingBox()
 {
 
 	GetDlgItem(IDC_RADIO3)->EnableWindow(FALSE);
@@ -640,33 +676,51 @@ void CBoxDeployTab::OnTvnSelchangedNavTree(NMHDR *pNMHDR, LRESULT *pResult)
 	HTREEITEM hLoop;
 	//root 클릭 예외처리
 
-	if (hItem == m_NavTreeCtrl.GetRootItem())
-		return;
 
+	m_iNavMeshIdx = 0;
+	hLoop = m_NavTreeCtrl.GetRootItem();
 
-	if (m_NavTreeCtrl.ItemHasChildren(hItem) == false)
+	while (hLoop != nullptr)
 	{
-		m_iNavMeshIdx = 0;
-		hLoop = m_NavTreeCtrl.GetParentItem(hItem);
-		hLoop = m_NavTreeCtrl.GetChildItem(hLoop);
-
-		while (hLoop != nullptr)
+		if (hLoop == hItem)
 		{
-			if (hLoop == hItem)
-			{
-				 m_pNavMesh = Find_NavMeshFromLayer();
-				 //m_sSelectNavID m_sTriBoxNavID 아이디 추가해야함 
-				 m_sSelectNaviName = m_NavTreeCtrl.GetItemText(hItem);
-				return;
-			}
-			hLoop = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXT);
-			++m_iNavMeshIdx;
+			m_pNavMesh = Find_NavMeshFromLayer();
+			//m_sSelectNavID m_sTriBoxNavID 아이디 추가해야함 
+			m_sSelectNaviName = m_NavTreeCtrl.GetItemText(hItem);
+			m_sSelectNavID.Format(L"%d", m_pNavMesh->m_pNaviCom->Get_NaviID());
+			UpdateData(FALSE);
+			return;
 		}
-		m_iNavMeshIdx = NOT_FOUND;
+		hLoop = m_NavTreeCtrl.GetNextItem(hLoop, TVGN_NEXT);
+		++m_iNavMeshIdx;
 	}
+	m_iNavMeshIdx = NOT_FOUND;
 	*pResult = 0;
 }
 
+
+void CBoxDeployTab::Add_TriBox()
+{
+	_int iIdx = m_lbTriggerList.GetCount();
+	if (iIdx == LB_ERR)
+		return;
+
+	CString str;
+
+	str.Format(L"TriBox[%d]", iIdx);
+	m_lbTriggerList.AddString(str);
+}
+
+void CBoxDeployTab::Add_ColBox()
+{
+	_int iIdx = m_lbCollsionList.GetCount();
+	if (iIdx == LB_ERR)
+		return;
+
+	CString str;
+	str.Format(L"ColBox[%d]", iIdx);
+	m_lbCollsionList.AddString(str);
+}
 
 CNaviObj * CBoxDeployTab::Find_NavMeshFromLayer()
 {
@@ -682,3 +736,22 @@ CNaviObj * CBoxDeployTab::Find_NavMeshFromLayer()
 	return nullptr;
 }
 
+
+
+void CBoxDeployTab::OnBnClicked_DeleteTriBox()
+{
+	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
+}
+
+
+
+
+BOOL CBoxDeployTab::OnInitDialog()
+{
+	CDialog::OnInitDialog();
+
+	// TODO:  여기에 추가 초기화 작업을 추가합니다.
+
+	return TRUE;  // return TRUE unless you set the focus to a control
+				  // 예외: OCX 속성 페이지는 FALSE를 반환해야 합니다.
+}

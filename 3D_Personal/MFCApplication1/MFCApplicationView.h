@@ -12,7 +12,9 @@ protected: // serialization에서만 만들어집니다.
 // 특성입니다.
 public:
 	CMFCApplicationDoc* GetDocument() const;
-	class CNaviModifyTab* m_pNaviModiTab;
+	class CNaviModifyTab* m_pNaviModiTab = nullptr;
+	class CBoxDeployTab* m_pBoxDeployTab = nullptr;
+	class CStaticDeploymentTab* m_pStaticDeployTab = nullptr;
 // 작업입니다.
 public:
 
@@ -45,7 +47,6 @@ public:
 
 private:
 
-	void Peeking_Process(const CPoint& point);
 };
 
 #ifndef _DEBUG  // MFCApplication1View.cpp의 디버그 버전

@@ -2,10 +2,17 @@
 
 #ifndef __CLIENT_ENUM_H__
 
-enum class eSceneID
+ENUMSPACES(eSceneID)
 {
-	Static, Logo, Stage, End
+	Static, Logo, Stage, Test, End
 };
+END
 
+ENUMSPACES(eLoadID)
+{
+	Test, End
+
+};
+END
 #define __CLIENT_ENUM_H__
 #endif

@@ -2,9 +2,8 @@
 
 USING(Engine)
 CLine::CLine()
-	:m_tColor(COLOR_LIGHTGRAY)
+	:m_vColor(VCOLOR_LIGHTGRAY)
 	,m_eType(eCellType::Base)
-	,m_iNextNavMeshID(NOT_FOUND)
 {
 }
 
@@ -36,13 +35,17 @@ void CLine::Set_Type(eCellType::eCellType eType)
 	switch (eType)
 	{
 	case Engine::eCellType::Base:
-		Set_Color(COLOR_LIGHTGRAY);
+		Set_Color(VCOLOR_LIGHTGRAY);
+		m_vecLinkCells.clear();
+		m_vecLinkCells.shrink_to_fit();
 		break;
 	case Engine::eCellType::Leave:
-		Set_Color(COLOR_BLUE);
+		Set_Color(VCOLOR_BLUE);
+		m_vecLinkCells.clear();
+		m_vecLinkCells.shrink_to_fit();
 		break;
 	case Engine::eCellType::Connect:
-		Set_Color(COLOR_ORANGE);
+		Set_Color(VCOLOR_ORANGE);
 		break;
 	}
 	m_eType = eType;
@@ -60,4 +63,6 @@ CLine * CLine::Create(const _vec2 * pPointA, const _vec2 * pPointB)
 
 void CLine::Free()
 {
+	m_vecLinkCells.clear();
+	m_vecLinkCells.shrink_to_fit();
 }

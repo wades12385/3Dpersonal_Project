@@ -162,14 +162,14 @@ HRESULT CGameObject_Manager::Ready_ProtoType(const _tchar * pProtoTag,  CGameObj
 
 
 CGameObject* CGameObject_Manager::Ready_GameObejct(const _int & iScene,
-	const _tchar* pLayerTag, const _tchar* GameObjectTag)
+	const _tchar* pLayerTag, const _tchar* ProtoTag)
 {
 	//find Prototype
-	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(GameObjectTag));
+	auto Proto_Iterfind = find_if(m_mapPrototypes.begin(), m_mapPrototypes.end(), CTagFinder(ProtoTag));
 	if (FAILED(FindCheck_Proto(Proto_Iterfind)))
 	{
 		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Failed found %s Prototype", GameObjectTag);
+		swprintf_s(szBuffer, L"Failed found %s Prototype", ProtoTag);
 		MSG_BOX(szBuffer);
 		return nullptr;
 	}
@@ -179,7 +179,7 @@ CGameObject* CGameObject_Manager::Ready_GameObejct(const _int & iScene,
 	if (nullptr == pClone)
 	{
 		TCHAR szBuffer[128] = L"";
-		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", GameObjectTag);
+		swprintf_s(szBuffer, L"Failed To Clone %s Prototype", ProtoTag);
 		MSG_BOX(szBuffer);
 		return nullptr;
 	}

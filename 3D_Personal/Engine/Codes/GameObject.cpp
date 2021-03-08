@@ -7,6 +7,8 @@ CGameObject::CGameObject(LPDIRECT3DDEVICE9 pDevice)
 	: m_pDevice(pDevice)
 	,m_bDelete(false)
 	,m_bEnable(true)
+	,m_iNavID(NOT_FOUND)
+	,m_iNaviCellIdx(NOT_FOUND)
 {
 	SafeAddRef(m_pDevice);
 }
@@ -15,6 +17,9 @@ CGameObject::CGameObject(const CGameObject & other)
 	: m_pDevice(other.m_pDevice)
 	, m_bDelete(other.m_bDelete)
 	, m_bEnable(other.m_bEnable)
+	, m_iNavID(other.m_iNavID)
+	, m_iNaviCellIdx(other.m_iNaviCellIdx)
+
 {
 	SafeAddRef(m_pDevice);
 }
@@ -34,7 +39,7 @@ HRESULT CGameObject::Ready_GameObject()
 	return S_OK;
 }
 
-_uint CGameObject::UpdateGameObject(const _float& fDeltaTime)
+_uint CGameObject::Update_GameObject(const _float& fDeltaTime)
 {
 	for (auto& pair : m_mapComponents)
 	{
@@ -44,7 +49,7 @@ _uint CGameObject::UpdateGameObject(const _float& fDeltaTime)
 	return _uint();
 }
 
-_uint CGameObject::LateUpdateGameObject(const _float& fDeltaTime)
+_uint CGameObject::LateUpdate_GameObject(const _float& fDeltaTime)
 {
 	return _uint();
 }
@@ -84,7 +89,7 @@ CComponent*	 CGameObject::Get_Component(const eComponentID::eComponentID & ComID
 {
 	auto& Comp_iterfind = m_mapComponents.find(ComID);
 
-	if (Comp_iterfind != m_mapComponents.end())
+	if (Comp_iterfind == m_mapComponents.end())
 	{
 		TCHAR szBuf[128] = TEXT("");
 		swprintf(szBuf, 128, TEXT("Failed to find component. Com ID:%d "), ComID);

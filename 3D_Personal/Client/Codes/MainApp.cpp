@@ -21,10 +21,14 @@ HRESULT CMainApp::ReadyMainApp()
 
 	m_pDevice = m_pManagement->Get_Device();
 	SafeAddRef(m_pDevice);
+
+	m_pManagement->SceneInitLog_Reserve(eSceneID::End);
+	FAILED_CHECK(Engine::Ready_Font(m_pManagement->Get_Device(), L"Font_Default", L"±Ã¼­", 10, 25, FW_HEAVY));
+
 	/* Á¶¸í off */
 	m_pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 
-	if (FAILED(m_pManagement->SetUpCurrentScene((_uint)eSceneID::Logo, CLogo::Create(m_pDevice))))
+	if (FAILED(m_pManagement->SetUp_ChangeScene((_uint)eSceneID::Logo, CLogo::Create(m_pDevice))))
 	{
 		return E_FAIL;
 	}
@@ -40,7 +44,11 @@ void CMainApp::Running(const _float & fTimeDelta)
 	ShowFPS(fTimeDelta);
 	Engine::Update_InputDev();
 	m_pManagement->UpdateEngine(fTimeDelta);
+
+	m_pManagement->BegineRender();
 	m_pManagement->RenderEngine(g_hWnd);
+	m_pManagement->EndRender(g_hWnd);
+
 }
 
 
@@ -66,7 +74,7 @@ CMainApp* CMainApp::Create()
 {
 	CMainApp* pInstance = new CMainApp;
 	if (FAILED(pInstance->ReadyMainApp()))
-	{
+	{	
 		MSG_BOX(L"Failed To Create CMainApp");
 		SafeRelease(pInstance);
 	}
@@ -76,6 +84,8 @@ CMainApp* CMainApp::Create()
 
 void CMainApp::Free()
 {
+	CNaviMesh_Manager::Release_Instance();
+
 	SafeRelease(m_pManagement);
 	SafeRelease(m_pDevice);
 	CManagement::Get_Instance()->ReleaseEngine();

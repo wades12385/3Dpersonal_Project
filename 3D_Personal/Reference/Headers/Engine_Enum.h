@@ -20,13 +20,13 @@ enum class eRenderID
 
 ENUMSPACES(eComponentID)
 {
-	Transform,VIBuffer,StaticMesh,DynamicMesh,NaviMesh,Texture,CColliderBox,End
+	Transform,VIBuffer,StaticMesh,DynamicMesh,NaviMesh,Texture,Collider,End
 };
 END
 
 ENUMSPACES(eResourcesID)
 {
-	StaticMesh,DynamicMesh,NaviMesh,Texture,CollisionBox,End
+	StaticMesh,DynamicMesh,NaviMesh,Texture,Collider,RectBuffer,End
 };
 END
 
@@ -67,7 +67,7 @@ ENUMSPACES(eLineID)
 END
 ENUMSPACES(eCompare)
 {
-	Move,Stop,End
+	Move,Stop,Leave,End
 };
 END
 
@@ -88,7 +88,17 @@ ENUMSPACES(eTextureType)
 	Nomal,Cube,End
 };
 END
+ENUMSPACES(eBoundType)
+{
+	Box, Sphere, End
+};
+END
 
+ENUMSPACES(eObjDataID)
+{
+	ID, Tag, Scale, Size, Weight, Decoration, Floating, Stationary, End
+};
+END
 
 END // for  Engine
 

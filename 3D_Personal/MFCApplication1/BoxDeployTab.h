@@ -28,7 +28,13 @@ protected:
 	DECLARE_MESSAGE_MAP()
 public:
 	void SetUp_Tree(const CString& NavName);
+	void Peeking(const CPoint& point);
+	void Peeking_Create(const _vec2& vPt);
 	void Peeking_Box(const _vec2& vPt);
+	void Update_TransInfo();
+
+	void Add_TriBox();
+	void Add_ColBox();
 
 	CNaviObj * Find_NavMeshFromLayer();
 public:
@@ -40,19 +46,18 @@ public:
 	list<CGameObject*>*  m_pColBoxList;
 	list<CGameObject*>*  m_pTriBoxList;
 public:
-	CButton m_rbClickOption[eClickOption::End];
-	CButton m_rbCreateOption[eBoxType::End];
-	CTreeCtrl m_NavTreeCtrl;
-	CString  m_sSelectNaviName;
-	BOOL	 m_cbSelected_Navi;
-	CButton m_rbPeekBoxType[eBoxType::End];
+	CButton				 m_rbClickOption[eClickOption::End];
+	CButton				 m_rbCreateOption[eBoxType::End];
+	CTreeCtrl			 m_NavTreeCtrl;
+	CString				 m_sSelectNaviName;
+	CButton				 m_rbPeekBoxType[eBoxType::End];
 
-	CString  m_sSacle[eFloat3::End];
-	CString	 m_sPos[eFloat3::End];
-	CListBox m_lbCollsionList;
-	CListBox m_lbTriggerList;
+	CString				 m_sSacle[eFloat3::End];
+	CString				 m_sPos[eFloat3::End];
+	CListBox			 m_lbCollsionList;
+	CListBox			 m_lbTriggerList;
 
-	CString m_sTriBoxNavID;
+	CString				 m_sTriBoxNavID;
 
 	//Box Data
 	afx_msg void OnBnClickedClearColBox();
@@ -71,9 +76,10 @@ public:
 	afx_msg void OnDeltaposSpinPosZ(NMHDR *pNMHDR, LRESULT *pResult);
 
 	
-	afx_msg void OnBnClickedCreateBox();
-	afx_msg void OnBnClickedPeekingBox();
+	afx_msg void OnBnClicked_EnableCreateBox();
+	afx_msg void OnBnClicked_EnablePeekingBox();
 
+	//Create
 	afx_msg void OnBnClickedPeekTypeCol();
 	afx_msg void OnBnClickedPeekTypeTri();
 
@@ -85,6 +91,9 @@ public:
 	afx_msg void OnBnClickedTriBoxIDApply();
 	afx_msg void OnTvnSelchangedNavTree(NMHDR *pNMHDR, LRESULT *pResult);
 	CString m_sSelectNavID;
+	CButton m_cbPeekAble;
+	afx_msg void OnBnClicked_DeleteTriBox();
+	virtual BOOL OnInitDialog();
 };
 #define __MFCBOXDEPLOYTAB_H__
 #endif // !__MFCBOXDEPLOYTAB_H__

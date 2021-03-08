@@ -1,0 +1,113 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="99.Default">
+      <UniqueIdentifier>{3e159137-4b19-45fb-a0f5-baa7c8dc326d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.Document">
+      <UniqueIdentifier>{0638ec90-52a3-4fa1-9b92-1b9901b40372}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View">
+      <UniqueIdentifier>{7f563dea-ac67-472f-8281-2c32d5238ff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="01.MainFrame">
+      <UniqueIdentifier>{bf05a85c-3324-491d-8a48-fc9f83bbbe0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="98.Header">
+      <UniqueIdentifier>{36cfa63b-98b8-478b-8d79-1ede1d61d506}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View\01.Form">
+      <UniqueIdentifier>{19fc5c2d-5d10-4ef1-bd6a-eeef720e071f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View\01.Form\01.Base">
+      <UniqueIdentifier>{aa8ed38c-c7f6-4b0c-ab06-33665ca41f70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.View\01.Form\02.NaviTab">
+      <UniqueIdentifier>{b5359e9f-4bbf-45a9-9f87-298d776aae91}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="96.Document\03.MFCTool">
+      <UniqueIdentifier>{494a0034-e1a4-4ca3-855b-f9127887db38}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>99.Default</Filter>
+    </ClInclude>
+    <ClInclude Include="MainFrm.h">
+      <Filter>01.MainFrame</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCToolView.h">
+      <Filter>02.View</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCToolDoc.h">
+      <Filter>96.Document</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="MFC_Define.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MFC_Extern.h">
+      <Filter>98.Header</Filter>
+    </ClInclude>
+    <ClInclude Include="MyFormView.h">
+      <Filter>02.View\01.Form\01.Base</Filter>
+    </ClInclude>
+    <ClInclude Include="NaviMeshTap.h">
+      <Filter>02.View\01.Form\02.NaviTab</Filter>
+    </ClInclude>
+    <ClInclude Include="MFCTool.h">
+      <Filter>96.Document\03.MFCTool</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>99.Default</Filter>
+    </ClCompile>
+    <ClCompile Include="MainFrm.cpp">
+      <Filter>01.MainFrame</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCToolView.cpp">
+      <Filter>02.View</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCToolDoc.cpp">
+      <Filter>96.Document</Filter>
+    </ClCompile>
+    <ClCompile Include="MyFormView.cpp">
+      <Filter>02.View\01.Form\01.Base</Filter>
+    </ClCompile>
+    <ClCompile Include="NaviMeshTap.cpp">
+      <Filter>02.View\01.Form\02.NaviTab</Filter>
+    </ClCompile>
+    <ClCompile Include="MFCTool.cpp">
+      <Filter>96.Document\03.MFCTool</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\MFCTool.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\MFCToolDoc.ico">
+      <Filter>99.Default</Filter>
+    </Image>
+    <Image Include="res\Toolbar.bmp">
+      <Filter>99.Default</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="MFCTool.rc">
+      <Filter>99.Default</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\MFCTool.rc2">
+      <Filter>99.Default</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="ReadMe.txt">
+      <Filter>99.Default</Filter>
+    </Text>
+    <Text Include="Text1.txt" />
+  </ItemGroup>
+</Project>

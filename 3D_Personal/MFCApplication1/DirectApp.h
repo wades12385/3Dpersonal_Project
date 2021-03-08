@@ -1,7 +1,7 @@
 #pragma once
 #ifndef __TOOLVIEW_H__
 #include "Base.h"
-
+USING(Engine)
 class CDirectApp final : public CBase
 {
 	DECLARE_SINGLETON(CDirectApp)

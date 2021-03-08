@@ -16,6 +16,7 @@ HRESULT CTransform::Ready_Component()
 	m_vTransDesc[eTransform::Rotate] = vZero;
 	m_vTransDesc[eTransform::Posision] = vZero;
 	m_vTransDesc[eTransform::Revolve] = vZero;
+	D3DXMatrixIdentity(&m_matWorld);
 
 
 	return S_OK;
@@ -60,6 +61,22 @@ CTransform* CTransform::Create(LPDIRECT3DDEVICE9 pDevice)
 	return pIns;
 }
 
+HRESULT CTransform::Update_TargetComponet(const _vec3 & vTargetPos)
+{
+	_matrix		matScale, matTrans , matRot ;
+	_vec3		vDir = vTargetPos - m_vTransDesc[eTransform::Posision];
+	D3DXVec3Normalize(&vDir, &vDir);
+	_vec3 vAxis = *D3DXVec3Cross(&vAxis, &Get_Up(), &vDir);
+	_float fRot = acosf(D3DXVec3Dot(&vDir, &Get_Up()));
+	D3DXMatrixRotationAxis(&matRot, &vAxis, fRot);
+
+	D3DXMatrixScaling(&matScale, m_vTransDesc[eTransform::Scale].x, m_vTransDesc[eTransform::Scale].y, m_vTransDesc[eTransform::Scale].z);
+	D3DXMatrixTranslation(&matTrans, m_vTransDesc[eTransform::Posision].x, m_vTransDesc[eTransform::Posision].y, m_vTransDesc[eTransform::Posision].z);
+
+	m_matWorld = matScale * matRot * matTrans;
+	return S_OK;
+}
+
 void CTransform::AddPosition(const _vec3 & vPos)
 {
 	m_vTransDesc[eTransform::Posision] += vPos;
@@ -101,13 +118,11 @@ void CTransform::Get_TransForm(const eTransform::eTransform & eType, OUT _vec3 &
 
 const _matrix  CTransform::Get_World()
 {
-	// TODO: 여기에 반환 구문을 삽입합니다.
 	return m_matWorld;
 }
 
 const _matrix  CTransform::Get_Parent()
 {
-	// TODO: 여기에 반환 구문을 삽입합니다.
 	return _matrix();
 }
 
@@ -115,21 +130,21 @@ const _vec3 CTransform::Get_Right()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[0][0], sizeof(_vec3));
-	return vInfo;
+	return *D3DXVec3Normalize(&vInfo, &vInfo);
 }
 
 const _vec3 CTransform::Get_Up()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[1][0], sizeof(_vec3));
-	return vInfo;
+	return *D3DXVec3Normalize(&vInfo, &vInfo);
 }
 
 const _vec3 CTransform::Get_Look()
 {
 	_vec3 vInfo;
 	memcpy(&vInfo, &m_matWorld.m[2][0], sizeof(_vec3));
-	return vInfo;
+	return *D3DXVec3Normalize(&vInfo, &vInfo);
 }
 
 const _vec3 CTransform::Get_PositionWorld()

@@ -205,7 +205,6 @@ void CAboutDlg::OnTvnSelchangedTree(NMHDR *pNMHDR, LRESULT *pResult)
 	LPNMTREEVIEW pNMTreeView = reinterpret_cast<LPNMTREEVIEW>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
 
-	cout << "Change" << endl;
 	*pResult = 0;
 }
 
@@ -214,8 +213,6 @@ void CAboutDlg::OnTvnKeydownTree(NMHDR *pNMHDR, LRESULT *pResult)
 {
 	LPNMTVKEYDOWN pTVKeyDown = reinterpret_cast<LPNMTVKEYDOWN>(pNMHDR);
 	// TODO: 여기에 컨트롤 알림 처리기 코드를 추가합니다.
-
-	cout << "Change" << endl;
 
 	*pResult = 0;
 }

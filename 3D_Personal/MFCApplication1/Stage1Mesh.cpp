@@ -3,7 +3,7 @@
 
 
 
-
+USING(Engine)
 CStage1Mesh::CStage1Mesh(LPDIRECT3DDEVICE9 pDevice)
 	:CGameObject(pDevice)
 {
@@ -39,13 +39,13 @@ HRESULT CStage1Mesh::Ready_GameObject()
 	return S_OK;
 }
 
-_uint CStage1Mesh::UpdateGameObject(const _float & fDeltaTime)
+_uint CStage1Mesh::Update_GameObject(const _float & fDeltaTime)
 {
 	m_pTrans->Update_Component(fDeltaTime);
 	return _uint();
 }
 
-_uint CStage1Mesh::LateUpdateGameObject(const _float & fDeltaTime)
+_uint CStage1Mesh::LateUpdate_GameObject(const _float & fDeltaTime)
 {
 	CManagement::Get_Instance()->Add_Renderer(m_eRenderID, this);
 	return _uint();

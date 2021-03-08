@@ -4,37 +4,43 @@
 
 //Comp
 #include "Transform.h"
-#include "ColliderBox.h"
+#include "Collider.h"
 //Resources
 #include "StaticMesh.h"
 #include "DynamicMesh.h"
 #include "NaviMesh.h"
 #include "Texture.h"
+//Buffer
+#include "RectBuffer.h"
 
 
 BEGIN(Engine)
 class ENGINE_DLL CResource_Manager : public CBase
 {
 	DECLARE_SINGLETON(CResource_Manager)
-	typedef unordered_map<const _tchar*, CResources*> RESOURCEMAP;
-public:
+	typedef unordered_map<wstring, CResources*> RESOURCEMAP;
+private:
 	explicit CResource_Manager();
 	virtual ~CResource_Manager() = default;
 
 public:
-	HRESULT			Ready_Resourece(LPDIRECT3DDEVICE9 pDevice, const _tchar* pCompTag, const eResourcesID::eResourcesID& eCompID , const CComponent* pComp);
+	HRESULT			Ready_Resourece(LPDIRECT3DDEVICE9 pDevice, const _tchar* pCompTag, 
+									const eResourcesID::eResourcesID& eCompID ,  CResources* pComp);
 	CComponent*		Clone(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourcesID);
 
-	HRESULT			Ready_Buffer(LPDIRECT3DDEVICE9 pDevice, const _tchar* pBufferTag , const eResourcesID::eResourcesID& eResourcesID);
-	//이건 루트경로 받아서 싹 읽는 형식으로 추가를 하던가 
-	HRESULT			Ready_Texture(LPDIRECT3DDEVICE9 pDevice, const _tchar* pTextureTag, const _tchar* pPath, const _uint& iCnt = 1);
+	//HRESULT			Ready_Buffer(LPDIRECT3DDEVICE9 pDevice, const _tchar* pBufferTag , 
+	//								const eResourcesID::eResourcesID& eResourcesID);
+	HRESULT			Ready_Texture(LPDIRECT3DDEVICE9 pDevice, const _tchar* pTextureTag, 
+									const _tchar* pPath, const _uint& iCnt = 1);
 
 
 
-	HRESULT			Ready_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar* pMeshTag, eResourcesID::eResourcesID eType, const _tchar* pFilePath, const _tchar* pFileName);
+	HRESULT			Ready_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar* pMeshTag, eResourcesID::eResourcesID eType,
+								const _tchar* pFilePath, const _tchar* pFileName);
 	HRESULT			Load_Mesh(LPDIRECT3DDEVICE9 pDevice, const _tchar* pMeshTag, const _tchar* pFilePath);
 
-	HRESULT			overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, RESOURCEMAP::iterator& iter);
+	HRESULT			overlapCheck_Comp(const _tchar* pCompTag, const eResourcesID::eResourcesID& eResourceID, 
+											RESOURCEMAP::iterator& iter);
 	HRESULT			FindCheck_Comp(RESOURCEMAP::iterator& iter, const eResourcesID::eResourcesID& eResourceID);
 private:
 	virtual void Free() override;

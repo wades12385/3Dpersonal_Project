@@ -14,6 +14,7 @@ private:
 public:
 	HRESULT Set_CurrentScene(const _int& iSceneID, CScene* pCurrentScene);
 	HRESULT Get_SceneID(OUT _int& rSceneID);
+	_int	Get_SceneID() { return m_iCurSceneID; }
 	HRESULT Scene_InitLogReserve(const _uint& iCnt);
 public:
 	HRESULT Awake_SceneMgr();
@@ -21,6 +22,7 @@ public:
 	_uint	Update_SceneMgr(const _float& fTimeDeleta);
 	_uint	LateUpdate_SceneMgr(const _float& fTimeDeleta);
 	void	Render_Scene();
+	void    Check_WaitChange();
 public:
 	virtual void Free() override;
 private:
@@ -28,8 +30,10 @@ private:
 	// 생성뒤 다시 돌아오면 리콜 루틴 
 
 	_bool*	m_pInitLog; // 씬 첫생성 로그
+	_bool   m_bWaitChangeScene;
 	CScene*	m_pCurrentScene;
-	_int  m_iCurSceneID;
+	_int	m_iCurSceneID;
+	_int    m_iNextSceneID;
 };
 END
 
