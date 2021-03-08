@@ -100,7 +100,7 @@ CComponent*	 CGameObject::Get_Component(const eComponentID::eComponentID & ComID
 	return Comp_iterfind->second;
 }
 
-CComponent*	 CGameObject::Get_Transform()
+CTransform*	 CGameObject::Get_Transform()
 {
 	auto& Comp_iterfind = m_mapComponents.find(eComponentID::Transform);
 	if (Comp_iterfind != m_mapComponents.end())
@@ -109,7 +109,7 @@ CComponent*	 CGameObject::Get_Transform()
 		return nullptr;
 	}
 
-	return Comp_iterfind->second;
+	return (CTransform*)Comp_iterfind->second;
 }
 
 void CGameObject::Set_Enalbe(_bool bEnable)

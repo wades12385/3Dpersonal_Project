@@ -3,6 +3,8 @@
 #include "Axis.h"
 #include "SizeCheck.h" 
 #include "MfcStaticItem.h"
+#include "MainFrm.h"
+#include "ToolForm.h"
 CStaticDeployScene::CStaticDeployScene(LPDIRECT3DDEVICE9 pDevice)
 	:CScene(pDevice)
 {
@@ -66,8 +68,17 @@ _uint CStaticDeployScene::Update_Scene(const _float & fTimeDeleta)
 		if (KeyDown(DIK_Z))
 		{
 			auto pList = CManagement::Get_Instance()->Get_GameObjetList(L"Layer_StaticItem");
-			if(pList !=  nullptr)
-				pList->back()->Set_Delete();
+			if (pList != nullptr)
+			{
+				auto iter = pList->rbegin();
+				(*iter)->Set_Delete();
+				
+				CMainFrame* pMain = (CMainFrame*)::AfxGetApp()->GetMainWnd();
+				CToolForm* pForm = (CToolForm*)(pMain->m_tSplitter.GetPane(0, 0));
+
+				if(iter != pList->rend())
+					pForm->m_StaticDeployTab.m_pObjItem = (CMfcStaticItem*)(*++iter);
+			}
 		}
 	}
 

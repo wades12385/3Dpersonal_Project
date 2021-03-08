@@ -32,7 +32,7 @@ public:
 
 public:
 	CComponent*								Get_Component(const eComponentID::eComponentID& ComID);
-	CComponent*								Get_Transform();
+	class CTransform*								Get_Transform();
 	void									Set_Enalbe(_bool bEnable);
 	void									Set_Delete() { m_bDelete = true; }
 protected:

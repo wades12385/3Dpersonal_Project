@@ -37,6 +37,7 @@ public:
 	const _vec3						Get_PositionWorld(); // 월드스페이스 적용 후  위치값 
 	const _vec3						Get_Position(); // 컴포넌트의 위치백터값  
 	const _vec3						Get_Sacle(); // 컴포넌트의 위치백터값  
+	const _vec3						Get_Rotate();
 
 	//////////////////////////////////////////////////////////////////////////
 	void							Set_Scale(const _float& fX, const _float& fY, const _float& fZ);

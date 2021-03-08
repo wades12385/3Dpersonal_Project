@@ -164,6 +164,11 @@ const _vec3 CTransform::Get_Sacle()
 	return m_vTransDesc[eTransform::Scale];
 }
 
+const _vec3 CTransform::Get_Rotate()
+{
+	return m_vTransDesc[eTransform::Rotate];
+}
+
 void CTransform::Set_Scale(const _float & fX, const _float & fY, const _float & fZ)
 {
 	m_vTransDesc[eTransform::Scale].x = fX;

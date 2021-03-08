@@ -19,6 +19,7 @@ public:
 	void        Create_Obj(const CPoint& vPos);
 	void        Delete_Obj(const CPoint& vPos);
 	void        Modify_Obj(const CPoint& vPos);
+	void		SetUp_Tranform();
 public:
 	vector<OBJDATA>*			m_pDataTable;
 	_int						m_iTableIdx;
@@ -79,4 +80,6 @@ public:
 
 	CEdit m_edScale;
 	CEdit m_edSizeCheck;
+	CEdit m_edRot[eFloat3::End];
+	CString m_sRot[eFloat3::End];
 };

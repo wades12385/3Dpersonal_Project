@@ -22,7 +22,6 @@ void CStaticDeploymentTab::SetUp_DataTable()
 		return L"FALSE";
 	};
 
-
 	for (_uint i = 0; i < m_pDataTable->size(); ++i)
 	{
 		str.Format(L"%d", (*m_pDataTable)[i].iItemID);
@@ -130,6 +129,22 @@ void CStaticDeploymentTab::Modify_Obj(const CPoint & vPos)
 {
 }
 
+void CStaticDeploymentTab::SetUp_Tranform()
+{
+	NULL_CHECK(m_pObjItem);
+
+	m_sPos[eFloat3::X].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Position().x);
+	m_sPos[eFloat3::Y].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Position().y);
+	m_sPos[eFloat3::Z].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Position().z);
+
+	m_sRot[eFloat3::X].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Rotate().x);
+	m_sRot[eFloat3::Y].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Rotate().y);
+	m_sRot[eFloat3::Z].Format(L"%.2f", m_pObjItem->Get_Transform()->Get_Rotate().z);
+
+
+	UpdateData(FALSE);
+}
+
 CStaticDeploymentTab::CStaticDeploymentTab(CWnd* pParent /*=NULL*/)
 	: CDialog(IDD_OBJECTTAB, pParent)
 	, m_sScale(_T(""))
@@ -140,6 +155,7 @@ CStaticDeploymentTab::CStaticDeploymentTab(CWnd* pParent /*=NULL*/)
 	, m_sSelectNaviName(_T(""))
 	, m_sPeekingItem(_T(""))
 	, m_sSizeCheck(_T(""))
+
 {
 }
 
@@ -176,6 +192,14 @@ void CStaticDeploymentTab::DoDataExchange(CDataExchange* pDX)
 	DDX_Control(pDX, IDC_EDIT28, m_edPos[eFloat3::X]);
 	DDX_Control(pDX, IDC_EDIT29, m_edPos[eFloat3::Y]);
 	DDX_Control(pDX, IDC_EDIT30, m_edPos[eFloat3::Z]);
+
+	DDX_Control(pDX, IDC_EDIT25, m_edRot[eFloat3::X]);
+	DDX_Control(pDX, IDC_EDIT26, m_edRot[eFloat3::Y]);
+	DDX_Control(pDX, IDC_EDIT27, m_edRot[eFloat3::Z]);
+
+	DDX_Text(pDX, IDC_EDIT28, m_sRot[eFloat3::X]);
+	DDX_Text(pDX, IDC_EDIT29, m_sRot[eFloat3::Y]);
+	DDX_Text(pDX, IDC_EDIT30, m_sRot[eFloat3::Z]);
 
 }
 
@@ -343,13 +367,12 @@ BOOL CStaticDeploymentTab::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	NULL_CHECK(m_pSize);
 	UpdateData(TRUE);
 	_float fDelta = 0.05f;
-	_float fScale;
-
-
-
+	_float fValue;
 
 	RECT tScaleRect , tSizeRect;
 	RECT tPosX, tPosY, tPosZ;
+	RECT tRotX, tRotY, tRotZ;
+
 
 	m_edScale.GetWindowRect(&tScaleRect);
 	m_edSizeCheck.GetWindowRect(&tSizeRect);
@@ -358,45 +381,104 @@ BOOL CStaticDeploymentTab::OnMouseWheel(UINT nFlags, short zDelta, CPoint pt)
 	m_edPos[eFloat3::Y].GetWindowRect(&tPosY);
 	m_edPos[eFloat3::Z].GetWindowRect(&tPosZ);
 
+	m_edRot[eFloat3::X].GetWindowRect(&tRotX);
+	m_edRot[eFloat3::Y].GetWindowRect(&tRotY);
+	m_edRot[eFloat3::Z].GetWindowRect(&tRotZ);
+
 	if (PtInRect(&tScaleRect, pt))
 	{
-		fScale = (_float)_ttof(m_sScale);
+		fValue = (_float)_ttof(m_sScale);
 		if (zDelta < 0)
-			fScale -= fDelta;
+			fValue -= fDelta;
 		else
-			fScale += fDelta;
+			fValue += fDelta;
 
-		m_sScale.Format(L"%.2f", fScale);
-		m_pObjItem->Set_Sacle(fScale);
+		m_sScale.Format(L"%.2f", fValue);
+		m_pObjItem->Set_Sacle(fValue);
 	}
 	else if (PtInRect(&tSizeRect, pt))
 	{
-		fScale = (_float)_ttof(m_sSizeCheck);
+		fValue = (_float)_ttof(m_sSizeCheck);
 		if (zDelta < 0)
-			fScale -= fDelta;
+			fValue -= fDelta;
 		else
-			fScale += fDelta;
+			fValue += fDelta;
 
-		m_sSizeCheck.Format(L"%.2f", fScale);
-		m_pSize->Set_ColliderSize(fScale);
+		m_sSizeCheck.Format(L"%.2f", fValue);
+		m_pSize->Set_ColliderSize(fValue);
 	}
 	else if (PtInRect(&tPosX, pt))
 	{
+		fValue = (_float)_ttof(m_sPos[eFloat3::X]);
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vPos = m_pObjItem->Get_Transform()->Get_Position();
+		vPos.x = fValue;
+		m_pObjItem->Get_Transform()->Set_Position(vPos);
 	}
 	else if (PtInRect(&tPosY, pt))
 	{
+		fValue = (_float)_ttof(m_sPos[eFloat3::Y]);
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vPos = m_pObjItem->Get_Transform()->Get_Position();
+		vPos.y = fValue;
+		m_pObjItem->Get_Transform()->Set_Position(vPos);
 	}
 	else if (PtInRect(&tPosZ, pt))
 	{
+		fValue = (_float)_ttof(m_sPos[eFloat3::Z]);
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vPos = m_pObjItem->Get_Transform()->Get_Position();
+		vPos.z = fValue;
+		m_pObjItem->Get_Transform()->Set_Position(vPos);
 	}
-	else if (PtInRect(&tSizeRect, pt))
+	else if (PtInRect(&tRotX, pt))
 	{
+		fValue = (_float)_ttof(m_sRot[eFloat3::X]);
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vRot = m_pObjItem->Get_Transform()->Get_Rotate();
+		vRot.x = fValue;
+		m_pObjItem->Get_Transform()->Set_Rotate(vRot);
 	}
-	else if (PtInRect(&tSizeRect, pt))
+	else if (PtInRect(&tRotY, pt))
 	{
+		fValue = (_float)_ttof(m_sRot[eFloat3::Y]);
+		fDelta = 1.f;
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vRot = m_pObjItem->Get_Transform()->Get_Rotate();
+		vRot.y = fValue;
+		m_pObjItem->Get_Transform()->Set_Rotate(vRot);
 	}
-	else if (PtInRect(&tSizeRect, pt))
+	else if (PtInRect(&tRotZ, pt))
 	{
+		fValue = (_float)_ttof(m_sRot[eFloat3::Z]);
+		if (zDelta < 0)
+			fValue -= fDelta;
+		else
+			fValue += fDelta;
+
+		_vec3 vRot = m_pObjItem->Get_Transform()->Get_Rotate();
+		vRot.z = fValue;
+		m_pObjItem->Get_Transform()->Set_Rotate(vRot);
 	}
 
 	UpdateData(FALSE);
